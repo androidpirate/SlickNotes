@@ -31,19 +31,21 @@ public class Note {
     @PrimaryKey(autoGenerate = true)
     private int noteId;
     @ColumnInfo(name = "note_title")
-    String title;
+    private String title;
     @ColumnInfo(name = "note_detail")
-    String detail;
+    private String detail;
     @ColumnInfo(name = "note_create_date")
-    Date dateCreated;
+    private Date dateCreated;
     @ColumnInfo(name = "note_edit_date")
-    Date dateEdited;
+    private Date dateEdited;
     @ColumnInfo(name = "note_trash_status")
-    boolean isTrash;
+    private boolean isTrash;
     @ColumnInfo(name = "note_pin_status")
-    boolean isPinned;
-    int colorId;
-    List<String> labels;
+    private boolean isPinned;
+    @ColumnInfo(name = "note_color")
+    private int colorId;
+    @ColumnInfo(name ="note_labels")
+    private List<String> labels;
 
     public Note(String title, String detail, Date dateCreated) {
         this.title = title;
