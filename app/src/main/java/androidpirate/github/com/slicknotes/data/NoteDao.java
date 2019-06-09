@@ -32,7 +32,7 @@ public interface NoteDao {
     @Query("SELECT * FROM Note WHERE note_trash_status = 0")
     LiveData<List<Note>> getDatabaseNotes();
     @Query("SELECT * FROM Note WHERE noteId = :id")
-    LiveData<List<Note>> getDatabaseNote(int id);
+    LiveData<Note> getDatabaseNote(int id);
     @Query("SELECT * FROM Note WHERE note_trash_status = 1")
     LiveData<List<Note>> getTrashNotes();
     @Insert
