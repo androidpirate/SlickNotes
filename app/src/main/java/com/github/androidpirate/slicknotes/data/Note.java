@@ -16,7 +16,7 @@
  * -->
  */
 
-package androidpirate.github.com.slicknotes.data;
+package com.github.androidpirate.slicknotes.data;
 
 import java.util.ArrayList;
 import java.util.Date;

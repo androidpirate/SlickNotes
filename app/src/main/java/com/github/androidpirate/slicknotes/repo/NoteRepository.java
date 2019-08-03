@@ -16,7 +16,7 @@
  * -->
  */
 
-package androidpirate.github.com.slicknotes.repo;
+package com.github.androidpirate.slicknotes.repo;
 
 import android.content.Context;
 
@@ -24,9 +24,9 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import androidpirate.github.com.slicknotes.data.Note;
-import androidpirate.github.com.slicknotes.data.NoteDao;
-import androidpirate.github.com.slicknotes.data.NoteDatabase;
+import com.github.androidpirate.slicknotes.data.Note;
+import com.github.androidpirate.slicknotes.data.NoteDao;
+import com.github.androidpirate.slicknotes.data.NoteDatabase;
 import androidx.lifecycle.LiveData;
 
 public class NoteRepository {

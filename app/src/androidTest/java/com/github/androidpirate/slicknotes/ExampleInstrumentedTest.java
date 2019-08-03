@@ -1,4 +1,4 @@
-package androidpirate.github.com.slicknotes;
+package com.github.androidpirate.slicknotes;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("androidpirate.github.com.slicknotes", appContext.getPackageName());
+        assertEquals("androidpirate.github.androidpirate.slicknotes", appContext.getPackageName());
     }
 }

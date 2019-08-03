@@ -1,4 +1,4 @@
-package androidpirate.github.com.slicknotes;
+package com.github.androidpirate.slicknotes;
 
 import org.junit.Test;
 

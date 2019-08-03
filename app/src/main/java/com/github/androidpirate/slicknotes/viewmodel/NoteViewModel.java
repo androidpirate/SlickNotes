@@ -16,15 +16,15 @@
  * -->
  */
 
-package androidpirate.github.com.slicknotes.viewmodel;
+package com.github.androidpirate.slicknotes.viewmodel;
 
 import android.app.Application;
 
 import java.util.Date;
 import java.util.List;
 
-import androidpirate.github.com.slicknotes.data.Note;
-import androidpirate.github.com.slicknotes.repo.NoteRepository;
+import com.github.androidpirate.slicknotes.data.Note;
+import com.github.androidpirate.slicknotes.repo.NoteRepository;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;

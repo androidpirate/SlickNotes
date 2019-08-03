@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="androidpirate.github.com.slicknotes">
+          package="com.github.androidpirate.slicknotes">
 
     <application
         android:allowBackup="true"
