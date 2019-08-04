@@ -8,4 +8,43 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Content frame style -->
+    <style name="ContentFrame">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_margin">@dimen/margin_16</item>
+    </style>
+
+    <!-- Toolbar style -->
+    <style name="Toolbar">
+        <item name="android:layout_width">@dimen/match_constraint_size</item>
+        <item name="android:layout_height">?android:actionBarSize</item>
+    </style>
+
+    <!-- NavigationView style -->
+    <style name="NavView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+
+    <!-- Navigation header icon style -->
+    <style name="NavHeaderIcon">
+        <item name="android:layout_width">@dimen/nav_header_icon_width</item>
+        <item name="android:layout_height">@dimen/nav_header_icon_height</item>
+        <item name="android:src">@drawable/ic_slick_note</item>
+    </style>
+
+    <!-- Navigation title style -->
+    <style name="NavHeaderTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">@string/nav_header_title_text</item>
+        <item name="android:textSize">@dimen/nav_header_title</item>
+        <item name="android:textColor">@color/colorToolbarFont</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">@dimen/margin_16</item>
+    </style>
+
 </resources>
