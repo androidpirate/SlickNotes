@@ -19,19 +19,14 @@
 
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/navigation"
-            app:startDestination="nav_home">
+            app:startDestination="@id/nav_home">
 
     <fragment
-        android:id="@+id/nav_home"/>
-
-    <fragment
-        android:id="@+id/nav_details"/>
-
-    <fragment
-        android:id="@+id/nav_create"/>
-
-    <fragment
-        android:id="@+id/nav_trash"/>
+        android:id="@+id/nav_home"
+        android:label="Notes"
+        android:name="com.github.androidpirate.slicknotes.ui.fragment.NoteListFragment"
+        tools:layout="@layout/fragment_note_list"/>
 
 </navigation>
