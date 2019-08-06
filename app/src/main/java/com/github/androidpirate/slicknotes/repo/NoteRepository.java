@@ -20,6 +20,7 @@ package com.github.androidpirate.slicknotes.repo;
 
 import android.content.Context;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -47,11 +48,25 @@ public class NoteRepository {
     }
 
     public List<Note> getPinnedDatabaseNotes() {
-        return dao.getPinnedNotes();
+        final List<Note> pinnedNotes = new ArrayList<>();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                pinnedNotes.addAll(dao.getPinnedNotes());
+            }
+        });
+        return pinnedNotes;
     }
 
     public List<Note> getNonPinnedDatabaseNotes() {
-        return dao.getNonPinnedNotes();
+        final List<Note> nonPinnedNotes = new ArrayList<>();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                nonPinnedNotes.addAll(dao.getNonPinnedNotes());
+            }
+        });
+        return nonPinnedNotes;
     }
 
     public LiveData<Note> getDatabaseNote(int noteId) {
@@ -102,4 +117,6 @@ public class NoteRepository {
             }
         });
     }
+
+
 }
