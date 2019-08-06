@@ -29,6 +29,6 @@
     <dimen name="padding_16">16dp</dimen>
     <!-- Fonts -->
     <dimen name="nav_header_title">22sp</dimen>
-    <dimen name="content_header"></dimen>
-    <dimen name="content_body"></dimen>
+    <dimen name="content_header">22sp</dimen>
+    <dimen name="content_details">16sp</dimen>
 </resources>

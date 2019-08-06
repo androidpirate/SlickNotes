@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -13,6 +13,12 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_margin">@dimen/margin_16</item>
+    </style>
+
+    <!-- Inner content frame style -->
+    <style name="InnerContentFrame">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
     </style>
 
     <!-- Toolbar style -->
@@ -45,6 +51,91 @@
         <item name="android:textColor">@color/colorToolbarFont</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_marginTop">@dimen/margin_16</item>
+    </style>
+
+    <!-- Fab style -->
+    <style name="FabStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@drawable/ic_insert_note</item>
+        <item name="android:layout_marginEnd">@dimen/margin_16</item>
+        <item name="android:layout_marginBottom">@dimen/margin_16</item>
+    </style>
+
+    <!-- Note list style -->
+    <style name="NoteList">
+        <item name="android:layout_width">@dimen/match_constraint_size</item>
+        <item name="android:layout_height">@dimen/match_constraint_size</item>
+    </style>
+
+    <!-- Empty list message style -->
+    <style name="EmptyListMessage">
+        <item name="android:layout_width">@dimen/match_constraint_size</item>
+        <item name="android:layout_height">@dimen/match_constraint_size</item>
+        <item name="android:text">@string/empty_list_message</item>
+        <item name="android:textSize">@dimen/nav_header_title</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorEmptyListMessage</item>
+        <item name="android:gravity">center</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <!-- Note card style -->
+    <style name="NoteCard">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/margin_8</item>
+        <item name="android:longClickable">true</item>
+    </style>
+
+    <!-- Note card border style -->
+    <style name="NoteCardBorder">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@drawable/card_border</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <!-- Note header style -->
+    <style name="NoteHeader">
+        <item name="android:layout_width">@dimen/match_constraint_size</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/margin_8</item>
+        <item name="android:layout_marginStart">@dimen/margin_8</item>
+        <item name="android:layout_marginEnd">@dimen/margin_8</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/contentFontColor</item>
+        <item name="android:textSize">@dimen/content_header</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
+    <!-- Note detail style -->
+    <style name="NoteDetail">
+        <item name="android:layout_width">@dimen/match_constraint_size</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/margin_8</item>
+        <item name="android:layout_marginStart">@dimen/margin_8</item>
+        <item name="android:layout_marginEnd">@dimen/margin_8</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:textSize">@dimen/content_details</item>
+        <item name="android:textColor">@color/contentFontColor</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
+    <!-- Pin tag style -->
+    <style name="PinTag" parent="NoteDetail">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <!-- Note card checkbox style -->
+    <style name="NoteCardCheckbox">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:visibility">gone</item>
     </style>
 
 </resources>

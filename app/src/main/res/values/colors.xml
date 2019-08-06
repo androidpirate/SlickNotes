@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorToolbarFont">#FDFDFD</color>
+    <color name="colorEmptyListMessage">#B6B6B6</color>
+    <color name="contentFontColor">#1D1D1D</color>
 </resources>
