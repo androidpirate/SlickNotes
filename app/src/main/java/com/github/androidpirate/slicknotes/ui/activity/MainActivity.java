@@ -33,8 +33,6 @@ import android.view.MenuItem;
 import com.github.androidpirate.slicknotes.R;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.Objects;
-
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navView;
@@ -48,18 +46,12 @@ public class MainActivity extends AppCompatActivity {
         // Set Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // Set hamburger icon
-        setActionBarIcon();
         drawerLayout = findViewById(R.id.drawer_layout);
         // Get AppBarConfig
         AppBarConfiguration appBarConfiguration = getAppBarConfig();
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         navView = findViewById(R.id.nav_view);
         setDrawerClickListener();
-    }
-
-    private void setActionBarIcon() {
-        Objects.requireNonNull(getSupportActionBar()).setIcon(R.drawable.ic_menu);
     }
 
     private AppBarConfiguration getAppBarConfig() {
