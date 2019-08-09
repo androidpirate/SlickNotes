@@ -25,6 +25,9 @@
     <style name="Toolbar">
         <item name="android:layout_width">@dimen/match_constraint_size</item>
         <item name="android:layout_height">?android:actionBarSize</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:theme">@style/Toolbar</item>
+        <item name="android:textColorSecondary">@color/colorToolbarFont</item>
     </style>
 
     <!-- NavigationView style -->
@@ -110,7 +113,7 @@
         <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 
-    <!-- Note detail style -->
+    <!-- Note details style -->
     <style name="NoteDetail">
         <item name="android:layout_width">@dimen/match_constraint_size</item>
         <item name="android:layout_height">wrap_content</item>
