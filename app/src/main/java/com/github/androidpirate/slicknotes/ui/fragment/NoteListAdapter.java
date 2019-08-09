@@ -21,11 +21,11 @@ package com.github.androidpirate.slicknotes.ui.fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Note;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -65,13 +65,18 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteLi
     }
 
     class NoteListHolder extends RecyclerView.ViewHolder {
+        private TextView title;
+        private TextView details;
 
         public NoteListHolder(@NonNull View itemView) {
             super(itemView);
+            title = itemView.findViewById(R.id.tv_title);
+            details = itemView.findViewById(R.id.tv_details);
         }
 
         private void bindNote(Note note) {
-
+            title.setText(note.getTitle());
+            details.setText(note.getDetails());
         }
     }
 }
