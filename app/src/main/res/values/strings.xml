@@ -1,12 +1,14 @@
 <resources>
     <string name="app_name">Slick Notes</string>
+    <!-- Drawer menu resources -->
     <string name="app_menu_home">Home</string>
     <string name="app_menu_trash">Trash</string>
     <string name="app_menu_settings">Settings</string>
     <string name="nav_header_title_text">Welcome to Slick Notes</string>
+    <!-- NoteListFragment resources -->
     <string name="note_pinned_tag">PINNED</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="empty_list_message">Currently there are no notes in the list.</string>
+    <!-- NoteCreateFragment resources -->
+    <string name="titleHint">Enter note title</string>
+    <string name="detailsHint">Enter note details</string>
 </resources>
