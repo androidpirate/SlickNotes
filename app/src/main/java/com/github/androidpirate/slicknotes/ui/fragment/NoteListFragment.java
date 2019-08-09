@@ -46,7 +46,9 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NoteListFragment extends Fragment {
+public class NoteListFragment extends Fragment
+    implements NoteListAdapter.NoteClickListener {
+
     private RecyclerView recyclerView;
     private NoteListAdapter adapter;
     private TextView emptyListMessage;
@@ -99,6 +101,13 @@ public class NoteListFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onNoteClick(int noteId) {
+        Bundle args = new Bundle();
+        args.putInt("noteId", noteId);
+        navigateToNoteDetails(args);
+    }
+
     private void displayEmptyListMessage() {
         recyclerView.setVisibility(View.GONE);
         emptyListMessage.setVisibility(View.VISIBLE);
@@ -114,7 +123,7 @@ public class NoteListFragment extends Fragment {
             displayNoteList();
         }
         if(adapter == null) {
-            adapter = new NoteListAdapter(notes);
+            adapter = new NoteListAdapter(notes, this);
         } else {
             adapter.loadNotes(notes);
         }
@@ -123,5 +132,9 @@ public class NoteListFragment extends Fragment {
 
     private void navigateToCreateNote() {
         navController.navigate(R.id.nav_home_to_create);
+    }
+
+    private void navigateToNoteDetails(Bundle args) {
+        navController.navigate(R.id.nav_home_to_details, args);
     }
 }
