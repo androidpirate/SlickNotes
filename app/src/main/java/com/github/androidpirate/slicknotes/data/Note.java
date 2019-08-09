@@ -33,7 +33,7 @@ public class Note {
     @ColumnInfo(name = "note_title")
     private String title;
     @ColumnInfo(name = "note_detail")
-    private String detail;
+    private String details;
     @ColumnInfo(name = "note_create_date")
     private Date dateCreated;
     @ColumnInfo(name = "note_edit_date")
@@ -47,9 +47,9 @@ public class Note {
     @ColumnInfo(name ="note_labels")
     private List<String> labels;
 
-    public Note(String title, String detail, Date dateCreated) {
+    public Note(String title, String details, Date dateCreated) {
         this.title = title;
-        this.detail = detail;
+        this.details = details;
         this.dateCreated = dateCreated;
         this.dateEdited = dateCreated;
         this.isTrash = false;
@@ -66,8 +66,8 @@ public class Note {
         return title;
     }
 
-    public String getDetail() {
-        return detail;
+    public String getDetails() {
+        return details;
     }
 
     public Date getDateCreated() {
@@ -102,8 +102,8 @@ public class Note {
         this.title = title;
     }
 
-    public void setDetail(String detail) {
-        this.detail = detail;
+    public void setDetails(String details) {
+        this.details = details;
     }
 
     public void setDateCreated(Date dateCreated) {
