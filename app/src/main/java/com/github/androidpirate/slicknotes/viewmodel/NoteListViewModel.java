@@ -28,35 +28,26 @@ import com.github.androidpirate.slicknotes.repo.NoteRepository;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.Observer;
 
 public class NoteListViewModel extends AndroidViewModel {
     private NoteRepository repo;
-    private MutableLiveData<List<Note>> databaseNotes;
-    private MutableLiveData<List<Note>> trashDatabaseNotes;
+    private List<Note> combinedNotes = new ArrayList<>();
+    private MediatorLiveData<List<Note>> databaseNotes = new MediatorLiveData<>();
 
     public NoteListViewModel(@NonNull Application application) {
         super(application);
         repo = new NoteRepository(application);
-        databaseNotes = new MutableLiveData<>();
-        trashDatabaseNotes = new MutableLiveData<>();
+        initializeNotes();
     }
 
     public LiveData<List<Note>> getDatabaseNotes() {
-        databaseNotes.setValue(getCombinedNotes());
         return databaseNotes;
     }
 
-    private List<Note> getCombinedNotes() {
-        List<Note> combinedNotes = new ArrayList<>();
-        combinedNotes.addAll(repo.getPinnedDatabaseNotes());
-        combinedNotes.addAll(repo.getNonPinnedDatabaseNotes());
-        return combinedNotes;
-    }
-
     public LiveData<List<Note>> getDatabaseTrashNotes() {
-        trashDatabaseNotes.setValue(repo.getDatabaseTrashNotes().getValue());
-        return trashDatabaseNotes;
+        return repo.getDatabaseTrashNotes();
     }
 
     public void moveNotesToTrash(List<Note> notes) {
@@ -85,5 +76,27 @@ public class NoteListViewModel extends AndroidViewModel {
             note.setTrash(false);
         }
         repo.updateDatabaseNotes(notes);
+    }
+
+    private void initializeNotes() {
+        LiveData<List<Note>> pinnedNotes = repo.getPinnedDatabaseNotes();
+        LiveData<List<Note>> nonPinnedNotes = repo.getNonPinnedDatabaseNotes();
+        databaseNotes.addSource(pinnedNotes, new Observer<List<Note>>() {
+            @Override
+            public void onChanged(List<Note> notes) {
+                orderNotes(notes);
+            }
+        });
+        databaseNotes.addSource(nonPinnedNotes, new Observer<List<Note>>() {
+            @Override
+            public void onChanged(List<Note> notes) {
+                orderNotes(notes);
+            }
+        });
+    }
+
+    private void orderNotes(List<Note> notes) {
+        combinedNotes.addAll(notes);
+        databaseNotes.setValue(combinedNotes);
     }
 }
