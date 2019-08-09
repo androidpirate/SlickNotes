@@ -48,7 +48,7 @@
             tools:text = "Note Title Goes Here"/>
 
         <TextView
-            android:id="@+id/tv_description"
+            android:id="@+id/tv_details"
             style="@style/NoteDetail"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
