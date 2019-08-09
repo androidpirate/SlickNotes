@@ -33,7 +33,8 @@ import androidx.lifecycle.Observer;
 
 public class NoteListViewModel extends AndroidViewModel {
     private NoteRepository repo;
-    private List<Note> combinedNotes = new ArrayList<>();
+    private List<Note> pinnedNotesY = new ArrayList<>();
+    private List<Note> nonPinnedNotesY = new ArrayList<>();
     private MediatorLiveData<List<Note>> databaseNotes = new MediatorLiveData<>();
 
     public NoteListViewModel(@NonNull Application application) {
@@ -80,23 +81,27 @@ public class NoteListViewModel extends AndroidViewModel {
 
     private void initializeNotes() {
         LiveData<List<Note>> pinnedNotes = repo.getPinnedDatabaseNotes();
-        LiveData<List<Note>> nonPinnedNotes = repo.getNonPinnedDatabaseNotes();
+        final LiveData<List<Note>> nonPinnedNotes = repo.getNonPinnedDatabaseNotes();
         databaseNotes.addSource(pinnedNotes, new Observer<List<Note>>() {
             @Override
             public void onChanged(List<Note> notes) {
-                orderNotes(notes);
+                pinnedNotesY = notes;
+                orderNotes();
             }
         });
         databaseNotes.addSource(nonPinnedNotes, new Observer<List<Note>>() {
             @Override
             public void onChanged(List<Note> notes) {
-                orderNotes(notes);
+                nonPinnedNotesY = notes;
+                orderNotes();
             }
         });
     }
 
-    private void orderNotes(List<Note> notes) {
-        combinedNotes.addAll(notes);
+    private void orderNotes() {
+        List<Note> combinedNotes = new ArrayList<>();
+        combinedNotes.addAll(pinnedNotesY);
+        combinedNotes.addAll(nonPinnedNotesY);
         databaseNotes.setValue(combinedNotes);
     }
 }
