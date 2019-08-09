@@ -34,9 +34,9 @@ public class NoteViewModel extends AndroidViewModel {
     private NoteRepository repo;
     private MutableLiveData<Note> note;
 
-    public NoteViewModel(@NonNull Application application, NoteRepository repo) {
+    public NoteViewModel(@NonNull Application application) {
         super(application);
-        this.repo = repo;
+        repo = new NoteRepository(application);
         note = new MutableLiveData<>();
     }
 
