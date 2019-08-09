@@ -28,51 +28,57 @@ import com.github.androidpirate.slicknotes.repo.NoteRepository;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 public class NoteViewModel extends AndroidViewModel {
+    private static final String DEFAULT_NOTE_TITLE = "";
+    private static final String DEFAULT_NOTE_DETAILS = "";
     private NoteRepository repo;
-    private MutableLiveData<Note> note;
+    private Note note;
 
     public NoteViewModel(@NonNull Application application) {
         super(application);
         repo = new NoteRepository(application);
-        note = new MutableLiveData<>();
+        note = new Note(DEFAULT_NOTE_TITLE, DEFAULT_NOTE_DETAILS, new Date());
     }
 
     public LiveData<Note> getDatabaseNote(int noteId) {
-        note.setValue(repo.getDatabaseNote(noteId).getValue());
-        return note;
+        return repo.getDatabaseNote(noteId);
     }
 
-    public void updateNotePinStatus(Note note, boolean status) {
+    public void updateViewModelNote(Note note) {
+        this.note = note;
+    }
+
+    public void updateNoteTitle(String title) {
+        note.setTitle(title);
+    }
+
+    public void updateNoteDetails(String details) {
+        note.setDetails(details);
+    }
+
+    public void updateNotePinStatus(boolean status) {
         note.setPinned(status);
-        updateNote(note);
     }
 
-    public void updateNoteColor(Note note, int colorId) {
+    public void updateNoteColor(int colorId) {
         note.setColorId(colorId);
-        updateNote(note);
     }
 
-    public void updateNoteLabels(Note note, List<String> labels) {
+    public void updateNoteLabels(List<String> labels) {
         note.setLabels(labels);
-        updateNote(note);
     }
 
-    public void updateNoteCreateDate(Note note, Date dateCreated) {
+    public void updateNoteCreateDate(Date dateCreated) {
         note.setDateCreated(dateCreated);
-        updateNote(note);
     }
 
-    public void updateNoteEditDate(Note note, Date dateEdited) {
+    public void updateNoteEditDate(Date dateEdited) {
         note.setDateEdited(dateEdited);
-        updateNote(note);
     }
 
-    public void moveNoteToTrash(Note note) {
+    public void moveNoteToTrash() {
         note.setTrash(true);
-        updateNote(note);
     }
 
     public void insertDefaultNote(String title, String detail) {
@@ -80,7 +86,7 @@ public class NoteViewModel extends AndroidViewModel {
         repo.insertDatabaseNote(note);
     }
 
-    private void updateNote(Note note) {
+    public void updateNote() {
         repo.updateDatabaseNote(note);
     }
 }
