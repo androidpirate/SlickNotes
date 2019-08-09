@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,6 +39,7 @@ import android.widget.TextView;
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Note;
 import com.github.androidpirate.slicknotes.viewmodel.NoteListViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -48,6 +50,7 @@ public class NoteListFragment extends Fragment {
     private RecyclerView recyclerView;
     private NoteListAdapter adapter;
     private TextView emptyListMessage;
+    private FloatingActionButton fab;
     private NavController navController;
     private NoteListViewModel viewModel;
 
@@ -59,6 +62,7 @@ public class NoteListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
     }
 
     @Override
@@ -69,6 +73,13 @@ public class NoteListFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rv_note_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         emptyListMessage = view.findViewById(R.id.tv_empty_list_message);
+        fab = view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToCreateNote();
+            }
+        });
         return view;
     }
 
@@ -108,5 +119,9 @@ public class NoteListFragment extends Fragment {
             adapter.loadNotes(notes);
         }
         recyclerView.setAdapter(adapter);
+    }
+
+    private void navigateToCreateNote() {
+        navController.navigate(R.id.nav_home_to_create);
     }
 }
