@@ -25,8 +25,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,7 +38,6 @@ import android.widget.TextView;
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Note;
 import com.github.androidpirate.slicknotes.viewmodel.NoteListViewModel;
-import com.github.androidpirate.slicknotes.viewmodel.NoteViewModel;
 
 import java.util.List;
 
@@ -50,7 +47,7 @@ import java.util.List;
 public class NoteListFragment extends Fragment {
     private RecyclerView recyclerView;
     private NoteListAdapter adapter;
-    private TextView emptyListMesssage;
+    private TextView emptyListMessage;
     private NavController navController;
     private NoteListViewModel viewModel;
 
@@ -71,7 +68,7 @@ public class NoteListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_note_list, container, false);
         recyclerView = view.findViewById(R.id.rv_note_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        emptyListMesssage = view.findViewById(R.id.tv_empty_list_message);
+        emptyListMessage = view.findViewById(R.id.tv_empty_list_message);
         return view;
     }
 
@@ -93,12 +90,12 @@ public class NoteListFragment extends Fragment {
 
     private void displayEmptyListMessage() {
         recyclerView.setVisibility(View.GONE);
-        emptyListMesssage.setVisibility(View.VISIBLE);
+        emptyListMessage.setVisibility(View.VISIBLE);
     }
 
     private void displayNoteList(){
         recyclerView.setVisibility(View.VISIBLE);
-        emptyListMesssage.setVisibility(View.GONE);
+        emptyListMessage.setVisibility(View.GONE);
     }
 
     private void displayNotes(List<Note> notes) {
