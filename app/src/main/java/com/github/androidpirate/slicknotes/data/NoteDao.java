@@ -36,9 +36,9 @@ public interface NoteDao {
     @Query("SELECT * FROM Note WHERE note_trash_status = 1")
     LiveData<List<Note>> getTrashNotes();
     @Query("SELECT * FROM Note WHERE note_pin_status = 1")
-    List<Note> getPinnedNotes();
+    LiveData<List<Note>> getPinnedNotes();
     @Query("SELECT * FROM Note WHERE note_pin_status = 0")
-    List<Note> getNonPinnedNotes();
+    LiveData<List<Note>> getNonPinnedNotes();
     @Insert
     void insertDatabaseNote(Note note);
     @Delete

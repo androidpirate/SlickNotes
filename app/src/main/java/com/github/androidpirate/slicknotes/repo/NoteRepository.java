@@ -47,26 +47,26 @@ public class NoteRepository {
         return dao.getTrashNotes();
     }
 
-    public List<Note> getPinnedDatabaseNotes() {
-        final List<Note> pinnedNotes = new ArrayList<>();
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                pinnedNotes.addAll(dao.getPinnedNotes());
-            }
-        });
-        return pinnedNotes;
+    public LiveData<List<Note>> getPinnedDatabaseNotes() {
+//        final List<Note> pinnedNotes = new ArrayList<>();
+//        executor.execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                pinnedNotes.addAll(dao.getPinnedNotes());
+//            }
+//        });
+        return dao.getPinnedNotes();
     }
 
-    public List<Note> getNonPinnedDatabaseNotes() {
-        final List<Note> nonPinnedNotes = new ArrayList<>();
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                nonPinnedNotes.addAll(dao.getNonPinnedNotes());
-            }
-        });
-        return nonPinnedNotes;
+    public LiveData<List<Note>> getNonPinnedDatabaseNotes() {
+//        final List<Note> nonPinnedNotes = new ArrayList<>();
+//        executor.execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                nonPinnedNotes.addAll(dao.getNonPinnedNotes());
+//            }
+//        });
+        return dao.getNonPinnedNotes();
     }
 
     public LiveData<Note> getDatabaseNote(int noteId) {
