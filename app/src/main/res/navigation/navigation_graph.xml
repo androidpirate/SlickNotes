@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:label="Notes"
+        android:label="Slick Notes"
         android:name="com.github.androidpirate.slicknotes.ui.fragment.NoteListFragment"
         tools:layout="@layout/fragment_note_list"/>
 
