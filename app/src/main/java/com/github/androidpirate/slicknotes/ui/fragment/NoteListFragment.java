@@ -40,6 +40,7 @@ import android.widget.TextView;
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Note;
 import com.github.androidpirate.slicknotes.viewmodel.NoteListViewModel;
+import com.github.androidpirate.slicknotes.viewmodel.NoteViewModel;
 
 import java.util.List;
 
@@ -109,5 +110,6 @@ public class NoteListFragment extends Fragment {
         } else {
             adapter.loadNotes(notes);
         }
+        recyclerView.setAdapter(adapter);
     }
 }
