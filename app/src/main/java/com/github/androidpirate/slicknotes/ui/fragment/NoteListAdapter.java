@@ -33,9 +33,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteListHolder> {
     private List<Note> notes;
+    private NoteClickListener listener;
 
-    public NoteListAdapter(List<Note> notes) {
+    interface NoteClickListener {
+        void onNoteClick(int noteId);
+    }
+
+    public NoteListAdapter(List<Note> notes, NoteClickListener listener) {
         this.notes = notes;
+        this.listener = listener;
     }
 
     @NonNull
@@ -72,11 +78,20 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteLi
             super(itemView);
             title = itemView.findViewById(R.id.tv_title);
             details = itemView.findViewById(R.id.tv_details);
+
         }
 
-        private void bindNote(Note note) {
+        private void bindNote(final Note note) {
             title.setText(note.getTitle());
             details.setText(note.getDetails());
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onNoteClick(note.getNoteId());
+                }
+            });
         }
     }
+
+
 }
