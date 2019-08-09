@@ -29,8 +29,7 @@
         style="@style/NoteCardBorder"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/InnerContentFrame"
-        android:layout_margin="@dimen/margin_8">
+        style="@style/InnerContentFrame">
 
         <TextView
             android:id="@+id/tv_pin"
@@ -49,7 +48,7 @@
 
         <TextView
             android:id="@+id/tv_details"
-            style="@style/NoteDetail"
+            style="@style/NoteDetails"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title"

@@ -12,13 +12,13 @@
     <style name="ContentFrame">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_margin">@dimen/margin_16</item>
     </style>
 
     <!-- Inner content frame style -->
     <style name="InnerContentFrame">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_margin">@dimen/margin_8</item>
     </style>
 
     <!-- Toolbar style -->
@@ -84,10 +84,9 @@
     </style>
 
     <!-- Note card style -->
-    <style name="NoteCard">
+    <style name="NoteCard" parent="InnerContentFrame">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_margin">@dimen/margin_8</item>
         <item name="android:longClickable">true</item>
     </style>
 
@@ -114,7 +113,7 @@
     </style>
 
     <!-- Note details style -->
-    <style name="NoteDetail">
+    <style name="NoteDetails">
         <item name="android:layout_width">@dimen/match_constraint_size</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">@dimen/margin_8</item>
@@ -128,7 +127,7 @@
     </style>
 
     <!-- Pin tag style -->
-    <style name="PinTag" parent="NoteDetail">
+    <style name="PinTag" parent="NoteDetails">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:visibility">gone</item>
@@ -140,5 +139,25 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:visibility">gone</item>
     </style>
+
+    <!-- Editable Note Header Text -->
+    <style name="EditNoteHeader" parent="NoteHeader">
+        <item name="android:hint">@string/titleHint</item>
+        <item name="android:maxLines">10</item>
+        <item name="android:isScrollContainer">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:inputType">textMultiLine</item>
+    </style>
+
+    <!-- Editable Note Detail Text -->
+    <style name="EditNoteDetails" parent="NoteDetails">
+        <item name="android:hint">@string/detailsHint</item>
+        <item name="android:layout_height">@dimen/match_constraint_size</item>
+        <item name="android:isScrollContainer">true</item>
+        <item name="android:maxLines">15</item>
+        <item name="android:gravity">top</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
 
 </resources>

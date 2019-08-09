@@ -16,12 +16,11 @@
   ~      limitations under the License.
   ~
   -->
-
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/InnerContentFrame"
+    style="@style/ContentFrame"
     tools:context=".ui.fragment.NoteListFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
