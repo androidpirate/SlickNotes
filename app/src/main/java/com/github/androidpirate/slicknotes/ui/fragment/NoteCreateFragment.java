@@ -18,28 +18,15 @@
 
 package com.github.androidpirate.slicknotes.ui.fragment;
 
-
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-
-import com.github.androidpirate.slicknotes.R;
-import com.github.androidpirate.slicknotes.viewmodel.NoteViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NoteCreateFragment extends Fragment {
-    private EditText title;
-    private EditText details;
-    private NoteViewModel viewModel;
+public class NoteCreateFragment extends BaseEditableNoteFragment {
 
     public NoteCreateFragment() {
         // Required empty public constructor
@@ -52,28 +39,16 @@ public class NoteCreateFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_note_create, container, false);
-        title = view.findViewById(R.id.et_title);
-        details = view.findViewById(R.id.et_details);
-        return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        viewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
-    }
-
-    @Override
     public void onPause() {
         super.onPause();
         String titleString = title.getText().toString();
         String detailsString = details.getText().toString();
+        // TODO 1: Multiple instances are inserted to database at device rotation
         if(!titleString.isEmpty() || !detailsString.isEmpty()) {
             viewModel.insertDefaultNote(titleString, detailsString);
+        }
+        if(isKeyboardOn) {
+            hideSoftKeyboard();
         }
     }
 }

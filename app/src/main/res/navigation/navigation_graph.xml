@@ -16,7 +16,6 @@
   ~      limitations under the License.
   ~
   -->
-
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
@@ -43,13 +42,13 @@
         android:id="@+id/nav_create"
         android:label="Create Note"
         android:name="com.github.androidpirate.slicknotes.ui.fragment.NoteCreateFragment"
-        tools:layout="@layout/fragment_note_create"/>
+        tools:layout="@layout/fragment_note_editable"/>
 
     <fragment
         android:id="@+id/nav_details"
         android:label=""
         android:name="com.github.androidpirate.slicknotes.ui.fragment.NoteDetailsFragment"
-        tools:layout="@layout/fragment_note_details">
+        tools:layout="@layout/fragment_note_editable">
 
         <argument
             android:name="noteId"

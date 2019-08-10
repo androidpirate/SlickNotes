@@ -18,33 +18,17 @@
 
 package com.github.androidpirate.slicknotes.ui.fragment;
 
-
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-
-import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Note;
-import com.github.androidpirate.slicknotes.viewmodel.NoteViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NoteDetailsFragment extends Fragment {
-    private EditText title;
-    private EditText details;
-    private NoteViewModel viewModel;
+public class NoteDetailsFragment extends BaseEditableNoteFragment {
 
     public NoteDetailsFragment() {
         // Required empty public constructor
@@ -57,47 +41,8 @@ public class NoteDetailsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_note_details, container, false);
-        title = view.findViewById(R.id.et_title);
-        title.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                viewModel.updateNoteTitle(s.toString());
-            }
-        });
-        details = view.findViewById(R.id.et_details);
-        details.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                viewModel.updateNoteDetails(s.toString());
-            }
-        });
-        return view;
-    }
-
-    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
         if(getArguments() != null) {
             viewModel.getDatabaseNote(getArguments()
                     .getInt("noteId"))
@@ -123,6 +68,9 @@ public class NoteDetailsFragment extends Fragment {
         String detailsText = details.getText().toString();
         if(!titleText.isEmpty() || !detailsText.isEmpty()) {
             viewModel.updateNote();
+        }
+        if(isKeyboardOn) {
+            hideSoftKeyboard();
         }
     }
 }
