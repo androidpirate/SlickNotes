@@ -52,9 +52,11 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
                             title.setText(note.getTitle());
                             // Set cursor at the end of title
                             title.setSelection(title.getText().length());
+                            title.clearFocus();
                             details.setText(note.getDetails());
                             // Set cursor at the end of details
                             details.setSelection(details.getText().length());
+                            details.clearFocus();
                             viewModel.updateViewModelNote(note);
                         }
                     });
