@@ -27,6 +27,7 @@
         <item name="android:layout_height">?android:actionBarSize</item>
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:theme">@style/Toolbar</item>
+        <item name="android:textColorPrimary">@color/colorToolbarFont</item>
         <item name="android:textColorSecondary">@color/colorToolbarFont</item>
     </style>
 
