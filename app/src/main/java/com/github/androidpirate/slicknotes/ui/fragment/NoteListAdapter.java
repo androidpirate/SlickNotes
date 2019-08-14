@@ -21,26 +21,34 @@ package com.github.androidpirate.slicknotes.ui.fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Note;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteListHolder> {
+    private static final int EMPTY_LIST_SIZE = 0;
+    private static final int MINIMUM_INDEX_NO = 0;
     private List<Note> notes;
+    private List<Integer> selectedNoteIds;
     private NoteClickListener listener;
 
     interface NoteClickListener {
         void onNoteClick(int noteId);
+        void onLongNoteClick(Note note, boolean isAdded);
     }
 
     public NoteListAdapter(List<Note> notes, NoteClickListener listener) {
         this.notes = notes;
+        this.selectedNoteIds = new ArrayList<>();
         this.listener = listener;
     }
 
@@ -65,33 +73,59 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteLi
         return 0;
     }
 
-    public void loadNotes(List<Note> notes) {
+    void loadNotes(List<Note> notes) {
         this.notes = notes;
         notifyDataSetChanged();
+    }
+
+    void loadSelectedNoteIds(List<Integer> selectedNoteIds) {
+        this.selectedNoteIds = selectedNoteIds;
     }
 
     class NoteListHolder extends RecyclerView.ViewHolder {
         private TextView title;
         private TextView details;
+        private FrameLayout cardBorder;
 
         public NoteListHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.tv_title);
             details = itemView.findViewById(R.id.tv_details);
-
+            cardBorder = itemView.findViewById(R.id.card_view_border);
         }
 
         private void bindNote(final Note note) {
             title.setText(note.getTitle());
             details.setText(note.getDetails());
+            if(selectedNoteIds.size() != EMPTY_LIST_SIZE) {
+                checkCardIsSelected(note.getNoteId());
+            }
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     listener.onNoteClick(note.getNoteId());
                 }
             });
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if(cardBorder.getVisibility() == View.GONE) {
+                        cardBorder.setVisibility(View.VISIBLE);
+                        listener.onLongNoteClick(note, true);
+                    } else {
+                        cardBorder.setVisibility(View.GONE);
+                        listener.onLongNoteClick(note, false);
+                    }
+                    return true;
+                }
+            });
+        }
+
+        private void checkCardIsSelected(int noteId) {
+            int result = Arrays.binarySearch(selectedNoteIds.toArray(), noteId);
+            if(result >= MINIMUM_INDEX_NO) {
+                cardBorder.setVisibility(View.VISIBLE);
+            }
         }
     }
-
-
 }

@@ -33,9 +33,11 @@ import androidx.lifecycle.Observer;
 
 public class NoteListViewModel extends AndroidViewModel {
     private NoteRepository repo;
-    private List<Note> pinnedNotesY = new ArrayList<>();
-    private List<Note> nonPinnedNotesY = new ArrayList<>();
+    private List<Note> pinnedNotes = new ArrayList<>();
+    private List<Note> nonPinnedNotes = new ArrayList<>();
     private MediatorLiveData<List<Note>> databaseNotes = new MediatorLiveData<>();
+    private boolean hasAlternateMenu;
+    private List<Integer> selectedNoteIds = new ArrayList<>();
 
     public NoteListViewModel(@NonNull Application application) {
         super(application);
@@ -79,20 +81,45 @@ public class NoteListViewModel extends AndroidViewModel {
         repo.updateDatabaseNotes(notes);
     }
 
+    public boolean isHasAlternateMenu() {
+        return hasAlternateMenu;
+    }
+
+    public void setHasAlternateMenu(boolean hasAlternateMenu) {
+        this.hasAlternateMenu = hasAlternateMenu;
+    }
+
+    public void addToSelectedNotes(int noteId) {
+        selectedNoteIds.add(noteId);
+    }
+
+    public void removeFromSelectedNotes(int noteId) {
+        // A cast is required to prevent noteId to be used as an index
+        selectedNoteIds.remove((Integer)noteId);
+    }
+
+    public List<Integer> getSelectedNoteIds() {
+        return selectedNoteIds;
+    }
+
+    public void clearSelectedNotesIds() {
+        selectedNoteIds.clear();
+    }
+
     private void initializeNotes() {
-        LiveData<List<Note>> pinnedNotes = repo.getPinnedDatabaseNotes();
-        final LiveData<List<Note>> nonPinnedNotes = repo.getNonPinnedDatabaseNotes();
-        databaseNotes.addSource(pinnedNotes, new Observer<List<Note>>() {
+        LiveData<List<Note>> livePinnedNotes = repo.getPinnedDatabaseNotes();
+        final LiveData<List<Note>> liveNonPinnedNotes = repo.getNonPinnedDatabaseNotes();
+        databaseNotes.addSource(livePinnedNotes, new Observer<List<Note>>() {
             @Override
             public void onChanged(List<Note> notes) {
-                pinnedNotesY = notes;
+                pinnedNotes = notes;
                 orderNotes();
             }
         });
-        databaseNotes.addSource(nonPinnedNotes, new Observer<List<Note>>() {
+        databaseNotes.addSource(liveNonPinnedNotes, new Observer<List<Note>>() {
             @Override
             public void onChanged(List<Note> notes) {
-                nonPinnedNotesY = notes;
+                nonPinnedNotes = notes;
                 orderNotes();
             }
         });
@@ -100,8 +127,8 @@ public class NoteListViewModel extends AndroidViewModel {
 
     private void orderNotes() {
         List<Note> combinedNotes = new ArrayList<>();
-        combinedNotes.addAll(pinnedNotesY);
-        combinedNotes.addAll(nonPinnedNotesY);
+        combinedNotes.addAll(pinnedNotes);
+        combinedNotes.addAll(nonPinnedNotes);
         databaseNotes.setValue(combinedNotes);
     }
 }
