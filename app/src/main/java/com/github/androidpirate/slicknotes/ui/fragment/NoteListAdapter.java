@@ -34,10 +34,16 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteListHolder> {
+public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int EMPTY_LIST_SIZE = 0;
     private static final int MINIMUM_INDEX_NO = 0;
+    private static final int TYPE_CARD = 0;
+    private static final int TYPE_HEADER = 1;
+    private static final String PINNED_HEADER_TAG = "PINNED";
+    private static final String OTHERS_HEADER_TAG = "OTHERS";
+
     private List<Note> notes;
+    private List<Object> contentList;
     private List<Integer> selectedNoteIds;
     private NoteClickListener listener;
 
@@ -46,35 +52,60 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteLi
         void onLongNoteClick(Note note, boolean isAdded);
     }
 
-    public NoteListAdapter(List<Note> notes, NoteClickListener listener) {
+    NoteListAdapter(List<Note> notes, NoteClickListener listener) {
         this.notes = notes;
-        this.selectedNoteIds = new ArrayList<>();
+        selectedNoteIds = new ArrayList<>();
+        contentList = new ArrayList<>();
         this.listener = listener;
+        initializeContentList();
     }
 
     @NonNull
     @Override
-    public NoteListHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.note_list_item, parent, false);
-        return new NoteListHolder(itemView);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        if (viewType == TYPE_CARD) {
+            View itemView = inflater.inflate(R.layout.note_list_item, parent, false);
+            return new NoteCardHolder(itemView);
+        } else if (viewType == TYPE_HEADER) {
+            View itemView = inflater.inflate(R.layout.note_list_header, parent, false);
+            return new NoteListHeaderHolder(itemView);
+        }
+        throw new IllegalArgumentException("Unsupported view type is used as an argument");
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NoteListHolder holder, int position) {
-        holder.bindNote(notes.get(position));
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if(holder instanceof NoteCardHolder) {
+            NoteCardHolder h = (NoteCardHolder) holder;
+            h.bindNote((Note) contentList.get(position));
+        } else if (holder instanceof NoteListHeaderHolder) {
+            NoteListHeaderHolder h = (NoteListHeaderHolder) holder;
+            h.setListHeader((String) contentList.get(position));
+        }
     }
 
     @Override
     public int getItemCount() {
-        if(notes != null) {
-            return notes.size();
+        if(contentList != null) {
+            return contentList.size();
         }
         return 0;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if(contentList.get(position) instanceof Note) {
+            return TYPE_CARD;
+        } else if (contentList.get(position) instanceof String) {
+            return TYPE_HEADER;
+        }
+        return super.getItemViewType(position);
+    }
+
     void loadNotes(List<Note> notes) {
         this.notes = notes;
+        initializeContentList();
         notifyDataSetChanged();
     }
 
@@ -82,12 +113,36 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteLi
         this.selectedNoteIds = selectedNoteIds;
     }
 
-    class NoteListHolder extends RecyclerView.ViewHolder {
+    private void initializeContentList() {
+        if(contentList.size() != 0) {
+            contentList.clear();
+        }
+        boolean isPinnedHeaderCreated = false;
+        boolean isOthersHeaderCreated = false;
+
+        for (Note note:
+             notes) {
+            if(note.isPinned() && !isPinnedHeaderCreated) {
+                contentList.add(PINNED_HEADER_TAG);
+                isPinnedHeaderCreated = true;
+            } else if(!note.isPinned() && !isOthersHeaderCreated) {
+                contentList.add(OTHERS_HEADER_TAG);
+                isOthersHeaderCreated = true;
+            }
+            contentList.add(note);
+        }
+//        for (Object test:
+//             contentList) {
+//            Log.d("ContentList", test.toString());
+//        }
+    }
+
+    class NoteCardHolder extends RecyclerView.ViewHolder {
         private TextView title;
         private TextView details;
         private FrameLayout cardBorder;
 
-        public NoteListHolder(@NonNull View itemView) {
+        NoteCardHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.tv_title);
             details = itemView.findViewById(R.id.tv_details);
@@ -128,4 +183,18 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteLi
             }
         }
     }
+
+    class NoteListHeaderHolder extends RecyclerView.ViewHolder {
+        private TextView listHeader;
+
+        public NoteListHeaderHolder(@NonNull View itemView) {
+            super(itemView);
+            listHeader = itemView.findViewById(R.id.tv_list_header);
+        }
+
+        private void setListHeader(String header) {
+            listHeader.setText(header);
+        }
+    }
+
 }
