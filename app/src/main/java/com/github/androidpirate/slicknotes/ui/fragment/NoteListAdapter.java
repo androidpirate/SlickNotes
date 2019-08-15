@@ -54,9 +54,9 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     NoteListAdapter(List<Note> notes, NoteClickListener listener) {
         this.notes = notes;
+        this.listener = listener;
         selectedNoteIds = new ArrayList<>();
         contentList = new ArrayList<>();
-        this.listener = listener;
         initializeContentList();
     }
 
@@ -90,7 +90,7 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if(contentList != null) {
             return contentList.size();
         }
-        return 0;
+        return EMPTY_LIST_SIZE;
     }
 
     @Override
@@ -119,7 +119,6 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
         boolean isPinnedHeaderCreated = false;
         boolean isOthersHeaderCreated = false;
-
         for (Note note:
              notes) {
             if(note.isPinned() && !isPinnedHeaderCreated) {
@@ -131,10 +130,6 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
             contentList.add(note);
         }
-//        for (Object test:
-//             contentList) {
-//            Log.d("ContentList", test.toString());
-//        }
     }
 
     class NoteCardHolder extends RecyclerView.ViewHolder {
@@ -150,11 +145,11 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
 
         private void bindNote(final Note note) {
+            if(selectedNoteIds.size() != EMPTY_LIST_SIZE) {
+                setCardBorderVisibility(checkCardIsSelected(note.getNoteId()));
+            }
             title.setText(note.getTitle());
             details.setText(note.getDetails());
-            if(selectedNoteIds.size() != EMPTY_LIST_SIZE) {
-                checkCardIsSelected(note.getNoteId());
-            }
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -164,22 +159,36 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    if(cardBorder.getVisibility() == View.GONE) {
-                        cardBorder.setVisibility(View.VISIBLE);
-                        listener.onLongNoteClick(note, true);
-                    } else {
-                        cardBorder.setVisibility(View.GONE);
-                        listener.onLongNoteClick(note, false);
-                    }
+                    listener.onLongNoteClick(note, switchCardBorderVisibility());
                     return true;
                 }
             });
         }
 
-        private void checkCardIsSelected(int noteId) {
-            int result = Arrays.binarySearch(selectedNoteIds.toArray(), noteId);
-            if(result >= MINIMUM_INDEX_NO) {
+        private boolean switchCardBorderVisibility() {
+            if(cardBorder.getVisibility() == View.GONE) {
                 cardBorder.setVisibility(View.VISIBLE);
+                return true;
+            } else {
+                cardBorder.setVisibility(View.GONE);
+                return false;
+            }
+        }
+
+        private boolean checkCardIsSelected(int noteId) {
+            Object[] selectedNoteIdsArray = selectedNoteIds.toArray();
+            Arrays.sort(selectedNoteIdsArray);
+            // Returns the index number of given id if exists,
+            // -(indexNumberTobeInserted) otherwise
+            int result = Arrays.binarySearch(selectedNoteIdsArray, noteId);
+            return result >= MINIMUM_INDEX_NO;
+        }
+
+        private void setCardBorderVisibility(boolean visible) {
+            if(visible) {
+                cardBorder.setVisibility(View.VISIBLE);
+            } else {
+                cardBorder.setVisibility(View.GONE);
             }
         }
     }
@@ -187,7 +196,7 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     class NoteListHeaderHolder extends RecyclerView.ViewHolder {
         private TextView listHeader;
 
-        public NoteListHeaderHolder(@NonNull View itemView) {
+        NoteListHeaderHolder(@NonNull View itemView) {
             super(itemView);
             listHeader = itemView.findViewById(R.id.tv_list_header);
         }
