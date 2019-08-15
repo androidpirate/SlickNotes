@@ -34,9 +34,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Note;
@@ -114,6 +116,31 @@ public class NoteListFragment extends Fragment
             inflater.inflate(R.menu.note_list_menu, menu);
         }
         super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_pin:
+            Toast.makeText(
+                    getContext(),
+                    "Action pin is clicked",
+                    Toast.LENGTH_SHORT).show();
+            break;
+            case R.id.action_add_label:
+                Toast.makeText(
+                        getContext(),
+                        "Action add label is clicked",
+                        Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_send_to_trash:
+                Toast.makeText(
+                        getContext(),
+                        "Action send to trash is clicked",
+                        Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void displayEmptyListMessage() {
