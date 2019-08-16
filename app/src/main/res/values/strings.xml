@@ -14,4 +14,9 @@
     <string name="action_pin_title">PIN</string>
     <string name="action_add_label_title">ADD LABEL</string>
     <string name="action_send_to_trash_title">SEND TO TRASH</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="action_restore_title">RESTORE</string>
+    <string name="action_delete">DELETE FOREVER</string>
 </resources>

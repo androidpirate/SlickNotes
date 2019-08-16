@@ -57,4 +57,20 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/nav_trash"
+        android:label=""
+        android:name="com.github.androidpirate.slicknotes.ui.fragment.NoteTrashFragment"
+        tools:layout="@layout/fragment_note_trash">
+
+        <action
+            android:id="@+id/nav_trash_to_list"
+            app:destination="@+id/nav_home"/>
+
+        <action
+            android:id="@+id/nav_trash_to_details"
+            app:destination="@+id/nav_details"/>
+
+    </fragment>
+
 </navigation>
