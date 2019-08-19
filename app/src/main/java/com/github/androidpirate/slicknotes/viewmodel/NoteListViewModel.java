@@ -36,13 +36,15 @@ import androidx.lifecycle.Transformations;
 public class NoteListViewModel extends AndroidViewModel {
     private NoteRepository repo;
     private LiveData<List<Note>> uiModel;
+    private List<Note> databaseModel;
+    private List<Integer> selectedNoteIds;
+    private List<Note> selectedNotes;
     private boolean hasAlternateMenu;
-    private List<Integer> selectedNoteIds = new ArrayList<>();
 
     public NoteListViewModel(@NonNull Application application) {
         super(application);
         repo = new NoteRepository(application);
-        initializeNotes();
+        initialize();
     }
 
     public LiveData<List<Note>> getDatabaseNotes() {
@@ -54,19 +56,22 @@ public class NoteListViewModel extends AndroidViewModel {
     }
 
     public void moveNotesToTrash(List<Note> notes) {
+        databaseModel = new ArrayList<>(notes);
         for (Note note:
-             notes) {
+             databaseModel) {
             note.setTrash(true);
         }
-        repo.updateDatabaseNotes(notes);
+        repo.updateDatabaseNotes(databaseModel);
     }
 
-    public void pinNotes(List<Note> notes) {
+    public void setNotePinStatus(List<Note> notes) {
+        databaseModel = new ArrayList<>(notes);
         for (Note note:
-             notes) {
-            note.setPinned(true);
+             databaseModel) {
+            note.setPinned(!note.isPinned());
         }
-        repo.updateDatabaseNotes(notes);
+        repo.updateDatabaseNotes(databaseModel);
+        clearSelections();
     }
 
     public void deleteNotes(List<Note> notes) {
@@ -74,39 +79,47 @@ public class NoteListViewModel extends AndroidViewModel {
     }
 
     public void restoreNotes(List<Note> notes) {
+        databaseModel = new ArrayList<>(notes);
         for (Note note:
-             notes) {
+             databaseModel) {
             note.setTrash(false);
         }
-        repo.updateDatabaseNotes(notes);
+        repo.updateDatabaseNotes(databaseModel);
     }
 
-    public boolean isHasAlternateMenu() {
+    public boolean hasAlternateMenu() {
         return hasAlternateMenu;
     }
 
-    public void setHasAlternateMenu(boolean hasAlternateMenu) {
-        this.hasAlternateMenu = hasAlternateMenu;
+    public void addToSelectedNotes(Note note) {
+        selectedNotes.add(note);
+        selectedNoteIds.add(note.getNoteId());
+        setHasAlternateMenu();
     }
 
-    public void addToSelectedNotes(int noteId) {
-        selectedNoteIds.add(noteId);
+    public void removeFromSelectedNotes(Note note) {
+        selectedNotes.remove(note);
+        selectedNoteIds.remove(note.getNoteId());
+        setHasAlternateMenu();
     }
 
-    public void removeFromSelectedNotes(int noteId) {
-        // A cast is required to prevent noteId to be used as an index
-        selectedNoteIds.remove((Integer)noteId);
+    public List<Note> getSelectedNotes() {
+        return selectedNotes;
     }
 
     public List<Integer> getSelectedNoteIds() {
         return selectedNoteIds;
     }
 
-    public void clearSelectedNotesIds() {
-        selectedNoteIds.clear();
+    public void clearSelections() {
+        clearSelectedNotes();
+        clearSelectedNotesIds();
+        setHasAlternateMenu();
     }
 
-    private void initializeNotes() {
+    private void initialize() {
+        selectedNotes = new ArrayList<>();
+        selectedNoteIds = new ArrayList<>();
         LiveData<List<Note>> databaseNotes = repo.getDatabaseNotes();
         uiModel = Transformations.map(databaseNotes, new Function<List<Note>, List<Note>>() {
             @Override
@@ -114,6 +127,18 @@ public class NoteListViewModel extends AndroidViewModel {
                 return orderNotes(notes);
             }
         });
+    }
+
+    private void setHasAlternateMenu() {
+        hasAlternateMenu = selectedNotes.size() > 0;
+    }
+
+    private void clearSelectedNotes() {
+        selectedNotes.clear();
+    }
+
+    private void clearSelectedNotesIds() {
+        selectedNoteIds.clear();
     }
 
     private List<Note> orderNotes(List<Note> notes) {

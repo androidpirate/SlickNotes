@@ -112,7 +112,7 @@ public class NoteListFragment extends Fragment
     public void onPrepareOptionsMenu(Menu menu) {
         MenuInflater inflater = Objects.requireNonNull(getActivity()).getMenuInflater();
         menu.clear();
-        if(viewModel.isHasAlternateMenu()) {
+        if(viewModel.hasAlternateMenu()) {
             inflater.inflate(R.menu.note_list_menu, menu);
         }
         super.onPrepareOptionsMenu(menu);
@@ -122,10 +122,8 @@ public class NoteListFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_pin:
-            Toast.makeText(
-                    getContext(),
-                    "Action pin is clicked",
-                    Toast.LENGTH_SHORT).show();
+                viewModel.setNotePinStatus(viewModel.getSelectedNotes());
+                toggleAlternateMenu();
             break;
             case R.id.action_add_label:
                 Toast.makeText(
@@ -162,30 +160,29 @@ public class NoteListFragment extends Fragment
         } else {
             adapter.loadNotes(notes);
         }
-        if(viewModel.isHasAlternateMenu()) {
+        if(viewModel.hasAlternateMenu()) {
             adapter.loadSelectedNoteIds(viewModel.getSelectedNoteIds());
         }
         recyclerView.setAdapter(adapter);
     }
 
-    private void displayAlternateMenu() {
+    private void toggleAlternateMenu() {
         Objects.requireNonNull(getActivity()).invalidateOptionsMenu();
     }
 
     private void navigateToCreateNote() {
-        viewModel.clearSelectedNotesIds();
+        viewModel.clearSelections();
         navController.navigate(R.id.nav_home_to_create);
     }
 
     private void navigateToNoteDetails(Bundle args) {
-        viewModel.clearSelectedNotesIds();
+        viewModel.clearSelections();
         navController.navigate(R.id.nav_home_to_details, args);
     }
 
     /**
      * ---- NoteListAdapter Click Listener Interface Implementation ----
      */
-
     @Override
     public void onNoteClick(int noteId) {
         Bundle args = new Bundle();
@@ -196,14 +193,10 @@ public class NoteListFragment extends Fragment
     @Override
     public void onLongNoteClick(Note note, boolean isAdded) {
         if(isAdded) {
-            viewModel.setHasAlternateMenu(true);
-            viewModel.addToSelectedNotes(note.getNoteId());
+            viewModel.addToSelectedNotes(note);
         } else {
-            viewModel.removeFromSelectedNotes(note.getNoteId());
-            if(viewModel.getSelectedNoteIds().size() == 0) {
-                viewModel.setHasAlternateMenu(false);
-            }
+            viewModel.removeFromSelectedNotes(note);
         }
-        displayAlternateMenu();
+        toggleAlternateMenu();
     }
 }

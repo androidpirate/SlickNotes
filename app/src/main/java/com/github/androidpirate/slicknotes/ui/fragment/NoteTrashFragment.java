@@ -103,7 +103,7 @@ public class NoteTrashFragment extends Fragment
     public void onPrepareOptionsMenu(Menu menu) {
         MenuInflater inflater = Objects.requireNonNull(getActivity()).getMenuInflater();
         menu.clear();
-        if(viewModel.isHasAlternateMenu()) {
+        if(viewModel.hasAlternateMenu()) {
             inflater.inflate(R.menu.note_trash_list_menu, menu);
         }
         super.onPrepareOptionsMenu(menu);
@@ -139,7 +139,7 @@ public class NoteTrashFragment extends Fragment
         } else {
             adapter.loadNotes(notes);
         }
-        if(viewModel.isHasAlternateMenu()) {
+        if(viewModel.hasAlternateMenu()) {
             adapter.loadSelectedNoteIds(viewModel.getSelectedNoteIds());
         }
         recyclerView.setAdapter(adapter);
@@ -150,19 +150,18 @@ public class NoteTrashFragment extends Fragment
     }
 
     private void navigateToNoteList() {
-        viewModel.clearSelectedNotesIds();
+        viewModel.clearSelections();
         navController.navigate(R.id.nav_trash_to_list);
     }
 
     private void navigateToNoteDetails(Bundle args) {
-        viewModel.clearSelectedNotesIds();
+        viewModel.clearSelections();
         navController.navigate(R.id.nav_trash_to_details, args);
     }
 
     /**
      * ---- NoteListAdapter Click Listener Interface Implementation ----
      */
-
     @Override
     public void onNoteClick(int noteId) {
         Bundle args = new Bundle();
@@ -173,13 +172,9 @@ public class NoteTrashFragment extends Fragment
     @Override
     public void onLongNoteClick(Note note, boolean isAdded) {
         if(isAdded) {
-            viewModel.setHasAlternateMenu(true);
-            viewModel.addToSelectedNotes(note.getNoteId());
+            viewModel.addToSelectedNotes(note);
         } else {
-            viewModel.removeFromSelectedNotes(note.getNoteId());
-            if(viewModel.getSelectedNoteIds().size() == 0) {
-                viewModel.setHasAlternateMenu(false);
-            }
+            viewModel.removeFromSelectedNotes(note);
         }
         displayAlternateMenu();
     }
