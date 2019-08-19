@@ -132,10 +132,8 @@ public class NoteListFragment extends Fragment
                         Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_send_to_trash:
-                Toast.makeText(
-                        getContext(),
-                        "Action send to trash is clicked",
-                        Toast.LENGTH_SHORT).show();
+                viewModel.sendNotesToTrash(viewModel.getSelectedNotes());
+                toggleAlternateMenu();
                 break;
         }
         return super.onOptionsItemSelected(item);

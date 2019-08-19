@@ -55,13 +55,14 @@ public class NoteListViewModel extends AndroidViewModel {
         return repo.getDatabaseTrashNotes();
     }
 
-    public void moveNotesToTrash(List<Note> notes) {
+    public void sendNotesToTrash(List<Note> notes) {
         databaseModel = new ArrayList<>(notes);
         for (Note note:
              databaseModel) {
             note.setTrash(true);
         }
         repo.updateDatabaseNotes(databaseModel);
+        clearSelections();
     }
 
     public void setNotePinStatus(List<Note> notes) {
