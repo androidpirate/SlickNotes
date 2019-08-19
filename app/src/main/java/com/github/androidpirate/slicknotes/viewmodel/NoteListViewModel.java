@@ -100,7 +100,8 @@ public class NoteListViewModel extends AndroidViewModel {
 
     public void removeFromSelectedNotes(Note note) {
         selectedNotes.remove(note);
-        selectedNoteIds.remove(note.getNoteId());
+        // Casting Integer is necessary, otherwise treats note id as index number
+        selectedNoteIds.remove((Integer)note.getNoteId());
         setHasAlternateMenu();
     }
 
