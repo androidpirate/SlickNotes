@@ -21,21 +21,21 @@ package com.github.androidpirate.slicknotes.viewmodel;
 import android.app.Application;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.github.androidpirate.slicknotes.data.Note;
 import com.github.androidpirate.slicknotes.repo.NoteRepository;
 import androidx.annotation.NonNull;
+import androidx.arch.core.util.Function;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.Observer;
+import androidx.lifecycle.Transformations;
 
 public class NoteListViewModel extends AndroidViewModel {
     private NoteRepository repo;
-    private List<Note> pinnedNotes = new ArrayList<>();
-    private List<Note> nonPinnedNotes = new ArrayList<>();
-    private MediatorLiveData<List<Note>> databaseNotes = new MediatorLiveData<>();
+    private LiveData<List<Note>> uiModel;
     private boolean hasAlternateMenu;
     private List<Integer> selectedNoteIds = new ArrayList<>();
 
@@ -46,7 +46,7 @@ public class NoteListViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Note>> getDatabaseNotes() {
-        return databaseNotes;
+        return uiModel;
     }
 
     public LiveData<List<Note>> getDatabaseTrashNotes() {
@@ -107,28 +107,28 @@ public class NoteListViewModel extends AndroidViewModel {
     }
 
     private void initializeNotes() {
-        LiveData<List<Note>> livePinnedNotes = repo.getPinnedDatabaseNotes();
-        final LiveData<List<Note>> liveNonPinnedNotes = repo.getNonPinnedDatabaseNotes();
-        databaseNotes.addSource(livePinnedNotes, new Observer<List<Note>>() {
+        LiveData<List<Note>> databaseNotes = repo.getDatabaseNotes();
+        uiModel = Transformations.map(databaseNotes, new Function<List<Note>, List<Note>>() {
             @Override
-            public void onChanged(List<Note> notes) {
-                pinnedNotes = notes;
-                orderNotes();
-            }
-        });
-        databaseNotes.addSource(liveNonPinnedNotes, new Observer<List<Note>>() {
-            @Override
-            public void onChanged(List<Note> notes) {
-                nonPinnedNotes = notes;
-                orderNotes();
+            public List<Note> apply(List<Note> notes) {
+                return orderNotes(notes);
             }
         });
     }
 
-    private void orderNotes() {
-        List<Note> combinedNotes = new ArrayList<>();
-        combinedNotes.addAll(pinnedNotes);
-        combinedNotes.addAll(nonPinnedNotes);
-        databaseNotes.setValue(combinedNotes);
+    private List<Note> orderNotes(List<Note> notes) {
+        Collections.sort(notes, new Comparator<Note>() {
+            @Override
+            public int compare(Note o1, Note o2) {
+                if(o1.isPinned() && !o2.isPinned()) {
+                    return -1;
+                } else if(!o1.isPinned() && o2.isPinned()) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+        return notes;
     }
 }
