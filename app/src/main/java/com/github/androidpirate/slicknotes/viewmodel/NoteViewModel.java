@@ -19,6 +19,7 @@
 package com.github.androidpirate.slicknotes.viewmodel;
 
 import android.app.Application;
+import android.widget.Toast;
 
 import java.util.Date;
 import java.util.List;
@@ -33,60 +34,82 @@ public class NoteViewModel extends AndroidViewModel {
     private static final String DEFAULT_NOTE_TITLE = "";
     private static final String DEFAULT_NOTE_DETAILS = "";
     private NoteRepository repo;
-    private Note note;
+    private LiveData<Note> uiModel;
+    private Note databaseModel;
 
     public NoteViewModel(@NonNull Application application) {
         super(application);
         repo = new NoteRepository(application);
-        note = new Note(DEFAULT_NOTE_TITLE, DEFAULT_NOTE_DETAILS, new Date());
+        initialize();
     }
 
     public LiveData<Note> getDatabaseNote(int noteId) {
-        return repo.getDatabaseNote(noteId);
+        uiModel = repo.getDatabaseNote(noteId);
+        return uiModel;
     }
 
-    public void updateViewModelNote(Note note) {
-        this.note = note;
-    }
-
-    public void updateNoteTitle(String title) {
-        note.setTitle(title);
-    }
-
-    public void updateNoteDetails(String details) {
-        note.setDetails(details);
+    public void updateDatabaseNote(Note note) {
+        this.databaseModel = note;
     }
 
     public void updateNotePinStatus(boolean status) {
-        note.setPinned(status);
+        databaseModel.setPinned(status);
     }
 
     public void updateNoteColor(int colorId) {
-        note.setColorId(colorId);
+        databaseModel.setColorId(colorId);
     }
 
     public void updateNoteLabels(List<String> labels) {
-        note.setLabels(labels);
+        databaseModel.setLabels(labels);
     }
 
     public void updateNoteCreateDate(Date dateCreated) {
-        note.setDateCreated(dateCreated);
+        databaseModel.setDateCreated(dateCreated);
     }
 
     public void updateNoteEditDate(Date dateEdited) {
-        note.setDateEdited(dateEdited);
+        databaseModel.setDateEdited(dateEdited);
     }
 
     public void moveNoteToTrash() {
-        note.setTrash(true);
+        databaseModel.setTrash(true);
     }
 
-    public void insertDefaultNote(String title, String detail) {
-        Note note = new Note(title, detail, new Date());
-        repo.insertDatabaseNote(note);
+    public void updateNote(String title, String details) {
+        databaseModel.setTitle(title);
+        databaseModel.setDetails(details);
+        if(checkDatabaseModelIsEmpty()) {
+            moveNoteToTrash();
+            repo.updateDatabaseNote(databaseModel);
+            displayEmptyNoteDiscardedToast();
+        } else {
+            repo.updateDatabaseNote(databaseModel);
+        }
     }
 
-    public void updateNote() {
-        repo.updateDatabaseNote(note);
+    private void initialize() {
+        databaseModel = new Note(DEFAULT_NOTE_TITLE, DEFAULT_NOTE_DETAILS, new Date());
+    }
+
+    /**
+     * NoteCreateFragment methods
+     */
+    public void insertNote(String title, String details) {
+        databaseModel.setTitle(title);
+        databaseModel.setDetails(details);
+        if(checkDatabaseModelIsEmpty()) {
+            displayEmptyNoteDiscardedToast();
+        } else {
+            repo.insertDatabaseNote(databaseModel);
+        }
+    }
+
+    private void displayEmptyNoteDiscardedToast() {
+        Toast.makeText(getApplication(), "Empty note is discarded.", Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean checkDatabaseModelIsEmpty() {
+        return databaseModel.getTitle().isEmpty() && databaseModel.getDetails().isEmpty();
     }
 }

@@ -41,12 +41,7 @@ public class NoteCreateFragment extends BaseEditableNoteFragment {
     @Override
     public void onPause() {
         super.onPause();
-        String titleString = title.getText().toString();
-        String detailsString = details.getText().toString();
-        // TODO 1: Multiple instances are inserted to database at device rotation
-        if(!titleString.isEmpty() || !detailsString.isEmpty()) {
-            viewModel.insertDefaultNote(titleString, detailsString);
-        }
+        viewModel.insertNote(title.getText().toString(), details.getText().toString());
         if(isKeyboardOn) {
             hideSoftKeyboard();
         }

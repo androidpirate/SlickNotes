@@ -57,7 +57,7 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
                             // Set cursor at the end of details
                             details.setSelection(details.getText().length());
                             details.clearFocus();
-                            viewModel.updateViewModelNote(note);
+                            viewModel.updateDatabaseNote(note);
                         }
                     });
         }
@@ -66,11 +66,7 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
     @Override
     public void onPause() {
         super.onPause();
-        String titleText = title.getText().toString();
-        String detailsText = details.getText().toString();
-        if(!titleText.isEmpty() || !detailsText.isEmpty()) {
-            viewModel.updateNote();
-        }
+        viewModel.updateNote(title.getText().toString(), details.getText().toString());
         if(isKeyboardOn) {
             hideSoftKeyboard();
         }

@@ -21,8 +21,6 @@ package com.github.androidpirate.slicknotes.ui.fragment;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,35 +51,7 @@ public abstract class BaseEditableNoteFragment extends Fragment {
         // Set soft keyboard listener
         setSoftKeyboardListener(view);
         title = view.findViewById(R.id.et_title);
-        title.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                viewModel.updateNoteTitle(s.toString());
-            }
-        });
         details = view.findViewById(R.id.et_details);
-        details.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                viewModel.updateNoteDetails(s.toString());
-            }
-        });
         return view;
     }
 
