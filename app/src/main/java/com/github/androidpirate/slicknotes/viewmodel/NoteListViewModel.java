@@ -59,6 +59,7 @@ public class NoteListViewModel extends AndroidViewModel {
         databaseModel = new ArrayList<>(notes);
         for (Note note:
              databaseModel) {
+            note.setPinned(false);
             note.setTrash(true);
         }
         repo.updateDatabaseNotes(databaseModel);
