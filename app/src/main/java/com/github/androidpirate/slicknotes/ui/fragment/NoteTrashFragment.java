@@ -82,6 +82,7 @@ public class NoteTrashFragment extends BaseNoteListFragment {
                 viewModel.restoreNotes(viewModel.getSelectedNotes());
                 break;
             case R.id.action_delete:
+                viewModel.deleteNotes(viewModel.getSelectedNotes());
                 break;
         }
         return super.onOptionsItemSelected(item);
