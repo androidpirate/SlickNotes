@@ -108,8 +108,14 @@ public abstract class BaseEditableNoteFragment extends Fragment {
                         isKeyboardOn = true;
                     } else {
                         isKeyboardOn = false;
+                        clearFocusFromTextFields();
                     }
                 }
             });
+    }
+
+    private void clearFocusFromTextFields() {
+        title.clearFocus();
+        details.clearFocus();
     }
 }
