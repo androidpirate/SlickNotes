@@ -46,7 +46,7 @@
 
     <fragment
         android:id="@+id/nav_details"
-        android:label=""
+        android:label=" "
         android:name="com.github.androidpirate.slicknotes.ui.fragment.NoteDetailsFragment"
         tools:layout="@layout/fragment_note_editable">
 
@@ -59,7 +59,7 @@
 
     <fragment
         android:id="@+id/nav_trash"
-        android:label=""
+        android:label="Trash"
         android:name="com.github.androidpirate.slicknotes.ui.fragment.NoteTrashFragment"
         tools:layout="@layout/fragment_note_trash">
 
