@@ -22,6 +22,7 @@ package com.github.androidpirate.slicknotes.ui.fragment;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,7 +30,9 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.github.androidpirate.slicknotes.R;
+import com.github.androidpirate.slicknotes.data.Note;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -46,6 +49,21 @@ public class NoteListFragment extends BaseNoteListFragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         setNavigationBase(NOTE_LIST_BASE);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        viewModel.getDatabaseNotes().observe(this, new Observer<List<Note>>() {
+            @Override
+            public void onChanged(List<Note> notes) {
+                if(notes == null || notes.size() == 0){
+                    displayEmptyListMessage();
+                } else {
+                    displayNotes(notes);
+                }
+            }
+        });
     }
 
     @Override

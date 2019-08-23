@@ -80,16 +80,7 @@ public abstract class BaseNoteListFragment extends Fragment
                         Objects.requireNonNull(getActivity()),
                         R.id.nav_host_fragment);
         viewModel = ViewModelProviders.of(this).get(NoteListViewModel.class);
-        viewModel.getDatabaseNotes().observe(this, new Observer<List<Note>>() {
-            @Override
-            public void onChanged(List<Note> notes) {
-                if(notes == null || notes.size() == 0){
-                    displayEmptyListMessage();
-                } else {
-                    displayNotes(notes);
-                }
-            }
-        });
+
     }
 
     void toggleAlternateMenu() {
@@ -105,17 +96,12 @@ public abstract class BaseNoteListFragment extends Fragment
         navController.navigate(R.id.nav_trash_to_list);
     }
 
-    private void displayEmptyListMessage() {
+    void displayEmptyListMessage() {
         recyclerView.setVisibility(View.GONE);
         emptyListMessage.setVisibility(View.VISIBLE);
     }
 
-    private void displayRecyclerView(){
-        recyclerView.setVisibility(View.VISIBLE);
-        emptyListMessage.setVisibility(View.GONE);
-    }
-
-    private void displayNotes(List<Note> notes) {
+    void displayNotes(List<Note> notes) {
         if(recyclerView.getVisibility() == View.GONE) {
             displayRecyclerView();
         }
@@ -128,6 +114,11 @@ public abstract class BaseNoteListFragment extends Fragment
             adapter.loadSelectedNoteIds(viewModel.getSelectedNoteIds());
         }
         recyclerView.setAdapter(adapter);
+    }
+
+    private void displayRecyclerView(){
+        recyclerView.setVisibility(View.VISIBLE);
+        emptyListMessage.setVisibility(View.GONE);
     }
 
     private void navigateToCreateNote() {

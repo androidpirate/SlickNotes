@@ -22,13 +22,16 @@ package com.github.androidpirate.slicknotes.ui.fragment;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.github.androidpirate.slicknotes.R;
+import com.github.androidpirate.slicknotes.data.Note;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -45,6 +48,21 @@ public class NoteTrashFragment extends BaseNoteListFragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         setNavigationBase(TRASH_LIST_BASE);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        viewModel.getDatabaseTrashNotes().observe(this, new Observer<List<Note>>() {
+            @Override
+            public void onChanged(List<Note> notes) {
+                if(notes == null || notes.size() == 0){
+                    displayEmptyListMessage();
+                } else {
+                    displayNotes(notes);
+                }
+            }
+        });
     }
 
     @Override
