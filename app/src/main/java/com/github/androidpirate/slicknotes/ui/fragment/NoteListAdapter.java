@@ -37,8 +37,8 @@ import androidx.recyclerview.widget.RecyclerView;
 public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int EMPTY_LIST_SIZE = 0;
     private static final int MINIMUM_INDEX_NO = 0;
-    private static final int TYPE_CARD = 0;
-    private static final int TYPE_HEADER = 1;
+    private static final int TYPE_CARD = 100;
+    private static final int TYPE_HEADER = 110;
     private static final String PINNED_HEADER_TAG = "PINNED";
     private static final String OTHERS_HEADER_TAG = "OTHERS";
 
