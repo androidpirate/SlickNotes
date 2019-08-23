@@ -79,6 +79,7 @@ public class NoteTrashFragment extends BaseNoteListFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_restore:
+                viewModel.restoreNotes(viewModel.getSelectedNotes());
                 break;
             case R.id.action_delete:
                 break;
