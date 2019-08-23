@@ -121,12 +121,17 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         boolean isOthersHeaderCreated = false;
         for (Note note:
              notes) {
-            if(note.isPinned() && !isPinnedHeaderCreated) {
-                contentList.add(PINNED_HEADER_TAG);
-                isPinnedHeaderCreated = true;
-            } else if(!note.isPinned() && !isOthersHeaderCreated) {
-                contentList.add(OTHERS_HEADER_TAG);
-                isOthersHeaderCreated = true;
+            if(
+                note.isPinned() &&
+                !isPinnedHeaderCreated ) {
+                    contentList.add(PINNED_HEADER_TAG);
+                    isPinnedHeaderCreated = true;
+            } else if (
+                isPinnedHeaderCreated &&
+                !note.isPinned() &&
+                !isOthersHeaderCreated) {
+                    contentList.add(OTHERS_HEADER_TAG);
+                    isOthersHeaderCreated = true;
             }
             contentList.add(note);
         }
