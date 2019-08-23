@@ -21,44 +21,21 @@ package com.github.androidpirate.slicknotes.ui.fragment;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.androidpirate.slicknotes.R;
-import com.github.androidpirate.slicknotes.data.Note;
-import com.github.androidpirate.slicknotes.viewmodel.NoteListViewModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.List;
 import java.util.Objects;
 
 /**
- * A simple {@link Fragment} subclass.
+ * A simple {@link BaseNoteListFragment} subclass.
  */
-public class NoteListFragment extends Fragment
-    implements NoteListAdapter.NoteClickListener {
-
-    private RecyclerView recyclerView;
-    private NoteListAdapter adapter;
-    private TextView emptyListMessage;
-    private NavController navController;
-    private NoteListViewModel viewModel;
+public class NoteListFragment extends BaseNoteListFragment {
 
     public NoteListFragment() {
         // Required empty public constructor
@@ -68,44 +45,7 @@ public class NoteListFragment extends Fragment
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-    }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_note_list, container, false);
-        recyclerView = view.findViewById(R.id.rv_note_list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        emptyListMessage = view.findViewById(R.id.tv_empty_list_message);
-        FloatingActionButton fab = view.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateToCreateNote();
-            }
-        });
-        return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        navController = Navigation
-                .findNavController(
-                        Objects.requireNonNull(getActivity()),
-                        R.id.nav_host_fragment);
-        viewModel = ViewModelProviders.of(this).get(NoteListViewModel.class);
-        viewModel.getDatabaseNotes().observe(this, new Observer<List<Note>>() {
-            @Override
-            public void onChanged(List<Note> notes) {
-                if(notes == null || notes.size() == 0){
-                    displayEmptyListMessage();
-                } else {
-                    displayNotes(notes);
-                }
-            }
-        });
+        setNavigationBase(NOTE_LIST_BASE);
     }
 
     @Override
@@ -129,7 +69,8 @@ public class NoteListFragment extends Fragment
                 Toast.makeText(
                         getContext(),
                         "Action add label is clicked",
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT)
+                        .show();
                 break;
             case R.id.action_send_to_trash:
                 viewModel.sendNotesToTrash(viewModel.getSelectedNotes());
@@ -137,64 +78,5 @@ public class NoteListFragment extends Fragment
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void displayEmptyListMessage() {
-        recyclerView.setVisibility(View.GONE);
-        emptyListMessage.setVisibility(View.VISIBLE);
-    }
-
-    private void displayRecyclerView(){
-        recyclerView.setVisibility(View.VISIBLE);
-        emptyListMessage.setVisibility(View.GONE);
-    }
-
-    private void displayNotes(List<Note> notes) {
-        if(recyclerView.getVisibility() == View.GONE) {
-            displayRecyclerView();
-        }
-        if(adapter == null) {
-            adapter = new NoteListAdapter(notes, this);
-        } else {
-            adapter.loadNotes(notes);
-        }
-        if(viewModel.hasAlternateMenu()) {
-            adapter.loadSelectedNoteIds(viewModel.getSelectedNoteIds());
-        }
-        recyclerView.setAdapter(adapter);
-    }
-
-    private void toggleAlternateMenu() {
-        Objects.requireNonNull(getActivity()).invalidateOptionsMenu();
-    }
-
-    private void navigateToCreateNote() {
-        viewModel.clearSelections();
-        navController.navigate(R.id.nav_home_to_create);
-    }
-
-    private void navigateToNoteDetails(Bundle args) {
-        viewModel.clearSelections();
-        navController.navigate(R.id.nav_home_to_details, args);
-    }
-
-    /**
-     * ---- NoteListAdapter Click Listener Interface Implementation ----
-     */
-    @Override
-    public void onNoteClick(int noteId) {
-        Bundle args = new Bundle();
-        args.putInt("noteId", noteId);
-        navigateToNoteDetails(args);
-    }
-
-    @Override
-    public void onLongNoteClick(Note note, boolean isAdded) {
-        if(isAdded) {
-            viewModel.addToSelectedNotes(note);
-        } else {
-            viewModel.removeFromSelectedNotes(note);
-        }
-        toggleAlternateMenu();
     }
 }
