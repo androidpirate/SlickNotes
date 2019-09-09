@@ -19,9 +19,14 @@
 package com.github.androidpirate.slicknotes.ui.fragment;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.github.androidpirate.slicknotes.R;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +41,27 @@ public class NoteCreateFragment extends BaseEditableNoteFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.note_create_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_pin:
+                break;
+            case R.id.action_set_reminder:
+                break;
+            case R.id.action_add_label:
+                break;
+            case R.id.action_discard_note:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
