@@ -20,4 +20,5 @@
     <string name="action_restore_title">RESTORE</string>
     <string name="action_delete">DELETE FOREVER</string>
     <string name="action_set_reminder">SET REMINDER</string>
+    <string name="action_discard_note_title">DISCARD NOTE</string>
 </resources>
