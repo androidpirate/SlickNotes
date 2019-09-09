@@ -52,8 +52,13 @@ public class NoteViewModel extends AndroidViewModel {
         this.databaseModel = note;
     }
 
-    public void updateNotePinStatus(boolean status) {
-        databaseModel.setPinned(status);
+    public boolean updateNotePinStatus() {
+        if(databaseModel.isPinned()) {
+            databaseModel.setPinned(false);
+        } else {
+            databaseModel.setPinned(true);
+        }
+        return databaseModel.isPinned();
     }
 
     public void updateNoteColor(int colorId) {

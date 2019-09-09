@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -30,10 +31,13 @@ import androidx.lifecycle.Observer;
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Note;
 
+import java.util.Objects;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class NoteDetailsFragment extends BaseEditableNoteFragment {
+    private boolean pinStatus;
 
     public NoteDetailsFragment() {
         // Required empty public constructor
@@ -59,6 +63,9 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
                             title.setSelection(title.getText().length());
                             title.clearFocus();
                             details.setText(note.getDetails());
+                            pinStatus = note.isPinned();
+                            // Invalidate options menu
+                            Objects.requireNonNull(getActivity()).invalidateOptionsMenu();
                             // Set cursor at the end of details
                             details.setSelection(details.getText().length());
                             details.clearFocus();
@@ -72,12 +79,18 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.note_details_menu, menu);
+        // Set initial pin status
+        MenuItem pinItem = menu.findItem(R.id.action_pin);
+        setPinIcon(pinStatus, pinItem);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_pin:
+                pinStatus = viewModel.updateNotePinStatus();
+                setPinIcon(pinStatus, item);
+                displayPinToast();
                 break;
             case R.id.action_set_reminder:
                 break;
@@ -95,6 +108,26 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
         viewModel.updateNote(title.getText().toString(), details.getText().toString());
         if(isKeyboardOn) {
             hideSoftKeyboard();
+        }
+    }
+
+    private void setPinIcon(boolean isPinned, MenuItem item) {
+        if(isPinned) {
+            item.setIcon(R.drawable.ic_pin_selected);
+        } else {
+            item.setIcon(R.drawable.ic_pin);
+        }
+    }
+
+    private void displayPinToast() {
+        if(pinStatus) {
+            Toast.makeText(getContext(),
+                    getResources().getString(R.string.note_pinned_toast),
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(),
+                    getResources().getString(R.string.note_unpinned_toast),
+                    Toast.LENGTH_SHORT).show();
         }
     }
 }
