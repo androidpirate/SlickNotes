@@ -25,6 +25,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.view.menu.ActionMenuItem;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
@@ -47,6 +48,9 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        if(getArguments() != null) {
+            pinStatus = getArguments().getBoolean("notePinStatus");
+        }
     }
 
     @Override
@@ -63,9 +67,9 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
                             title.setSelection(title.getText().length());
                             title.clearFocus();
                             details.setText(note.getDetails());
-                            pinStatus = note.isPinned();
+                            // pinStatus = note.isPinned();
                             // Invalidate options menu
-                            Objects.requireNonNull(getActivity()).invalidateOptionsMenu();
+                            // Objects.requireNonNull(getActivity()).invalidateOptionsMenu();
                             // Set cursor at the end of details
                             details.setSelection(details.getText().length());
                             details.clearFocus();
@@ -75,13 +79,34 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
         }
     }
 
+//    @Override
+//    public void onPrepareOptionsMenu(Menu menu) {
+//        MenuInflater inflater = Objects.requireNonNull(getActivity()).getMenuInflater();
+//        menu.clear();
+//        int pinId = 101;
+//        if(pinStatus) {
+//            inflater.inflate(R.menu.note_details_menu, menu);
+//            MenuItem pin = menu.add(Menu.NONE, pinId, 10, getString(R.string.action_pin_title));
+//            pin.setIcon(R.drawable.ic_pin_selected);
+//            pin.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
+//        } else {
+//            inflater.inflate(R.menu.note_details_menu, menu);
+//            MenuItem pin = menu.add(Menu.NONE, pinId, 0, getString(R.string.action_pin_title));
+//            pin.setIcon(R.drawable.ic_pin);
+//            pin.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
+//        }
+//        super.onPrepareOptionsMenu(menu);
+//    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+
         inflater.inflate(R.menu.note_details_menu, menu);
-        // Set initial pin status
-        MenuItem pinItem = menu.findItem(R.id.action_pin);
-        setPinIcon(pinStatus, pinItem);
+        if(pinStatus) {
+            MenuItem pin = menu.findItem(R.id.action_pin);
+            setPinIcon(pinStatus, pin);
+        }
     }
 
     @Override

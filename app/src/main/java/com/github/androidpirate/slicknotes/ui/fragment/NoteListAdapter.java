@@ -48,7 +48,7 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private NoteClickListener listener;
 
     interface NoteClickListener {
-        void onNoteClick(int noteId);
+        void onNoteClick(int noteId, boolean notePinStatus);
         void onLongNoteClick(Note note, boolean isAdded);
     }
 
@@ -158,7 +158,7 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onNoteClick(note.getNoteId());
+                    listener.onNoteClick(note.getNoteId(), note.isPinned());
                 }
             });
             itemView.setOnLongClickListener(new View.OnLongClickListener() {

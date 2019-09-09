@@ -139,9 +139,10 @@ public abstract class BaseNoteListFragment extends Fragment
      * ---- NoteListAdapter Click Listener Interface Implementation ----
      */
     @Override
-    public void onNoteClick(int noteId) {
+    public void onNoteClick(int noteId, boolean notePinStatus) {
         Bundle args = new Bundle();
         args.putInt("noteId", noteId);
+        args.putBoolean("notePinStatus", notePinStatus);
         navigateToNoteDetails(args);
     }
 
