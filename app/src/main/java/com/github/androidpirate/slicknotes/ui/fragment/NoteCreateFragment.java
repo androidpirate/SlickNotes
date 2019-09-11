@@ -56,8 +56,6 @@ public class NoteCreateFragment extends BaseEditableNoteFragment {
                 break;
             case R.id.action_set_reminder:
                 break;
-            case R.id.action_add_label:
-                break;
             case R.id.action_discard_note:
                 break;
         }
