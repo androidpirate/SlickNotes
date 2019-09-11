@@ -42,13 +42,13 @@
         android:id="@+id/nav_create"
         android:label="Create Note"
         android:name="com.github.androidpirate.slicknotes.ui.fragment.NoteCreateFragment"
-        tools:layout="@layout/fragment_note_editable"/>
+        tools:layout="@layout/fragment_note_editable_base"/>
 
     <fragment
         android:id="@+id/nav_details"
         android:label=" "
         android:name="com.github.androidpirate.slicknotes.ui.fragment.NoteDetailsFragment"
-        tools:layout="@layout/fragment_note_editable">
+        tools:layout="@layout/fragment_note_editable_base">
 
         <argument
             android:name="noteId"

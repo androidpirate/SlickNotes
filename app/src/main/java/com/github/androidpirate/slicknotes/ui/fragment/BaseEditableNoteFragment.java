@@ -22,9 +22,6 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -50,7 +47,7 @@ public abstract class BaseEditableNoteFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_note_editable, container, false);
+        View view = inflater.inflate(R.layout.fragment_note_editable_base, container, false);
         // Set soft keyboard listener
         setSoftKeyboardListener(view);
         title = view.findViewById(R.id.et_title);
