@@ -58,7 +58,7 @@ public abstract class BaseNoteListFragment extends Fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_note_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_note_list_base, container, false);
         recyclerView = view.findViewById(R.id.rv_note_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         emptyListMessage = view.findViewById(R.id.tv_empty_list_message);

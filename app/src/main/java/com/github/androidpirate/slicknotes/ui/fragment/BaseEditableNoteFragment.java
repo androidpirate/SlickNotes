@@ -25,11 +25,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.viewmodel.NoteViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Objects;
 
@@ -42,7 +45,10 @@ public abstract class BaseEditableNoteFragment extends Fragment {
     boolean isKeyboardOn = false;
     EditText title;
     EditText details;
+    private FloatingActionButton fabAction, fabAddLabel, fabChangeColor, fabShare;
+    private Animation fabExpand, fabCollapse, fabRotateLeft, fabRotateRight;
     NoteViewModel viewModel;
+    boolean isFabActionOpen = false;
 
     @Nullable
     @Override
@@ -52,6 +58,19 @@ public abstract class BaseEditableNoteFragment extends Fragment {
         setSoftKeyboardListener(view);
         title = view.findViewById(R.id.et_title);
         details = view.findViewById(R.id.et_details);
+        fabAction = view.findViewById(R.id.fab_actions);
+        fabAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                animateFab();
+            }
+        });
+        fabAddLabel = view.findViewById(R.id.fab_add_label);
+        fabChangeColor = view.findViewById(R.id.fab_change_color);
+        fabShare = view.findViewById(R.id.fab_share);
+        // setup fab animations
+        setupFabAnimations();
+
         return view;
     }
 
@@ -97,5 +116,35 @@ public abstract class BaseEditableNoteFragment extends Fragment {
     private void clearFocusFromTextFields() {
         title.clearFocus();
         details.clearFocus();
+    }
+
+    private void setupFabAnimations() {
+        Context context = getContext();
+        fabExpand = AnimationUtils.loadAnimation(context, R.anim.fab_expand);
+        fabCollapse = AnimationUtils.loadAnimation(context, R.anim.fab_collapse);
+        fabRotateLeft = AnimationUtils.loadAnimation(context, R.anim.fab_rotate_left);
+        fabRotateRight = AnimationUtils.loadAnimation(context, R.anim.fab_rotate_right);
+    }
+
+    private void animateFab() {
+        if(isFabActionOpen) {
+            fabAction.startAnimation(fabRotateRight);
+            fabAddLabel.startAnimation(fabCollapse);
+            fabAddLabel.setClickable(false);
+            fabChangeColor.startAnimation(fabCollapse);
+            fabChangeColor.setClickable(false);
+            fabShare.startAnimation(fabCollapse);
+            fabShare.setClickable(false);
+            isFabActionOpen = false;
+        } else {
+            fabAction.startAnimation(fabRotateLeft);
+            fabAddLabel.startAnimation(fabExpand);
+            fabAddLabel.setClickable(true);
+            fabChangeColor.startAnimation(fabExpand);
+            fabChangeColor.setClickable(true);
+            fabShare.startAnimation(fabExpand);
+            fabShare.setClickable(true);
+            isFabActionOpen = true;
+        }
     }
 }
