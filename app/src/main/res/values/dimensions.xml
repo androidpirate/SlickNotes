@@ -31,4 +31,8 @@
     <dimen name="nav_header_title">22sp</dimen>
     <dimen name="content_header">22sp</dimen>
     <dimen name="content_details">16sp</dimen>
+    <!-- FAB Margins -->
+    <dimen name="fab_bottom_margin_level_1">90dp</dimen>
+    <dimen name="fab_bottom_margin_level_2">160dp</dimen>
+    <dimen name="fab_bottom_margin_level_3">230dp</dimen>
 </resources>
