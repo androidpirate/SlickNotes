@@ -46,14 +46,20 @@ public abstract class BaseEditableNoteFragment extends Fragment {
     EditText title;
     EditText details;
     private FloatingActionButton fabAction, fabAddLabel, fabChangeColor, fabShare;
-    private Animation fabExpand, fabCollapse, fabRotateLeft, fabRotateRight;
+    private Animation fabExpand, fabCollapse, fabRotateLeft,
+            fabRotateRight, fabActionShow, fabActionHide;
     NoteViewModel viewModel;
     boolean isFabActionOpen = false;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_note_editable_base, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View view = inflater
+                .inflate(R.layout.fragment_note_editable_base,
+                        container,
+                        false);
         // Set soft keyboard listener
         setSoftKeyboardListener(view);
         title = view.findViewById(R.id.et_title);
@@ -105,9 +111,11 @@ public abstract class BaseEditableNoteFragment extends Fragment {
                     if (heightDiff > 500) {
                         // if more than 100 pixels, its probably a keyboard...
                         isKeyboardOn = true;
+                        hideFabAction();
                     } else {
                         isKeyboardOn = false;
                         clearFocusFromTextFields();
+                        showFabAction();
                     }
                 }
             });
@@ -124,6 +132,8 @@ public abstract class BaseEditableNoteFragment extends Fragment {
         fabCollapse = AnimationUtils.loadAnimation(context, R.anim.fab_collapse);
         fabRotateLeft = AnimationUtils.loadAnimation(context, R.anim.fab_rotate_left);
         fabRotateRight = AnimationUtils.loadAnimation(context, R.anim.fab_rotate_right);
+        fabActionShow = AnimationUtils.loadAnimation(context, R.anim.fab_action_show);
+        fabActionHide = AnimationUtils.loadAnimation(context, R.anim.fab_action_hide);
     }
 
     private void animateFab() {
@@ -146,5 +156,16 @@ public abstract class BaseEditableNoteFragment extends Fragment {
             fabShare.setClickable(true);
             isFabActionOpen = true;
         }
+    }
+
+    private void showFabAction() {
+        fabAction.startAnimation(fabActionShow);
+    }
+
+    private void hideFabAction() {
+        if(isFabActionOpen) {
+            animateFab();
+        }
+        fabAction.startAnimation(fabActionHide);
     }
 }
