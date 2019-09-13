@@ -31,6 +31,7 @@ import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 public class NoteListViewModel extends AndroidViewModel {
@@ -87,6 +88,10 @@ public class NoteListViewModel extends AndroidViewModel {
             note.setTrash(false);
         }
         repo.updateDatabaseNotes(databaseModel);
+    }
+
+    public void restoreNote(int noteId) {
+        // TODO: Implement restoring deleted card here
     }
 
     public boolean hasAlternateMenu() {

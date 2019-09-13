@@ -28,6 +28,11 @@
         android:name="com.github.androidpirate.slicknotes.ui.fragment.NoteListFragment"
         tools:layout="@layout/fragment_note_list">
 
+        <argument
+            android:name="deletedNoteId"
+            app:argType="integer"
+            android:defaultValue="-1"/>
+
         <action
             android:id="@+id/nav_home_to_create"
             app:destination="@+id/nav_create"/>
@@ -59,6 +64,10 @@
             android:name="notePinStatus"
             app:argType="boolean"
             android:defaultValue="false" />
+
+        <action
+            android:id="@+id/nav_details_to_home"
+            app:destination="@id/nav_home"/>
 
     </fragment>
 

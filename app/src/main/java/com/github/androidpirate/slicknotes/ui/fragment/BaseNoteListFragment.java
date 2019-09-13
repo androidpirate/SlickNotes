@@ -23,9 +23,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -38,7 +40,9 @@ import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Note;
 import com.github.androidpirate.slicknotes.viewmodel.NoteListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -114,6 +118,20 @@ public abstract class BaseNoteListFragment extends Fragment
             adapter.loadSelectedNoteIds(viewModel.getSelectedNoteIds());
         }
         recyclerView.setAdapter(adapter);
+    }
+
+    void displayTrashSnackBar(final int deletedNoteId) {
+        Snackbar.make(
+                Objects.requireNonNull(getActivity()).findViewById(android.R.id.content),
+                "Note is sent to Trash.",
+                Snackbar.LENGTH_SHORT)
+                .setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        viewModel.restoreNote(deletedNoteId);
+                    }
+                })
+                .show();
     }
 
     private void displayRecyclerView(){

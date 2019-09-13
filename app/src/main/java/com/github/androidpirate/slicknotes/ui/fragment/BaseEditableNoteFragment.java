@@ -40,6 +40,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 public abstract class BaseEditableNoteFragment extends Fragment {
     boolean isKeyboardOn = false;
@@ -48,6 +50,7 @@ public abstract class BaseEditableNoteFragment extends Fragment {
     private FloatingActionButton fabAction, fabAddLabel, fabChangeColor, fabShare;
     private Animation fabExpand, fabCollapse, fabRotateLeft,
             fabRotateRight, fabActionShow, fabActionHide;
+    private NavController navController;
     NoteViewModel viewModel;
     boolean isFabActionOpen = false;
 
@@ -83,6 +86,10 @@ public abstract class BaseEditableNoteFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        navController = Navigation
+                .findNavController(
+                        Objects.requireNonNull(getActivity()),
+                        R.id.nav_host_fragment);
         viewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
     }
 
@@ -96,6 +103,12 @@ public abstract class BaseEditableNoteFragment extends Fragment {
                     .hideSoftInputFromWindow(currentFocusedView.getWindowToken(),
                             InputMethodManager.HIDE_NOT_ALWAYS);
         }
+    }
+
+    void navigateToList(int deletedNoteId) {
+        Bundle args = new Bundle();
+        args.putInt("deletedNoteId", deletedNoteId);
+        navController.navigate(R.id.nav_details_to_home, args);
     }
 
     private void setSoftKeyboardListener(final View view) {

@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -30,12 +31,14 @@ import androidx.lifecycle.Observer;
 
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Note;
+import com.google.android.material.snackbar.Snackbar;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class NoteDetailsFragment extends BaseEditableNoteFragment {
     private boolean pinStatus;
+    private int noteId;
 
     public NoteDetailsFragment() {
         // Required empty public constructor
@@ -54,8 +57,8 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if(getArguments() != null) {
-            viewModel.getDatabaseNote(getArguments()
-                    .getInt("noteId"))
+            noteId = getArguments().getInt("noteId");
+            viewModel.getDatabaseNote(noteId)
                     .observe(this, new Observer<Note>() {
                         @Override
                         public void onChanged(Note note) {
@@ -93,6 +96,8 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
             case R.id.action_set_reminder:
                 break;
             case R.id.action_send_to_trash:
+                viewModel.moveNoteToTrash();
+                navigateToList(noteId);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -125,5 +130,16 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
                     getResources().getString(R.string.note_unpinned_toast),
                     Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void displayTrashSnackBar(int noteId) {
+        Snackbar snackbar = Snackbar.make(getView(),
+                "Note is sent to trash.",
+                Snackbar.LENGTH_SHORT).setAction("UNDO", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 }

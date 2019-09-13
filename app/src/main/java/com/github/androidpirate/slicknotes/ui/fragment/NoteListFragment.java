@@ -49,6 +49,9 @@ public class NoteListFragment extends BaseNoteListFragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         setNavigationBase(NOTE_LIST_BASE);
+        if(getArguments() != null && getArguments().getInt("deletedNoteId") != -1) {
+            displayTrashSnackBar(getArguments().getInt("deletedNoteId"));
+        }
     }
 
     @Override
