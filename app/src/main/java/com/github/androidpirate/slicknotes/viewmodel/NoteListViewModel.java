@@ -31,7 +31,6 @@ import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 public class NoteListViewModel extends AndroidViewModel {
