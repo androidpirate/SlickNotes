@@ -58,6 +58,16 @@ public class NoteRepository {
         return dao.getDatabaseNote(noteId);
     }
 
+    public void updateNoteTrashStatus(final int noteId, final boolean isTrash) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                dao.updateTrashStatus(noteId, isTrash);
+            }
+        });
+
+    }
+
     public void insertDatabaseNote(final Note note) {
         executor.execute(new Runnable() {
             @Override

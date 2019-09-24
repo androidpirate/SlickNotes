@@ -90,7 +90,7 @@ public class NoteListViewModel extends AndroidViewModel {
     }
 
     public void restoreNote(int noteId) {
-        // TODO: Implement restoring deleted card here
+       repo.updateNoteTrashStatus(noteId, false);
     }
 
     public boolean hasAlternateMenu() {
