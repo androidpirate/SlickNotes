@@ -29,7 +29,7 @@ import androidx.room.Update;
 
 @Dao
 public interface NoteDao {
-    @Query("SELECT * FROM Note WHERE note_trash_status = 0")
+    @Query("SELECT * FROM Note WHERE note_trash_status = 0 ORDER BY note_pin_status DESC")
     LiveData<List<Note>> getDatabaseNotes();
     @Query("SELECT * FROM Note WHERE noteId = :id")
     LiveData<Note> getDatabaseNote(int id);

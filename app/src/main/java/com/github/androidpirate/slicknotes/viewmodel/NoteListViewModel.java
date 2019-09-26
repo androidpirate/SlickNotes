@@ -21,17 +21,13 @@ package com.github.androidpirate.slicknotes.viewmodel;
 import android.app.Application;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import com.github.androidpirate.slicknotes.data.Note;
 import com.github.androidpirate.slicknotes.repo.NoteRepository;
 import androidx.annotation.NonNull;
-import androidx.arch.core.util.Function;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Transformations;
 
 public class NoteListViewModel extends AndroidViewModel {
     private NoteRepository repo;
@@ -127,13 +123,7 @@ public class NoteListViewModel extends AndroidViewModel {
     private void initialize() {
         selectedNotes = new ArrayList<>();
         selectedNoteIds = new ArrayList<>();
-        LiveData<List<Note>> databaseNotes = repo.getDatabaseNotes();
-        uiModel = Transformations.map(databaseNotes, new Function<List<Note>, List<Note>>() {
-            @Override
-            public List<Note> apply(List<Note> notes) {
-                return orderNotes(notes);
-            }
-        });
+        uiModel = repo.getDatabaseNotes();
     }
 
     private void setHasAlternateMenu() {
@@ -146,21 +136,5 @@ public class NoteListViewModel extends AndroidViewModel {
 
     private void clearSelectedNotesIds() {
         selectedNoteIds.clear();
-    }
-
-    private List<Note> orderNotes(List<Note> notes) {
-        Collections.sort(notes, new Comparator<Note>() {
-            @Override
-            public int compare(Note o1, Note o2) {
-                if(o1.isPinned() && !o2.isPinned()) {
-                    return -1;
-                } else if(!o1.isPinned() && o2.isPinned()) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
-        });
-        return notes;
     }
 }
