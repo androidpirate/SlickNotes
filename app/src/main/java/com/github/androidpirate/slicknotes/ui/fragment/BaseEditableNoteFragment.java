@@ -31,7 +31,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.github.androidpirate.slicknotes.R;
-import com.github.androidpirate.slicknotes.viewmodel.NoteViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Objects;
@@ -39,19 +38,18 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 public abstract class BaseEditableNoteFragment extends Fragment {
+
     boolean isKeyboardOn = false;
     EditText title;
     EditText details;
-    private FloatingActionButton fabAction, fabAddLabel, fabChangeColor, fabShare;
     private Animation fabExpand, fabCollapse, fabRotateLeft,
             fabRotateRight, fabActionShow, fabActionHide;
+    private FloatingActionButton fabAction, fabAddLabel, fabChangeColor, fabShare;
     private NavController navController;
-    NoteViewModel viewModel;
     boolean isFabActionOpen = false;
 
     @Nullable
@@ -90,7 +88,6 @@ public abstract class BaseEditableNoteFragment extends Fragment {
                 .findNavController(
                         Objects.requireNonNull(getActivity()),
                         R.id.nav_host_fragment);
-        viewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
     }
 
     void hideSoftKeyboard() {

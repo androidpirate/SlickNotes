@@ -25,13 +25,17 @@ import android.view.MenuItem;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.github.androidpirate.slicknotes.R;
+import com.github.androidpirate.slicknotes.viewmodel.NoteCreateViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class NoteCreateFragment extends BaseEditableNoteFragment {
+
+    private NoteCreateViewModel viewModel;
 
     public NoteCreateFragment() {
         // Required empty public constructor
@@ -41,6 +45,12 @@ public class NoteCreateFragment extends BaseEditableNoteFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        viewModel = ViewModelProviders.of(this).get(NoteCreateViewModel.class);
     }
 
     @Override

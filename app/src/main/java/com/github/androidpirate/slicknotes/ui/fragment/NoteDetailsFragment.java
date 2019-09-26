@@ -22,21 +22,23 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Note;
-import com.google.android.material.snackbar.Snackbar;
+import com.github.androidpirate.slicknotes.viewmodel.NoteDetailViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class NoteDetailsFragment extends BaseEditableNoteFragment {
+
+    private NoteDetailViewModel viewModel;
     private boolean pinStatus;
     private int noteId;
 
@@ -50,30 +52,29 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
         setHasOptionsMenu(true);
         if(getArguments() != null) {
             pinStatus = getArguments().getBoolean("notePinStatus");
+            noteId = getArguments().getInt("noteId");
         }
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if(getArguments() != null) {
-            noteId = getArguments().getInt("noteId");
-            viewModel.getDatabaseNote(noteId)
-                    .observe(this, new Observer<Note>() {
-                        @Override
-                        public void onChanged(Note note) {
-                            title.setText(note.getTitle());
-                            // Set cursor at the end of title
-                            title.setSelection(title.getText().length());
-                            title.clearFocus();
-                            details.setText(note.getDetails());
-                            // Set cursor at the end of details
-                            details.setSelection(details.getText().length());
-                            details.clearFocus();
-                            viewModel.updateDatabaseNote(note);
-                        }
-                    });
-        }
+        viewModel = ViewModelProviders.of(this).get(NoteDetailViewModel.class);
+        viewModel.getDatabaseNote(noteId)
+                .observe(this, new Observer<Note>() {
+                    @Override
+                    public void onChanged(Note note) {
+                        title.setText(note.getTitle());
+                        // Set cursor at the end of title
+                        title.setSelection(title.getText().length());
+                        title.clearFocus();
+                        details.setText(note.getDetails());
+                        // Set cursor at the end of details
+                        details.setSelection(details.getText().length());
+                        details.clearFocus();
+                        viewModel.updateDatabaseNote(note);
+                    }
+                });
     }
 
     @Override
@@ -130,16 +131,5 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
                     getResources().getString(R.string.note_unpinned_toast),
                     Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void displayTrashSnackBar(int noteId) {
-        Snackbar snackbar = Snackbar.make(getView(),
-                "Note is sent to trash.",
-                Snackbar.LENGTH_SHORT).setAction("UNDO", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 }
