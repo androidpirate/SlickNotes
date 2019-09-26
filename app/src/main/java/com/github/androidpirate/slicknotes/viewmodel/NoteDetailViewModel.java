@@ -19,28 +19,18 @@
 package com.github.androidpirate.slicknotes.viewmodel;
 
 import android.app.Application;
-import android.widget.Toast;
 
 import java.util.Date;
 import java.util.List;
 
 import com.github.androidpirate.slicknotes.data.Note;
-import com.github.androidpirate.slicknotes.repo.NoteRepository;
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-public class NoteViewModel extends AndroidViewModel {
-    private static final String DEFAULT_NOTE_TITLE = "";
-    private static final String DEFAULT_NOTE_DETAILS = "";
-    private NoteRepository repo;
-    private LiveData<Note> uiModel;
-    private Note databaseModel;
+public class NoteDetailViewModel extends BaseNoteViewModel {
 
-    public NoteViewModel(@NonNull Application application) {
+    public NoteDetailViewModel(@NonNull Application application) {
         super(application);
-        repo = new NoteRepository(application);
-        initialize();
     }
 
     public LiveData<Note> getDatabaseNote(int noteId) {
@@ -87,30 +77,5 @@ public class NoteViewModel extends AndroidViewModel {
         } else {
             repo.updateDatabaseNote(databaseModel);
         }
-    }
-
-    private void initialize() {
-        databaseModel = new Note(DEFAULT_NOTE_TITLE, DEFAULT_NOTE_DETAILS, new Date());
-    }
-
-    /**
-     * NoteCreateFragment methods
-     */
-    public void insertNote(String title, String details) {
-        databaseModel.setTitle(title);
-        databaseModel.setDetails(details);
-        if(checkDatabaseModelIsEmpty()) {
-            displayEmptyNoteDiscardedToast();
-        } else {
-            repo.insertDatabaseNote(databaseModel);
-        }
-    }
-
-    private void displayEmptyNoteDiscardedToast() {
-        Toast.makeText(getApplication(), "Empty note is discarded.", Toast.LENGTH_SHORT).show();
-    }
-
-    private boolean checkDatabaseModelIsEmpty() {
-        return databaseModel.getTitle().isEmpty() && databaseModel.getDetails().isEmpty();
     }
 }
