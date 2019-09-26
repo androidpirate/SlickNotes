@@ -26,16 +26,12 @@ import java.util.List;
 import com.github.androidpirate.slicknotes.data.Note;
 import com.github.androidpirate.slicknotes.repo.NoteRepository;
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-public class NoteListViewModel extends AndroidViewModel {
+public class NoteListViewModel extends BaseListViewModel {
     private NoteRepository repo;
     private LiveData<List<Note>> uiModel;
     private List<Note> databaseModel;
-    private List<Integer> selectedNoteIds;
-    private List<Note> selectedNotes;
-    private boolean hasAlternateMenu;
 
     public NoteListViewModel(@NonNull Application application) {
         super(application);
@@ -47,11 +43,8 @@ public class NoteListViewModel extends AndroidViewModel {
         return uiModel;
     }
 
-    public LiveData<List<Note>> getDatabaseTrashNotes() {
-        return repo.getDatabaseTrashNotes();
-    }
-
     public void sendNotesToTrash(List<Note> notes) {
+        // TODO 1: Try to set trash status at Dao level
         databaseModel = new ArrayList<>(notes);
         for (Note note:
              databaseModel) {
@@ -63,6 +56,7 @@ public class NoteListViewModel extends AndroidViewModel {
     }
 
     public void setNotePinStatus(List<Note> notes) {
+        // TODO 2: Try to set pin status at Dao level
         databaseModel = new ArrayList<>(notes);
         for (Note note:
              databaseModel) {
@@ -72,69 +66,11 @@ public class NoteListViewModel extends AndroidViewModel {
         clearSelections();
     }
 
-    public void deleteNotes(List<Note> notes) {
-        repo.deleteDatabaseNotes(notes);
-    }
-
-    public void restoreNotes(List<Note> notes) {
-        databaseModel = new ArrayList<>(notes);
-        for (Note note:
-             databaseModel) {
-            note.setTrash(false);
-        }
-        repo.updateDatabaseNotes(databaseModel);
-    }
-
     public void restoreNote(int noteId) {
        repo.updateNoteTrashStatus(noteId, false);
     }
 
-    public boolean hasAlternateMenu() {
-        return hasAlternateMenu;
-    }
-
-    public void addToSelectedNotes(Note note) {
-        selectedNotes.add(note);
-        selectedNoteIds.add(note.getNoteId());
-        setHasAlternateMenu();
-    }
-
-    public void removeFromSelectedNotes(Note note) {
-        selectedNotes.remove(note);
-        // Casting Integer is necessary, otherwise treats note id as index number
-        selectedNoteIds.remove((Integer)note.getNoteId());
-        setHasAlternateMenu();
-    }
-
-    public List<Note> getSelectedNotes() {
-        return selectedNotes;
-    }
-
-    public List<Integer> getSelectedNoteIds() {
-        return selectedNoteIds;
-    }
-
-    public void clearSelections() {
-        clearSelectedNotes();
-        clearSelectedNotesIds();
-        setHasAlternateMenu();
-    }
-
     private void initialize() {
-        selectedNotes = new ArrayList<>();
-        selectedNoteIds = new ArrayList<>();
         uiModel = repo.getDatabaseNotes();
-    }
-
-    private void setHasAlternateMenu() {
-        hasAlternateMenu = selectedNotes.size() > 0;
-    }
-
-    private void clearSelectedNotes() {
-        selectedNotes.clear();
-    }
-
-    private void clearSelectedNotesIds() {
-        selectedNoteIds.clear();
     }
 }
