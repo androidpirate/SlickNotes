@@ -23,6 +23,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,6 +31,7 @@ import android.view.MenuItem;
 
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Note;
+import com.github.androidpirate.slicknotes.viewmodel.NoteTrashViewModel;
 
 import java.util.List;
 import java.util.Objects;
@@ -38,6 +40,8 @@ import java.util.Objects;
  * A simple {@link BaseNoteListFragment} subclass.
  */
 public class NoteTrashFragment extends BaseNoteListFragment {
+
+    private NoteTrashViewModel viewModel;
 
     public NoteTrashFragment() {
         // Required empty public constructor
@@ -53,6 +57,9 @@ public class NoteTrashFragment extends BaseNoteListFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        viewModel = ViewModelProviders.of(this).get(NoteTrashViewModel.class);
+        // Set baseViewModel
+        baseViewModel = viewModel;
         viewModel.getDatabaseTrashNotes().observe(this, new Observer<List<Note>>() {
             @Override
             public void onChanged(List<Note> notes) {
@@ -69,7 +76,7 @@ public class NoteTrashFragment extends BaseNoteListFragment {
     public void onPrepareOptionsMenu(Menu menu) {
         MenuInflater inflater = Objects.requireNonNull(getActivity()).getMenuInflater();
         menu.clear();
-        if(viewModel.hasAlternateMenu()) {
+        if(baseViewModel.hasAlternateMenu()) {
             inflater.inflate(R.menu.note_trash_list_menu, menu);
         }
         super.onPrepareOptionsMenu(menu);
@@ -79,10 +86,10 @@ public class NoteTrashFragment extends BaseNoteListFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_restore:
-                viewModel.restoreNotes(viewModel.getSelectedNotes());
+                viewModel.restoreNotes(baseViewModel.getSelectedNotes());
                 break;
             case R.id.action_delete:
-                viewModel.deleteNotes(viewModel.getSelectedNotes());
+                viewModel.deleteNotes(baseViewModel.getSelectedNotes());
                 break;
         }
         return super.onOptionsItemSelected(item);

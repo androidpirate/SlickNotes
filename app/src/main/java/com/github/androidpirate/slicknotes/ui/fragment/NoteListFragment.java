@@ -23,14 +23,18 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Note;
+import com.github.androidpirate.slicknotes.viewmodel.NoteListViewModel;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 import java.util.Objects;
@@ -39,6 +43,8 @@ import java.util.Objects;
  * A simple {@link BaseNoteListFragment} subclass.
  */
 public class NoteListFragment extends BaseNoteListFragment {
+
+    private NoteListViewModel viewModel;
 
     public NoteListFragment() {
         // Required empty public constructor
@@ -49,6 +55,7 @@ public class NoteListFragment extends BaseNoteListFragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         setNavigationBase(NOTE_LIST_BASE);
+        // If a note is deleted before navigating to list, then display snack bar
         if(getArguments() != null && getArguments().getInt("deletedNoteId") != -1) {
             displayTrashSnackBar(getArguments().getInt("deletedNoteId"));
         }
@@ -57,6 +64,9 @@ public class NoteListFragment extends BaseNoteListFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        viewModel = ViewModelProviders.of(this).get(NoteListViewModel.class);
+        // Set baseViewModel
+        baseViewModel = viewModel;
         viewModel.getDatabaseNotes().observe(this, new Observer<List<Note>>() {
             @Override
             public void onChanged(List<Note> notes) {
@@ -73,7 +83,7 @@ public class NoteListFragment extends BaseNoteListFragment {
     public void onPrepareOptionsMenu(Menu menu) {
         MenuInflater inflater = Objects.requireNonNull(getActivity()).getMenuInflater();
         menu.clear();
-        if(viewModel.hasAlternateMenu()) {
+        if(baseViewModel.hasAlternateMenu()) {
             inflater.inflate(R.menu.note_list_menu, menu);
         }
         super.onPrepareOptionsMenu(menu);
@@ -83,7 +93,7 @@ public class NoteListFragment extends BaseNoteListFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_pin:
-                viewModel.setNotePinStatus(viewModel.getSelectedNotes());
+                viewModel.setNotePinStatus(baseViewModel.getSelectedNotes());
                 toggleAlternateMenu();
             break;
             case R.id.action_add_label:
@@ -94,10 +104,24 @@ public class NoteListFragment extends BaseNoteListFragment {
                         .show();
                 break;
             case R.id.action_send_to_trash:
-                viewModel.sendNotesToTrash(viewModel.getSelectedNotes());
+                viewModel.sendNotesToTrash(baseViewModel.getSelectedNotes());
                 toggleAlternateMenu();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void displayTrashSnackBar(final int deletedNoteId) {
+        Snackbar.make(
+                Objects.requireNonNull(getActivity()).findViewById(android.R.id.content),
+                "Note is sent to Trash.",
+                Snackbar.LENGTH_SHORT)
+                .setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        viewModel.restoreNote(deletedNoteId);
+                    }
+                })
+                .show();
     }
 }

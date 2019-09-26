@@ -28,7 +28,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,15 +35,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Note;
-import com.github.androidpirate.slicknotes.viewmodel.NoteListViewModel;
+import com.github.androidpirate.slicknotes.viewmodel.BaseListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 import java.util.Objects;
 
 public abstract class BaseNoteListFragment extends Fragment
     implements NoteListAdapter.NoteClickListener {
+
     static final int NOTE_LIST_BASE = 0;
     static final int TRASH_LIST_BASE = 1;
 
@@ -53,11 +52,13 @@ public abstract class BaseNoteListFragment extends Fragment
     private TextView emptyListMessage;
     private NavController navController;
     private int navigationBase;
-    NoteListViewModel viewModel;
+    BaseListViewModel baseViewModel;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_note_list_base, container, false);
         recyclerView = view.findViewById(R.id.rv_note_list);
@@ -80,8 +81,6 @@ public abstract class BaseNoteListFragment extends Fragment
                 .findNavController(
                         Objects.requireNonNull(getActivity()),
                         R.id.nav_host_fragment);
-        viewModel = ViewModelProviders.of(this).get(NoteListViewModel.class);
-
     }
 
     void toggleAlternateMenu() {
@@ -90,11 +89,6 @@ public abstract class BaseNoteListFragment extends Fragment
 
     void setNavigationBase(int navigationBase) {
         this.navigationBase = navigationBase;
-    }
-
-    void navigateToNoteList() {
-        viewModel.clearSelections();
-        navController.navigate(R.id.nav_trash_to_list);
     }
 
     void displayEmptyListMessage() {
@@ -111,24 +105,10 @@ public abstract class BaseNoteListFragment extends Fragment
         } else {
             adapter.loadNotes(notes);
         }
-        if(viewModel.hasAlternateMenu()) {
-            adapter.loadSelectedNoteIds(viewModel.getSelectedNoteIds());
+        if(baseViewModel.hasAlternateMenu()) {
+            adapter.loadSelectedNoteIds(baseViewModel.getSelectedNoteIds());
         }
         recyclerView.setAdapter(adapter);
-    }
-
-    void displayTrashSnackBar(final int deletedNoteId) {
-        Snackbar.make(
-                Objects.requireNonNull(getActivity()).findViewById(android.R.id.content),
-                "Note is sent to Trash.",
-                Snackbar.LENGTH_SHORT)
-                .setAction("UNDO", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        viewModel.restoreNote(deletedNoteId);
-                    }
-                })
-                .show();
     }
 
     private void displayRecyclerView(){
@@ -137,12 +117,12 @@ public abstract class BaseNoteListFragment extends Fragment
     }
 
     private void navigateToCreateNote() {
-        viewModel.clearSelections();
+        baseViewModel.clearSelections();
         navController.navigate(R.id.nav_home_to_create);
     }
 
     private void navigateToNoteDetails(Bundle args) {
-        viewModel.clearSelections();
+        baseViewModel.clearSelections();
         if(navigationBase == NOTE_LIST_BASE) {
             navController.navigate(R.id.nav_home_to_details, args);
         } else if (navigationBase == TRASH_LIST_BASE) {
@@ -164,9 +144,9 @@ public abstract class BaseNoteListFragment extends Fragment
     @Override
     public void onLongNoteClick(Note note, boolean isAdded) {
         if(isAdded) {
-            viewModel.addToSelectedNotes(note);
+            baseViewModel.addToSelectedNotes(note);
         } else {
-            viewModel.removeFromSelectedNotes(note);
+            baseViewModel.removeFromSelectedNotes(note);
         }
         toggleAlternateMenu();
     }
