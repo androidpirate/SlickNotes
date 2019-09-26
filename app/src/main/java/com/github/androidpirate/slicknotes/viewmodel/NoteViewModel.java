@@ -53,11 +53,7 @@ public class NoteViewModel extends AndroidViewModel {
     }
 
     public boolean updateNotePinStatus() {
-        if(databaseModel.isPinned()) {
-            databaseModel.setPinned(false);
-        } else {
-            databaseModel.setPinned(true);
-        }
+        databaseModel.setPinned(!databaseModel.isPinned());
         return databaseModel.isPinned();
     }
 
