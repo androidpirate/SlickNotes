@@ -99,6 +99,14 @@
         <item name="android:visibility">invisible</item>
     </style>
 
+    <!-- Pick Color FAB -->
+    <style name="PickColorFabStyle" parent="BaseFabStyle">
+        <item name="android:layout_marginStart">@dimen/margin_16</item>
+        <item name="android:layout_marginEnd">@dimen/margin_16</item>
+        <item name="android:layout_marginTop">@dimen/margin_16</item>
+        <item name="android:layout_marginBottom">@dimen/margin_32</item>
+    </style>
+
     <!-- Note list style -->
     <style name="NoteList">
         <item name="android:layout_width">@dimen/match_constraint_size</item>
