@@ -51,6 +51,7 @@ public abstract class BaseEditableNoteFragment extends Fragment {
     private FloatingActionButton fabAction, fabAddLabel, fabChangeColor, fabShare;
     private NavController navController;
     boolean isFabActionOpen = false;
+    boolean isFabOn = true;
 
     @Nullable
     @Override
@@ -118,12 +119,14 @@ public abstract class BaseEditableNoteFragment extends Fragment {
                     // your view that area still visible.
                     view.getWindowVisibleDisplayFrame(r);
                     int heightDiff = view.getRootView().getHeight() - (r.bottom - r.top);
-                    if (heightDiff > 500) {
+                    if (heightDiff > 500 && isFabOn) {
                         // if more than 100 pixels, its probably a keyboard...
                         isKeyboardOn = true;
+                        isFabOn = false;
                         hideFabAction();
-                    } else {
+                    } else if (heightDiff < 500 && !isFabOn){
                         isKeyboardOn = false;
+                        isFabOn = true;
                         clearFocusFromTextFields();
                         showFabAction();
                     }
