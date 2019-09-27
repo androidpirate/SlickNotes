@@ -32,6 +32,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -141,15 +142,18 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private TextView title;
         private TextView details;
         private FrameLayout cardBorder;
+        private CardView cardView;
 
         NoteCardHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.tv_title);
             details = itemView.findViewById(R.id.tv_details);
             cardBorder = itemView.findViewById(R.id.card_view_border);
+            cardView = itemView.findViewById(R.id.card_view);
         }
 
         private void bindNote(final Note note) {
+            cardView.setBackgroundColor(note.getColorId());
             if(selectedNoteIds.size() != EMPTY_LIST_SIZE) {
                 setCardBorderVisibility(checkCardIsSelected(note.getNoteId()));
             }

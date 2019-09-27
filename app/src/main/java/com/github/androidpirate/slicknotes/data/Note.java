@@ -18,6 +18,8 @@
 
 package com.github.androidpirate.slicknotes.data;
 
+import android.graphics.Color;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -47,6 +49,8 @@ public class Note {
     @ColumnInfo(name ="note_labels")
     private List<String> labels;
 
+    private static final String NOTE_DEFAULT_COLOR = "#FAFAFA";
+
     public Note(String title, String details, Date dateCreated) {
         this.title = title;
         this.details = details;
@@ -54,7 +58,7 @@ public class Note {
         this.dateEdited = dateCreated;
         this.isTrash = false;
         this.isPinned = false;
-        this.colorId = 0;
+        this.colorId = Color.parseColor(NOTE_DEFAULT_COLOR);
         this.labels = new ArrayList<>();
     }
 
