@@ -19,6 +19,11 @@
         <item name="android:layout_margin">@dimen/margin_8</item>
     </style>
 
+    <!-- Inner content frame with padding style -->
+    <style name="InnerContentFrameWithPadding" parent="ContentFrame">
+        <item name="android:padding">@dimen/padding_8</item>
+    </style>
+
     <!-- List header content frame style -->
     <style name="ListHeaderContentFrame" parent="ContentFrame">
         <item name="android:layout_height">wrap_content</item>
