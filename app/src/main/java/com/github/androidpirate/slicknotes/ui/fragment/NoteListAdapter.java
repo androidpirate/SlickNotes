@@ -153,7 +153,7 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
 
         private void bindNote(final Note note) {
-            cardView.setBackgroundColor(note.getColorId());
+            setCardBackgroundColor(note.getColorId());
             if(selectedNoteIds.size() != EMPTY_LIST_SIZE) {
                 setCardBorderVisibility(checkCardIsSelected(note.getNoteId()));
             }
@@ -199,6 +199,10 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             } else {
                 cardBorder.setVisibility(View.GONE);
             }
+        }
+
+        private void setCardBackgroundColor(int colorId) {
+            cardView.setBackgroundColor(colorId);
         }
     }
 
