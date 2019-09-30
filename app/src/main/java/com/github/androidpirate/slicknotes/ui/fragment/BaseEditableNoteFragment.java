@@ -44,7 +44,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-public abstract class BaseEditableNoteFragment extends Fragment {
+public abstract class BaseEditableNoteFragment extends Fragment
+    implements View.OnClickListener {
 
     private static final String FAB_WHITE_COLOR_ID = "#FAFAFA";
     private static final String FAB_PINK_COLOR_ID = "#F2B4F7";
@@ -100,6 +101,46 @@ public abstract class BaseEditableNoteFragment extends Fragment {
                 .findNavController(
                         Objects.requireNonNull(getActivity()),
                         R.id.nav_host_fragment);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.fab_actions:
+                animateFab();
+                break;
+            case R.id.fab_add_label:
+                break;
+            case R.id.fab_change_color:
+                displayColorPickerDialog();
+                break;
+            case R.id.fab_share:
+                break;
+            case R.id.fab_white:
+                onColorPickerFabClick(Color.parseColor(FAB_WHITE_COLOR_ID));
+                break;
+            case R.id.fab_pink:
+                onColorPickerFabClick(Color.parseColor(FAB_PINK_COLOR_ID));
+                break;
+            case R.id.fab_yellow:
+                onColorPickerFabClick(Color.parseColor(FAB_YELLOW_COLOR_ID));
+                break;
+            case R.id.fab_blue:
+                onColorPickerFabClick(Color.parseColor(FAB_BLUE_COLOR_ID));
+                break;
+            case R.id.fab_orange:
+                onColorPickerFabClick(Color.parseColor(FAB_ORANGE_COLOR_ID));
+                break;
+            case R.id.fab_green:
+                onColorPickerFabClick(Color.parseColor(FAB_GREEN_COLOR_ID));
+                break;
+            case R.id.fab_purple:
+                onColorPickerFabClick(Color.parseColor(FAB_PURPLE_COLOR_ID));
+                break;
+            case R.id.fab_gray:
+                onColorPickerFabClick(Color.parseColor(FAB_GRAY_COLOR_ID));
+                break;
+        }
     }
 
     void hideSoftKeyboard() {
@@ -203,33 +244,13 @@ public abstract class BaseEditableNoteFragment extends Fragment {
 
     private void setupFabAction(View view) {
         fabAction = view.findViewById(R.id.fab_actions);
-        fabAction.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                animateFab();
-            }
-        });
+        fabAction.setOnClickListener(this);
         fabAddLabel = view.findViewById(R.id.fab_add_label);
-        fabAddLabel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO 3: Implement adding labels here
-            }
-        });
+        fabAddLabel.setOnClickListener(this);
         fabChangeColor = view.findViewById(R.id.fab_change_color);
-        fabChangeColor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayColorPickerDialog();
-            }
-        });
+        fabChangeColor.setOnClickListener(this);
         fabShare = view.findViewById(R.id.fab_share);
-        fabShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO 4: Implement sharing options here
-            }
-        });
+        fabShare.setOnClickListener(this);
     }
 
     private void displayColorPickerDialog() {
@@ -253,61 +274,20 @@ public abstract class BaseEditableNoteFragment extends Fragment {
 
     private void setupColorPickerFabs(final View dialogView) {
         FloatingActionButton fabWhite = dialogView.findViewById(R.id.fab_white);
-        fabWhite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onColorPickerFabClick(Color.parseColor(FAB_WHITE_COLOR_ID));
-            }
-        });
+        fabWhite.setOnClickListener(this);
         FloatingActionButton fabPink = dialogView.findViewById(R.id.fab_pink);
-        fabPink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onColorPickerFabClick(Color.parseColor(FAB_PINK_COLOR_ID));
-            }
-        });
+        fabPink.setOnClickListener(this);
         FloatingActionButton fabYellow = dialogView.findViewById(R.id.fab_yellow);
-        fabYellow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onColorPickerFabClick(Color.parseColor(FAB_YELLOW_COLOR_ID));
-            }
-        });
+        fabYellow.setOnClickListener(this);
         FloatingActionButton fabBlue = dialogView.findViewById(R.id.fab_blue);
-        fabBlue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onColorPickerFabClick(Color.parseColor(FAB_BLUE_COLOR_ID));
-            }
-        });
+        fabBlue.setOnClickListener(this);
         FloatingActionButton fabOrange = dialogView.findViewById(R.id.fab_orange);
-        fabOrange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onColorPickerFabClick(Color.parseColor(FAB_ORANGE_COLOR_ID));
-            }
-        });
+        fabOrange.setOnClickListener(this);
         FloatingActionButton fabGreen = dialogView.findViewById(R.id.fab_green);
-        fabGreen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onColorPickerFabClick(Color.parseColor(FAB_GREEN_COLOR_ID));
-            }
-        });
+        fabGreen.setOnClickListener(this);
         FloatingActionButton fabPurple = dialogView.findViewById(R.id.fab_purple);
-        fabPurple.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onColorPickerFabClick(Color.parseColor(FAB_PURPLE_COLOR_ID));
-            }
-        });
+        fabPurple.setOnClickListener(this);
         FloatingActionButton fabGray = dialogView.findViewById(R.id.fab_gray);
-        fabGray.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onColorPickerFabClick(Color.parseColor(FAB_GRAY_COLOR_ID));
-            }
-        });
-
+        fabGray.setOnClickListener(this);
     }
 }
