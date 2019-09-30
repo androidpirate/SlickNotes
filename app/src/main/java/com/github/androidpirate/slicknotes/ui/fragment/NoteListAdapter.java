@@ -153,10 +153,9 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
 
         private void bindNote(final Note note) {
+            // Set card background color
             setCardBackgroundColor(note.getColorId());
-            if(selectedNoteIds.size() != EMPTY_LIST_SIZE) {
-                setCardBorderVisibility(checkCardIsSelected(note.getNoteId()));
-            }
+            // Set card fields
             title.setText(note.getTitle());
             details.setText(note.getDetails());
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -181,23 +180,6 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             } else {
                 cardBorder.setVisibility(View.GONE);
                 return false;
-            }
-        }
-
-        private boolean checkCardIsSelected(int noteId) {
-            Object[] selectedNoteIdsArray = selectedNoteIds.toArray();
-            Arrays.sort(selectedNoteIdsArray);
-            // Returns the index number of given id if exists,
-            // -(indexNumberTobeInserted) otherwise
-            int result = Arrays.binarySearch(selectedNoteIdsArray, noteId);
-            return result >= MINIMUM_INDEX_NO;
-        }
-
-        private void setCardBorderVisibility(boolean visible) {
-            if(visible) {
-                cardBorder.setVisibility(View.VISIBLE);
-            } else {
-                cardBorder.setVisibility(View.GONE);
             }
         }
 
