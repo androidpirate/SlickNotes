@@ -38,6 +38,10 @@ public abstract class BaseNoteViewModel extends AndroidViewModel {
         repo = new NoteRepository(application);
     }
 
+    public void updateNoteColor(int colorId) {
+        databaseModel.setColorId(colorId);
+    }
+
     boolean checkDatabaseModelIsEmpty() {
         return databaseModel.getTitle().isEmpty() && databaseModel.getDetails().isEmpty();
     }

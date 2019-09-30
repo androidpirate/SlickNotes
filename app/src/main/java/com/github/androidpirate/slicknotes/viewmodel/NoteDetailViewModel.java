@@ -47,10 +47,6 @@ public class NoteDetailViewModel extends BaseNoteViewModel {
         return databaseModel.isPinned();
     }
 
-    public void updateNoteColor(int colorId) {
-        databaseModel.setColorId(colorId);
-    }
-
     public void updateNoteLabels(List<String> labels) {
         databaseModel.setLabels(labels);
     }
