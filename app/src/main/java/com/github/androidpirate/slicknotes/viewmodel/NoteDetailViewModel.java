@@ -60,6 +60,7 @@ public class NoteDetailViewModel extends BaseNoteViewModel {
     }
 
     public void moveNoteToTrash() {
+        databaseModel.setPinned(false);
         databaseModel.setTrash(true);
     }
 
