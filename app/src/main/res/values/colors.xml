@@ -6,12 +6,12 @@
     <color name="colorToolbarFont">#FDFDFD</color>
     <color name="colorEmptyListMessage">#B6B6B6</color>
     <color name="contentFontColor">#1D1D1D</color>
+    <color name="colorFabWhite">#FAFAFA</color>
     <color name="colorFabPink">#F2B4F7</color>
-    <color name="colorFabBlue">#B6CDFC</color>
     <color name="colorFabYellow">#F8EDB2</color>
+    <color name="colorFabBlue">#B6CDFC</color>
     <color name="colorFabOrange">#FAB266</color>
     <color name="colorFabGreen">#B6FCB9</color>
     <color name="colorFabPurple">#C9B0F7</color>
-    <color name="colorFabWhite">#FAFAFA</color>
     <color name="colorFabGray">#D5D5D5</color>
 </resources>
