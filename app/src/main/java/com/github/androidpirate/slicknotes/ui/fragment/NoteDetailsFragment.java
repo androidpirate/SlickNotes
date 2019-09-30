@@ -64,6 +64,7 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
                 .observe(this, new Observer<Note>() {
                     @Override
                     public void onChanged(Note note) {
+                        setBackgroundColor(note.getColorId());
                         title.setText(note.getTitle());
                         // Set cursor at the end of title
                         title.setSelection(title.getText().length());
@@ -111,6 +112,13 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
         if(isKeyboardOn) {
             hideSoftKeyboard();
         }
+    }
+
+    @Override
+    void onColorPickerFabClick(int colorId) {
+        viewModel.updateNoteColor(colorId);
+        setBackgroundColor(colorId);
+        hideColorPickerDialog();
     }
 
     private void setPinIcon(boolean isPinned, MenuItem item) {

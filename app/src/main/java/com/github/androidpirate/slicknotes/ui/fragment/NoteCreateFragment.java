@@ -80,4 +80,11 @@ public class NoteCreateFragment extends BaseEditableNoteFragment {
             hideSoftKeyboard();
         }
     }
+
+    @Override
+    void onColorPickerFabClick(int colorId) {
+        viewModel.updateNoteColor(colorId);
+        setBackgroundColor(colorId);
+        hideColorPickerDialog();
+    }
 }

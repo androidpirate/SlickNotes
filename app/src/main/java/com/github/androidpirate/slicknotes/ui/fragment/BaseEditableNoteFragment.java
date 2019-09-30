@@ -21,6 +21,7 @@ package com.github.androidpirate.slicknotes.ui.fragment;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -45,45 +46,51 @@ import androidx.navigation.Navigation;
 
 public abstract class BaseEditableNoteFragment extends Fragment {
 
-    static final String FAB_WHITE_COLOR_ID = "#FAFAFA";
-    static final String FAB_PINK_COLOR_ID = "#F2B4F7";
-    static final String FAB_YELLOW_COLOR_ID = "#B6CDFC";
-    static final String FAB_BLUE_COLOR_ID = "#F8EDB2";
-    static final String FAB_ORANGE_COLOR_ID = "#FAB266";
-    static final String FAB_GREEN_COLOR_ID = "#B6FCB9";
-    static final String FAB_PURPLE_COLOR_ID = "#C9B0F7";
-    static final String FAB_GRAY_COLOR_ID = "#D5D5D5";
+    private static final String FAB_WHITE_COLOR_ID = "#FAFAFA";
+    private static final String FAB_PINK_COLOR_ID = "#F2B4F7";
+    private static final String FAB_YELLOW_COLOR_ID = "#F8EDB2";
+    private static final String FAB_BLUE_COLOR_ID = "#B6CDFC";
+    private static final String FAB_ORANGE_COLOR_ID = "#FAB266";
+    private static final String FAB_GREEN_COLOR_ID = "#B6FCB9";
+    private static final String FAB_PURPLE_COLOR_ID = "#C9B0F7";
+    private static final String FAB_GRAY_COLOR_ID = "#D5D5D5";
 
     boolean isKeyboardOn = false;
     EditText title;
     EditText details;
     private Animation fabExpand, fabCollapse, fabRotateLeft,
             fabRotateRight, fabActionShow, fabActionHide;
-    private FloatingActionButton fabAction, fabAddLabel, fabChangeColor, fabShare,fabWhite,
-            fabPink, fabYellow, fabBlue, fabOrange, fabPurple, fabGreen, fabGray;
+    private View rootView;
+    private FloatingActionButton fabAction;
+    private FloatingActionButton fabAddLabel;
+    private FloatingActionButton fabChangeColor;
+    private FloatingActionButton fabShare;
     private NavController navController;
+    private AlertDialog colorPickerDialog;
     boolean isFabActionOpen = false;
     boolean isFabOn = true;
+
+    abstract void onColorPickerFabClick(int colorId);
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater
+        rootView = inflater
                 .inflate(R.layout.fragment_note_editable_base,
                         container,
                         false);
         // Set soft keyboard listener
-        setSoftKeyboardListener(view);
-        title = view.findViewById(R.id.et_title);
-        details = view.findViewById(R.id.et_details);
+        setSoftKeyboardListener(rootView);
+        title = rootView.findViewById(R.id.et_title);
+        details = rootView.findViewById(R.id.et_details);
         // Setup fab action
-        setupFabAction(view);
+        setupFabAction(rootView);
         // setup fab animations
         setupFabAnimations();
 
-        return view;
+        return rootView;
     }
 
     @Override
@@ -111,6 +118,14 @@ public abstract class BaseEditableNoteFragment extends Fragment {
         Bundle args = new Bundle();
         args.putInt("deletedNoteId", deletedNoteId);
         navController.navigate(R.id.nav_details_to_home, args);
+    }
+
+    void setBackgroundColor(int colorId) {
+        rootView.setBackgroundColor(colorId);
+    }
+
+    void hideColorPickerDialog() {
+        colorPickerDialog.cancel();
     }
 
     private void setSoftKeyboardListener(final View view) {
@@ -205,7 +220,6 @@ public abstract class BaseEditableNoteFragment extends Fragment {
         fabChangeColor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setupColorPickerFabs(v);
                 displayColorPickerDialog();
             }
         });
@@ -218,77 +232,82 @@ public abstract class BaseEditableNoteFragment extends Fragment {
         });
     }
 
-    private void setupColorPickerFabs(View view) {
-        fabWhite = view.findViewById(R.id.fab_white);
-        fabWhite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        fabPink = view.findViewById(R.id.fab_pink);
-        fabPink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        fabYellow = view.findViewById(R.id.fab_yellow);
-        fabYellow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        fabBlue = view.findViewById(R.id.fab_blue);
-        fabBlue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        fabOrange = view.findViewById(R.id.fab_orange);
-        fabOrange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        fabGreen = view.findViewById(R.id.fab_green);
-        fabGreen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        fabPurple = view.findViewById(R.id.fab_purple);
-        fabPurple.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        fabGray = view.findViewById(R.id.fab_gray);
-        fabGray.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-    }
-
     private void displayColorPickerDialog() {
+        // Inflate dialog view
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_color_picker, null);
+        // Create dialog builder
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Pick Card Background")
-                .setView(getLayoutInflater().inflate(R.layout.dialog_color_picker, null))
-                .setIcon(R.drawable.ic_color)
+                .setView(dialogView)
                 .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
+                        hideColorPickerDialog();
                     }
                 });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        colorPickerDialog = builder.create();
+        // Setup color picker fabs
+        setupColorPickerFabs(dialogView);
+        colorPickerDialog.show();
+    }
+
+    private void setupColorPickerFabs(final View dialogView) {
+        FloatingActionButton fabWhite = dialogView.findViewById(R.id.fab_white);
+        fabWhite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onColorPickerFabClick(Color.parseColor(FAB_WHITE_COLOR_ID));
+            }
+        });
+        FloatingActionButton fabPink = dialogView.findViewById(R.id.fab_pink);
+        fabPink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onColorPickerFabClick(Color.parseColor(FAB_PINK_COLOR_ID));
+            }
+        });
+        FloatingActionButton fabYellow = dialogView.findViewById(R.id.fab_yellow);
+        fabYellow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onColorPickerFabClick(Color.parseColor(FAB_YELLOW_COLOR_ID));
+            }
+        });
+        FloatingActionButton fabBlue = dialogView.findViewById(R.id.fab_blue);
+        fabBlue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onColorPickerFabClick(Color.parseColor(FAB_BLUE_COLOR_ID));
+            }
+        });
+        FloatingActionButton fabOrange = dialogView.findViewById(R.id.fab_orange);
+        fabOrange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onColorPickerFabClick(Color.parseColor(FAB_ORANGE_COLOR_ID));
+            }
+        });
+        FloatingActionButton fabGreen = dialogView.findViewById(R.id.fab_green);
+        fabGreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onColorPickerFabClick(Color.parseColor(FAB_GREEN_COLOR_ID));
+            }
+        });
+        FloatingActionButton fabPurple = dialogView.findViewById(R.id.fab_purple);
+        fabPurple.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onColorPickerFabClick(Color.parseColor(FAB_PURPLE_COLOR_ID));
+            }
+        });
+        FloatingActionButton fabGray = dialogView.findViewById(R.id.fab_gray);
+        fabGray.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onColorPickerFabClick(Color.parseColor(FAB_GRAY_COLOR_ID));
+            }
+        });
+
     }
 }
