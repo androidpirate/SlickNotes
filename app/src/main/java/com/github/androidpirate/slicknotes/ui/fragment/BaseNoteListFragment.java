@@ -138,6 +138,7 @@ public abstract class BaseNoteListFragment extends Fragment
         Bundle args = new Bundle();
         args.putInt("noteId", noteId);
         args.putBoolean("notePinStatus", notePinStatus);
+        args.putInt("navigationBase", navigationBase);
         navigateToNoteDetails(args);
     }
 

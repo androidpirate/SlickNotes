@@ -68,8 +68,8 @@ public abstract class BaseEditableNoteFragment extends Fragment
     private FloatingActionButton fabShare;
     private NavController navController;
     private AlertDialog colorPickerDialog;
-    boolean isFabActionOpen = false;
-    boolean isFabOn = true;
+    private boolean isFabActionOpen = false;
+    private boolean isFabOn = true;
 
     abstract void onColorPickerFabClick(int colorId);
 
@@ -167,6 +167,10 @@ public abstract class BaseEditableNoteFragment extends Fragment
 
     void hideColorPickerDialog() {
         colorPickerDialog.cancel();
+    }
+
+    void setFabActionVisibility() {
+        hideFabAction();
     }
 
     private void setSoftKeyboardListener(final View view) {

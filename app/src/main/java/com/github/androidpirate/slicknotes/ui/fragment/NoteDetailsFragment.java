@@ -33,14 +33,20 @@ import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Note;
 import com.github.androidpirate.slicknotes.viewmodel.NoteDetailViewModel;
 
+import java.util.Objects;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class NoteDetailsFragment extends BaseEditableNoteFragment {
 
+    private static final int NOTE_LIST_BASE = 0;
+    private static final int TRASH_LIST_BASE = 1;
+
     private NoteDetailViewModel viewModel;
     private boolean pinStatus;
     private int noteId;
+    private int navigationBase;
 
     public NoteDetailsFragment() {
         // Required empty public constructor
@@ -53,6 +59,7 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
         if(getArguments() != null) {
             pinStatus = getArguments().getBoolean("notePinStatus");
             noteId = getArguments().getInt("noteId");
+            navigationBase = getArguments().getInt("navigationBase");
         }
     }
 
@@ -76,15 +83,25 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
                         viewModel.updateDatabaseNote(note);
                     }
                 });
+        if(navigationBase == TRASH_LIST_BASE) {
+            title.setFocusable(false);
+            details.setFocusable(false);
+            Objects.requireNonNull(getActivity()).invalidateOptionsMenu();
+            setFabActionVisibility();
+        }
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.note_details_menu, menu);
-        // Set pin icon status
-        MenuItem pin = menu.findItem(R.id.action_pin);
-        setPinIcon(pinStatus, pin);
+        if(navigationBase == NOTE_LIST_BASE) {
+            inflater.inflate(R.menu.note_details_list_base_menu, menu);
+            // Set pin icon status
+            MenuItem pin = menu.findItem(R.id.action_pin);
+            setPinIcon(pinStatus, pin);
+        } else {
+            inflater.inflate(R.menu.note_details_trash_base_menu, menu);
+        }
     }
 
     @Override
