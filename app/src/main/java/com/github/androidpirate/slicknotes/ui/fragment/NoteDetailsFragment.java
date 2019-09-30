@@ -118,6 +118,14 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
                 viewModel.moveNoteToTrash();
                 navigateToList(noteId);
                 break;
+            case R.id.action_restore:
+                viewModel.restoreNote();
+                navigateToTrash();
+                break;
+            case R.id.action_delete:
+                viewModel.deleteNote();
+                navigateToTrash();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

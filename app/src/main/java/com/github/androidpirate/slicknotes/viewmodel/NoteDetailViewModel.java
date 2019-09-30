@@ -64,6 +64,14 @@ public class NoteDetailViewModel extends BaseNoteViewModel {
         databaseModel.setTrash(true);
     }
 
+    public void restoreNote() {
+        databaseModel.setTrash(false);
+    }
+
+    public void deleteNote() {
+        repo.deleteDatabaseNote(databaseModel);
+    }
+
     public void updateNote(String title, String details) {
         databaseModel.setTitle(title);
         databaseModel.setDetails(details);

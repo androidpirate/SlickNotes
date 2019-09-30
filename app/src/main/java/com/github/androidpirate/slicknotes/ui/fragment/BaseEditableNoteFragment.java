@@ -161,6 +161,10 @@ public abstract class BaseEditableNoteFragment extends Fragment
         navController.navigate(R.id.nav_details_to_home, args);
     }
 
+    void navigateToTrash() {
+        navController.navigate(R.id.nav_details_to_trash);
+    }
+
     void setBackgroundColor(int colorId) {
         rootView.setBackgroundColor(colorId);
     }

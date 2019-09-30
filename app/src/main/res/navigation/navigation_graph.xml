@@ -74,6 +74,10 @@
             android:id="@+id/nav_details_to_home"
             app:destination="@id/nav_home"/>
 
+        <action
+            android:id="@+id/nav_details_to_trash"
+            app:destination="@id/nav_trash"/>
+
     </fragment>
 
     <fragment
