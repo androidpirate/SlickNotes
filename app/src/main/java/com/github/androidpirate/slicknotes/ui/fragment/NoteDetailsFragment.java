@@ -19,6 +19,8 @@
 package com.github.androidpirate.slicknotes.ui.fragment;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,6 +33,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Note;
+import com.github.androidpirate.slicknotes.util.CustomTextWatcher;
 import com.github.androidpirate.slicknotes.viewmodel.NoteDetailViewModel;
 
 import java.util.Objects;
@@ -67,22 +70,35 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         viewModel = ViewModelProviders.of(this).get(NoteDetailViewModel.class);
-        viewModel.getDatabaseNote(noteId)
-                .observe(this, new Observer<Note>() {
+        viewModel.getDatabaseNote(noteId).observe(this, new Observer<Note>() {
+            @Override
+            public void onChanged(Note note) {
+                setBackgroundColor(note.getColorId());
+                title.setText(note.getTitle());
+                // Set cursor at the end of title
+                title.setSelection(title.getText().length());
+                title.clearFocus();
+                details.setText(note.getDetails());
+                // Set cursor at the end of details
+                details.setSelection(details.getText().length());
+                details.clearFocus();
+
+                title.addTextChangedListener(new CustomTextWatcher() {
                     @Override
-                    public void onChanged(Note note) {
-                        setBackgroundColor(note.getColorId());
-                        title.setText(note.getTitle());
-                        // Set cursor at the end of title
-                        title.setSelection(title.getText().length());
-                        title.clearFocus();
-                        details.setText(note.getDetails());
-                        // Set cursor at the end of details
-                        details.setSelection(details.getText().length());
-                        details.clearFocus();
-                        viewModel.updateDatabaseNote(note);
-                    }
+                    public void onTextChanged(String _after) {
+                        viewModel.updateDatabaseNoteTitle(_after);
+                   }
                 });
+                details.addTextChangedListener(new CustomTextWatcher() {
+                   @Override
+                    public void onTextChanged(String _after) {
+                       viewModel.updateDatabaseNoteDetails(_after);
+                   }
+               });
+                viewModel.updateDatabaseNote(note);
+            }
+        });
+
         if(navigationBase == TRASH_LIST_BASE) {
             title.setFocusable(false);
             details.setFocusable(false);
@@ -133,7 +149,7 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
     @Override
     public void onPause() {
         super.onPause();
-        viewModel.updateNote(title.getText().toString(), details.getText().toString());
+        viewModel.updateNote();
         if(isKeyboardOn) {
             hideSoftKeyboard();
         }

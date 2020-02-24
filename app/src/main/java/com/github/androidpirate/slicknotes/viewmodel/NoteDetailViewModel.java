@@ -42,6 +42,18 @@ public class NoteDetailViewModel extends BaseNoteViewModel {
         this.databaseModel = note;
     }
 
+    public void updateDatabaseNoteTitle(String title) {
+        if(databaseModel != null) {
+            databaseModel.setTitle(title);
+        }
+    }
+
+    public void updateDatabaseNoteDetails(String details) {
+        if(databaseModel != null) {
+            databaseModel.setDetails(details);
+        }
+    }
+
     public boolean updateNotePinStatus() {
         databaseModel.setPinned(!databaseModel.isPinned());
         return databaseModel.isPinned();
@@ -72,9 +84,9 @@ public class NoteDetailViewModel extends BaseNoteViewModel {
         repo.deleteDatabaseNote(databaseModel);
     }
 
-    public void updateNote(String title, String details) {
-        databaseModel.setTitle(title);
-        databaseModel.setDetails(details);
+    public void updateNote() {
+//        databaseModel.setTitle(title);
+//        databaseModel.setDetails(details);
         if(checkDatabaseModelIsEmpty()) {
             moveNoteToTrash();
             repo.updateDatabaseNote(databaseModel);
