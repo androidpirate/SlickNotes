@@ -72,7 +72,7 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
         viewModel = ViewModelProviders.of(this).get(NoteDetailViewModel.class);
         viewModel.getDatabaseNote(noteId).observe(this, new Observer<Note>() {
             @Override
-            public void onChanged(Note note) {
+            public void onChanged(final Note note) {
                 setBackgroundColor(note.getColorId());
                 title.setText(note.getTitle());
                 // Set cursor at the end of title
@@ -86,13 +86,13 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
                 title.addTextChangedListener(new CustomTextWatcher() {
                     @Override
                     public void onTextChanged(String _after) {
-                        viewModel.updateDatabaseNoteTitle(_after);
+                        note.setTitle(_after);
                    }
                 });
                 details.addTextChangedListener(new CustomTextWatcher() {
                    @Override
                     public void onTextChanged(String _after) {
-                       viewModel.updateDatabaseNoteDetails(_after);
+                       note.setDetails(_after);
                    }
                });
                 viewModel.updateDatabaseNote(note);

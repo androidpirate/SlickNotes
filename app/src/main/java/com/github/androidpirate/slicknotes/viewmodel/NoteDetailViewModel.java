@@ -42,18 +42,6 @@ public class NoteDetailViewModel extends BaseNoteViewModel {
         this.databaseModel = note;
     }
 
-    public void updateDatabaseNoteTitle(String title) {
-        if(databaseModel != null) {
-            databaseModel.setTitle(title);
-        }
-    }
-
-    public void updateDatabaseNoteDetails(String details) {
-        if(databaseModel != null) {
-            databaseModel.setDetails(details);
-        }
-    }
-
     public boolean updateNotePinStatus() {
         databaseModel.setPinned(!databaseModel.isPinned());
         return databaseModel.isPinned();
