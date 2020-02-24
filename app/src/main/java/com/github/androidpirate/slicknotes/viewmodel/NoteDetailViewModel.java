@@ -85,8 +85,6 @@ public class NoteDetailViewModel extends BaseNoteViewModel {
     }
 
     public void updateNote() {
-//        databaseModel.setTitle(title);
-//        databaseModel.setDetails(details);
         if(checkDatabaseModelIsEmpty()) {
             moveNoteToTrash();
             repo.updateDatabaseNote(databaseModel);
