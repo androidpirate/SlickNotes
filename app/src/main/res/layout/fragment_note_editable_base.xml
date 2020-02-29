@@ -29,7 +29,12 @@
 
     <EditText
         android:id="@+id/et_title"
+        android:layout_width="@dimen/match_constraint_size"
+        android:layout_height="wrap_content"
         style="@style/EditNoteHeader"
+        android:layout_marginTop="@dimen/margin_8"
+        android:layout_marginStart="@dimen/margin_8"
+        android:layout_marginEnd="@dimen/margin_8"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
