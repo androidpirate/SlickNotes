@@ -88,12 +88,4 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
-    <!-- Note header text style -->
-    <style name="NoteListHeader">
-        <item name="android:layout_width">@dimen/match_constraint_size</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">@dimen/margin_16</item>
-        <item name="android:layout_marginTop">@dimen/margin_8</item>
-        <item name="android:layout_marginBottom">@dimen/margin_8</item>
-    </style>
 </resources>

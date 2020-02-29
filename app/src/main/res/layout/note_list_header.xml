@@ -25,7 +25,11 @@
 
     <TextView
         android:id="@+id/tv_list_header"
-        style="@style/NoteListHeader"
+        android:layout_width="@dimen/match_constraint_size"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_8"
+        android:layout_marginBottom="@dimen/margin_8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
