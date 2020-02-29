@@ -35,7 +35,9 @@
 
         <ImageView
             android:id="@+id/nav_header_icon"
-            style="@style/NavHeaderIcon"
+            android:layout_width="@dimen/nav_header_icon_width"
+            android:layout_height="@dimen/nav_header_icon_height"
+            android:src="@drawable/ic_slick_note"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 

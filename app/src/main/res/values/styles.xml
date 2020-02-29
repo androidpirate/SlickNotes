@@ -15,13 +15,6 @@
         <item name="android:fitsSystemWindows">true</item>
     </style>
 
-    <!-- Navigation header icon style -->
-    <style name="NavHeaderIcon">
-        <item name="android:layout_width">@dimen/nav_header_icon_width</item>
-        <item name="android:layout_height">@dimen/nav_header_icon_height</item>
-        <item name="android:src">@drawable/ic_slick_note</item>
-    </style>
-
     <!-- Navigation title style -->
     <style name="NavHeaderTitle">
         <item name="android:layout_width">wrap_content</item>
