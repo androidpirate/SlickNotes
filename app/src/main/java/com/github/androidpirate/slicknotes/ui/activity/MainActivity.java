@@ -35,6 +35,7 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
+    private Toolbar toolbar;
     private NavigationView navView;
     private NavController navController;
 
@@ -42,17 +43,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // Get navController
-        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        // Set Toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        // Setup views
+        setupViews();
+        // Setup navigation controller and app navigation with drawer
+        setupNavigation();
+        // Set drawer click listener
+        setDrawerClickListener();
+    }
+
+    private void setupViews() {
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
-        // Get AppBarConfig
+        navView = findViewById(R.id.nav_view);
+    }
+
+    private void setupNavigation() {
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         AppBarConfiguration appBarConfiguration = getAppBarConfig();
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
-        navView = findViewById(R.id.nav_view);
-        setDrawerClickListener();
     }
 
     private AppBarConfiguration getAppBarConfig() {
