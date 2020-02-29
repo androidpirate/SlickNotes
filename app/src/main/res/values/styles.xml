@@ -9,37 +9,6 @@
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
-    <!-- Content frame style -->
-<!--    <style name="ContentFrame">-->
-<!--        <item name="android:layout_width">match_parent</item>-->
-<!--        <item name="android:layout_height">match_parent</item>-->
-<!--    </style>-->
-
-    <!-- Inner content frame style -->
-<!--    <style name="InnerContentFrame" parent="ContentFrame">-->
-<!--        <item name="android:layout_margin">@dimen/margin_8</item>-->
-<!--    </style>-->
-
-    <!-- Inner content frame with padding style -->
-<!--    <style name="InnerContentFrameWithPadding" parent="ContentFrame">-->
-<!--        <item name="android:padding">@dimen/padding_8</item>-->
-<!--    </style>-->
-
-    <!-- List header content frame style -->
-<!--    <style name="ListHeaderContentFrame" parent="ContentFrame">-->
-<!--        <item name="android:layout_height">wrap_content</item>-->
-<!--    </style>-->
-
-    <!-- Toolbar style -->
-    <style name="Toolbar">
-        <item name="android:layout_width">@dimen/match_constraint_size</item>
-        <item name="android:layout_height">?android:actionBarSize</item>
-        <item name="android:background">@color/colorPrimary</item>
-        <item name="android:theme">@style/Toolbar</item>
-        <item name="android:textColorPrimary">@color/colorToolbarFont</item>
-        <item name="android:textColorSecondary">@color/colorToolbarFont</item>
-    </style>
-
     <!-- NavigationView style -->
     <style name="NavView">
         <item name="android:layout_width">match_parent</item>
@@ -130,13 +99,6 @@
         <item name="android:gravity">center</item>
         <item name="android:visibility">gone</item>
     </style>
-
-    <!-- Note card style -->
-<!--    <style name="NoteCard" parent="InnerContentFrame">-->
-<!--        <item name="android:layout_width">match_parent</item>-->
-<!--        <item name="android:layout_height">wrap_content</item>-->
-<!--        <item name="android:longClickable">true</item>-->
-<!--    </style>-->
 
     <!-- Note card border style -->
     <style name="NoteCardBorder">
