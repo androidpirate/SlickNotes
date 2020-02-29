@@ -21,7 +21,6 @@ package com.github.androidpirate.slicknotes.ui.fragment;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -47,6 +46,9 @@ import androidx.navigation.Navigation;
 
 public abstract class BaseEditableNoteFragment extends Fragment
     implements View.OnClickListener {
+    private static final String EXTRA_NOTE_ID = "note_id";
+    private static final String PICKER_DIALOG_TITLE = "Pick Card Background";
+    private static final String PICKER_DIALOG_CANCEL = "Cancel";
 
     boolean isKeyboardOn = false;
     EditText title;
@@ -63,6 +65,10 @@ public abstract class BaseEditableNoteFragment extends Fragment
     private boolean isFabActionOpen = false;
     private boolean isFabOn = true;
 
+    /**
+     * Abstract methods for color picker dialog
+     * @param colorId Color resource id
+     */
     abstract void onColorPickerFabClick(int colorId);
 
     @Nullable
@@ -70,107 +76,73 @@ public abstract class BaseEditableNoteFragment extends Fragment
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        rootView = inflater
-                .inflate(R.layout.fragment_note_editable_base,
-                        container,
-                        false);
+        rootView = inflater.inflate(
+                R.layout.fragment_note_editable_base,
+                container,
+                false);
         // Set soft keyboard listener
         setSoftKeyboardListener(rootView);
-        title = rootView.findViewById(R.id.et_title);
-        details = rootView.findViewById(R.id.et_details);
+        // Setup views
+        setupViews(rootView);
         // Setup fab action
         setupFabAction(rootView);
         // setup fab animations
         setupFabAnimations();
-
         return rootView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        navController = Navigation
-                .findNavController(
-                        Objects.requireNonNull(getActivity()),
-                        R.id.nav_host_fragment);
+        // Find navigation controller
+        navController = Navigation.findNavController(
+                Objects.requireNonNull(getActivity()),
+                R.id.nav_host_fragment);
     }
 
     @Override
     public void onClick(View v) {
+        @NonNull
+        Context context = Objects.requireNonNull(getContext());
         switch (v.getId()) {
-            case R.id.fab_actions:
-                animateFab();
+            case R.id.fab_actions: animateFab();
                 break;
             case R.id.fab_add_label:
                 break;
-            case R.id.fab_change_color:
-                displayColorPickerDialog();
+            case R.id.fab_change_color: displayColorPickerDialog();
                 break;
             case R.id.fab_share:
                 break;
             case R.id.fab_white:
-                onColorPickerFabClick(ContextCompat.getColor(
-                        Objects.requireNonNull(getContext()),
-                        R.color.colorFabWhite));
+                onColorPickerFabClick(ContextCompat.getColor(context, R.color.colorFabWhite));
                 break;
             case R.id.fab_pink:
-                onColorPickerFabClick(ContextCompat.getColor(
-                        Objects.requireNonNull(getContext()),
-                        R.color.colorFabPink)
-                );
+                onColorPickerFabClick(ContextCompat.getColor(context, R.color.colorFabPink));
                 break;
             case R.id.fab_yellow:
-                onColorPickerFabClick(ContextCompat.getColor(
-                        Objects.requireNonNull(getContext()),
-                        R.color.colorFabYellow)
-                );
+                onColorPickerFabClick(ContextCompat.getColor(context, R.color.colorFabYellow));
                 break;
             case R.id.fab_blue:
-                onColorPickerFabClick(ContextCompat.getColor(
-                        Objects.requireNonNull(getContext()),
-                        R.color.colorFabBlue)
-                );
+                onColorPickerFabClick(ContextCompat.getColor(context, R.color.colorFabBlue));
                 break;
             case R.id.fab_orange:
-                onColorPickerFabClick(ContextCompat.getColor(
-                        Objects.requireNonNull(getContext()),
-                        R.color.colorFabOrange));
+                onColorPickerFabClick(ContextCompat.getColor(context, R.color.colorFabOrange));
                 break;
             case R.id.fab_green:
-                onColorPickerFabClick(ContextCompat.getColor(
-                        Objects.requireNonNull(getContext()),
-                        R.color.colorFabGreen)
-                );
+                onColorPickerFabClick(ContextCompat.getColor(context, R.color.colorFabGreen));
                 break;
             case R.id.fab_purple:
-                onColorPickerFabClick(ContextCompat.getColor(
-                        Objects.requireNonNull(getContext()),
-                        R.color.colorFabPurple)
-                );
+                onColorPickerFabClick(ContextCompat.getColor(context, R.color.colorFabPurple));
                 break;
             case R.id.fab_gray:
-                onColorPickerFabClick(ContextCompat.getColor(
-                        Objects.requireNonNull(getContext()),
-                        R.color.colorFabGray));
+                onColorPickerFabClick(ContextCompat.getColor(context, R.color.colorFabGray));
                 break;
-        }
-    }
-
-    void hideSoftKeyboard() {
-        InputMethodManager inputManager = (InputMethodManager)
-                Objects.requireNonNull(getActivity())
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-        View currentFocusedView = getActivity().getCurrentFocus();
-        if(currentFocusedView != null) {
-            Objects.requireNonNull(inputManager)
-                    .hideSoftInputFromWindow(currentFocusedView.getWindowToken(),
-                            InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
 
     void navigateToList(int deletedNoteId) {
         Bundle args = new Bundle();
-        args.putInt("deletedNoteId", deletedNoteId);
+        args.putInt(EXTRA_NOTE_ID, deletedNoteId);
         navController.navigate(R.id.nav_details_to_home, args);
     }
 
@@ -190,29 +162,32 @@ public abstract class BaseEditableNoteFragment extends Fragment
         hideFabAction();
     }
 
-    private void setSoftKeyboardListener(final View view) {
-        view.getViewTreeObserver()
-            .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    Rect r = new Rect();
-                    //r will be populated with the coordinates of
-                    // your view that area still visible.
-                    view.getWindowVisibleDisplayFrame(r);
-                    int heightDiff = view.getRootView().getHeight() - (r.bottom - r.top);
-                    if (heightDiff > 500 && isFabOn) {
-                        // if more than 100 pixels, its probably a keyboard...
-                        isKeyboardOn = true;
-                        isFabOn = false;
-                        hideFabAction();
-                    } else if (heightDiff < 500 && !isFabOn){
-                        isKeyboardOn = false;
-                        isFabOn = true;
-                        clearFocusFromTextFields();
-                        showFabAction();
-                    }
-                }
-            });
+    void hideSoftKeyboard() {
+        @NonNull
+        InputMethodManager inputManager = (InputMethodManager) Objects.requireNonNull(
+                Objects.requireNonNull(getActivity()).getSystemService(Context.INPUT_METHOD_SERVICE));
+        View currentFocusedView = getActivity().getCurrentFocus();
+        if(currentFocusedView != null) {
+            inputManager.hideSoftInputFromWindow(
+                    currentFocusedView.getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
+    private void setupViews(View rootView) {
+        title = rootView.findViewById(R.id.et_title);
+        details = rootView.findViewById(R.id.et_details);
+    }
+
+    private void setupFabAction(View view) {
+        fabAction = view.findViewById(R.id.fab_actions);
+        fabAction.setOnClickListener(this);
+        fabAddLabel = view.findViewById(R.id.fab_add_label);
+        fabAddLabel.setOnClickListener(this);
+        fabChangeColor = view.findViewById(R.id.fab_change_color);
+        fabChangeColor.setOnClickListener(this);
+        fabShare = view.findViewById(R.id.fab_share);
+        fabShare.setOnClickListener(this);
     }
 
     private void clearFocusFromTextFields() {
@@ -228,6 +203,17 @@ public abstract class BaseEditableNoteFragment extends Fragment
         fabRotateRight = AnimationUtils.loadAnimation(context, R.anim.fab_rotate_right);
         fabActionShow = AnimationUtils.loadAnimation(context, R.anim.fab_action_show);
         fabActionHide = AnimationUtils.loadAnimation(context, R.anim.fab_action_hide);
+    }
+
+    private void showFabAction() {
+        fabAction.startAnimation(fabActionShow);
+    }
+
+    private void hideFabAction() {
+        if(isFabActionOpen) {
+            animateFab();
+        }
+        fabAction.startAnimation(fabActionHide);
     }
 
     private void animateFab() {
@@ -252,48 +238,26 @@ public abstract class BaseEditableNoteFragment extends Fragment
         }
     }
 
-    private void showFabAction() {
-        fabAction.startAnimation(fabActionShow);
-    }
-
-    private void hideFabAction() {
-        if(isFabActionOpen) {
-            animateFab();
-        }
-        fabAction.startAnimation(fabActionHide);
-    }
-
-    private void setupFabAction(View view) {
-        fabAction = view.findViewById(R.id.fab_actions);
-        fabAction.setOnClickListener(this);
-        fabAddLabel = view.findViewById(R.id.fab_add_label);
-        fabAddLabel.setOnClickListener(this);
-        fabChangeColor = view.findViewById(R.id.fab_change_color);
-        fabChangeColor.setOnClickListener(this);
-        fabShare = view.findViewById(R.id.fab_share);
-        fabShare.setOnClickListener(this);
-    }
-
     private void displayColorPickerDialog() {
         // Inflate dialog view
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_color_picker, null);
         // Create dialog builder
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Pick Card Background")
+        builder.setTitle(PICKER_DIALOG_TITLE)
                 .setView(dialogView)
-                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                .setNegativeButton(PICKER_DIALOG_CANCEL, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         hideColorPickerDialog();
                     }
                 });
         colorPickerDialog = builder.create();
-        // Setup color picker fabs
-        setupColorPickerFabs(dialogView);
+        // Setup color picker FABs
+        setupColorPickerFABs(dialogView);
         colorPickerDialog.show();
     }
 
-    private void setupColorPickerFabs(final View dialogView) {
+    private void setupColorPickerFABs(final View dialogView) {
         FloatingActionButton fabWhite = dialogView.findViewById(R.id.fab_white);
         fabWhite.setOnClickListener(this);
         FloatingActionButton fabPink = dialogView.findViewById(R.id.fab_pink);
@@ -310,5 +274,30 @@ public abstract class BaseEditableNoteFragment extends Fragment
         fabPurple.setOnClickListener(this);
         FloatingActionButton fabGray = dialogView.findViewById(R.id.fab_gray);
         fabGray.setOnClickListener(this);
+    }
+
+    private void setSoftKeyboardListener(final View view) {
+        view.getViewTreeObserver()
+                .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        Rect r = new Rect();
+                        //r will be populated with the coordinates of
+                        // your view that area still visible.
+                        view.getWindowVisibleDisplayFrame(r);
+                        int heightDiff = view.getRootView().getHeight() - (r.bottom - r.top);
+                        if (heightDiff > 500 && isFabOn) {
+                            // if more than 100 pixels, its probably a keyboard...
+                            isKeyboardOn = true;
+                            isFabOn = false;
+                            hideFabAction();
+                        } else if (heightDiff < 500 && !isFabOn){
+                            isKeyboardOn = false;
+                            isFabOn = true;
+                            clearFocusFromTextFields();
+                            showFabAction();
+                        }
+                    }
+                });
     }
 }
