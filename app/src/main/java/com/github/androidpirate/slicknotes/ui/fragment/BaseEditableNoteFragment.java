@@ -46,7 +46,9 @@ import androidx.navigation.Navigation;
 
 public abstract class BaseEditableNoteFragment extends Fragment
     implements View.OnClickListener {
-    private static final String EXTRA_NOTE_ID = "note_id";
+    static final String EXTRA_NOTE_ID = "note_id";
+    static final String NOTE_PIN_STATUS = "note_pin_status";
+    static final String NAVIGATION_BASE = "navigation_base";
     private static final String PICKER_DIALOG_TITLE = "Pick Card Background";
     private static final String PICKER_DIALOG_CANCEL = "Cancel";
 

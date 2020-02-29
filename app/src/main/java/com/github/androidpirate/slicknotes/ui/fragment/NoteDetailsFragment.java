@@ -19,8 +19,6 @@
 package com.github.androidpirate.slicknotes.ui.fragment;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -42,10 +40,8 @@ import java.util.Objects;
  * A simple {@link Fragment} subclass.
  */
 public class NoteDetailsFragment extends BaseEditableNoteFragment {
-
     private static final int NOTE_LIST_BASE = 0;
     private static final int TRASH_LIST_BASE = 1;
-
     private NoteDetailViewModel viewModel;
     private boolean pinStatus;
     private int noteId;
@@ -60,9 +56,9 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         if(getArguments() != null) {
-            pinStatus = getArguments().getBoolean("notePinStatus");
-            noteId = getArguments().getInt("noteId");
-            navigationBase = getArguments().getInt("navigationBase");
+            pinStatus = getArguments().getBoolean(NOTE_PIN_STATUS);
+            noteId = getArguments().getInt(EXTRA_NOTE_ID);
+            navigationBase = getArguments().getInt(NAVIGATION_BASE);
         }
     }
 
@@ -82,7 +78,6 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
                 // Set cursor at the end of details
                 details.setSelection(details.getText().length());
                 details.clearFocus();
-
                 title.addTextChangedListener(new CustomTextWatcher() {
                     @Override
                     public void onTextChanged(String _after) {
