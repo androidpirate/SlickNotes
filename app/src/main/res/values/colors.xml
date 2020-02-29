@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <!-- App Theme -->
+    <color name="colorPrimary">#0F71BE</color>
+    <color name="colorPrimaryDark">#1E37C2</color>
+    <color name="colorAccent">#FF9800</color>
+    <!-- Basic -->
     <color name="colorToolbarFont">#FDFDFD</color>
     <color name="colorEmptyListMessage">#B6B6B6</color>
     <color name="contentFontColor">#1D1D1D</color>
+    <!-- Color Picker Dialog -->
     <color name="colorFabWhite">#FAFAFA</color>
     <color name="colorFabPink">#F2B4F7</color>
     <color name="colorFabYellow">#F8EDB2</color>
