@@ -21,7 +21,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
-    style="@style/NoteCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_8"
+    android:longClickable="true"
     app:cardCornerRadius="5dp">
 
     <FrameLayout
@@ -29,7 +32,9 @@
         style="@style/NoteCardBorder"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/InnerContentFrame">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_8">
 
         <TextView
             android:id="@+id/tv_pin"

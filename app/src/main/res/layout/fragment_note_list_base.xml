@@ -20,7 +20,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/InnerContentFrame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/margin_8"
     tools:context=".ui.fragment.NoteListFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
