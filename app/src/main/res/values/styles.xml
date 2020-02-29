@@ -16,17 +16,15 @@
     </style>
 
     <!-- Navigation title style -->
-    <style name="NavHeaderTitle">
+    <style name="NavHeaderTitle" parent="TextAppearance.AppCompat.Headline">
         <item name="android:text">@string/nav_header_title_text</item>
-        <item name="android:textSize">@dimen/nav_header_title</item>
         <item name="android:textColor">@color/colorToolbarFont</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <!-- Empty list message style -->
-    <style name="EmptyListMessage">
+    <style name="EmptyListMessage" parent="TextAppearance.AppCompat.Headline">
         <item name="android:text">@string/empty_list_message</item>
-        <item name="android:textSize">@dimen/nav_header_title</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorEmptyListMessage</item>
         <item name="android:gravity">center</item>
@@ -40,19 +38,17 @@
     </style>
 
     <!-- Note header style -->
-    <style name="NoteHeader">
+    <style name="NoteHeader" parent="TextAppearance.AppCompat.Title">
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/contentFontColor</item>
-        <item name="android:textSize">@dimen/content_header</item>
         <item name="android:maxLines">3</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 
     <!-- Note details style -->
-    <style name="NoteDetails">
+    <style name="NoteDetails" parent="TextAppearance.AppCompat.Subhead">
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">3</item>
-        <item name="android:textSize">@dimen/content_details</item>
         <item name="android:textColor">@color/contentFontColor</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
