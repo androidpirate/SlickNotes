@@ -22,6 +22,11 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!-- Toolbar style -->
+    <style name="Toolbar" parent="AppTheme">
+        <item name="android:textColorSecondary">@color/colorToolbarFont</item>
+    </style>
+
     <!-- Empty list message style -->
     <style name="EmptyListMessage" parent="TextAppearance.AppCompat.Headline">
         <item name="android:text">@string/empty_list_message</item>
