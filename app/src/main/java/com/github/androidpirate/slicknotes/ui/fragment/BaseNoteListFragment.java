@@ -54,6 +54,12 @@ public abstract class BaseNoteListFragment extends Fragment
     private int navigationBase;
     BaseListViewModel baseViewModel;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -65,12 +71,16 @@ public abstract class BaseNoteListFragment extends Fragment
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         emptyListMessage = view.findViewById(R.id.tv_empty_list_message);
         FloatingActionButton fab = view.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateToCreateNote();
-            }
-        });
+        if(navigationBase == NOTE_LIST_BASE) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    navigateToCreateNote();
+                }
+            });
+        } else {
+            fab.hide();
+        }
         return view;
     }
 
