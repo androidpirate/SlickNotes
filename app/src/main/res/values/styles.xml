@@ -53,11 +53,6 @@
         <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 
-    <!-- Pin tag style -->
-    <style name="PinTag" parent="NoteDetails">
-        <item name="android:visibility">gone</item>
-    </style>
-
     <!-- Note card checkbox style -->
     <style name="NoteCardCheckbox">
         <item name="android:layout_width">wrap_content</item>
