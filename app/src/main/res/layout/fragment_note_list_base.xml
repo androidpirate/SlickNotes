@@ -37,7 +37,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_note_list"
-        style="@style/NoteList"
+        android:layout_width="@dimen/match_constraint_size"
+        android:layout_height="@dimen/match_constraint_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

@@ -23,12 +23,6 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <!-- Note list style -->
-    <style name="NoteList">
-        <item name="android:layout_width">@dimen/match_constraint_size</item>
-        <item name="android:layout_height">@dimen/match_constraint_size</item>
-    </style>
-
     <!-- Empty list message style -->
     <style name="EmptyListMessage">
         <item name="android:layout_width">@dimen/match_constraint_size</item>
