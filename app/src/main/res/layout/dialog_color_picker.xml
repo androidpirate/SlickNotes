@@ -17,17 +17,22 @@
   ~
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_white"
-        style="@style/PickColorFabStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:backgroundTint="@color/colorFabWhite"
         app:fabSize="mini"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_16"
+        android:layout_marginBottom="@dimen/margin_32"
         app:layout_constraintEnd_toStartOf="@+id/fab_pink"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,9 +40,14 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_pink"
-        style="@style/PickColorFabStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:backgroundTint="@color/colorFabPink"
         app:fabSize="mini"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_16"
+        android:layout_marginBottom="@dimen/margin_32"
         app:layout_constraintEnd_toStartOf="@+id/fab_yellow"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/fab_white"
@@ -45,9 +55,14 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_yellow"
-        style="@style/PickColorFabStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:backgroundTint="@color/colorFabYellow"
         app:fabSize="mini"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_16"
+        android:layout_marginBottom="@dimen/margin_32"
         app:layout_constraintEnd_toStartOf="@+id/fab_blue"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/fab_pink"
@@ -55,19 +70,28 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_blue"
-        style="@style/PickColorFabStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:backgroundTint="@color/colorFabBlue"
         app:fabSize="mini"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_16"
+        android:layout_marginBottom="@dimen/margin_32"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/fab_yellow"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_orange"
-        style="@style/PickColorFabStyle"
-        android:layout_marginTop="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:backgroundTint="@color/colorFabOrange"
         app:fabSize="mini"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_16"
+        android:layout_marginBottom="@dimen/margin_32"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/fab_green"
         app:layout_constraintHorizontal_bias="0.5"
@@ -77,9 +101,14 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_green"
-        style="@style/PickColorFabStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:backgroundTint="@color/colorFabGreen"
         app:fabSize="mini"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_16"
+        android:layout_marginBottom="@dimen/margin_32"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/fab_purple"
         app:layout_constraintHorizontal_bias="0.5"
@@ -87,9 +116,14 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_purple"
-        style="@style/PickColorFabStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:backgroundTint="@color/colorFabPurple"
         app:fabSize="mini"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_16"
+        android:layout_marginBottom="@dimen/margin_32"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/fab_gray"
         app:layout_constraintHorizontal_bias="0.5"
@@ -97,13 +131,16 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_gray"
-        style="@style/PickColorFabStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:backgroundTint="@color/colorFabGray"
         app:fabSize="mini"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_16"
+        android:layout_marginBottom="@dimen/margin_32"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/fab_purple" />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

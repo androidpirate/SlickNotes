@@ -23,53 +23,6 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <!-- Fab styles -->
-    <style name="BaseFabStyle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginEnd">@dimen/margin_16</item>
-        <item name="android:layout_marginBottom">@dimen/margin_16</item>
-    </style>
-
-    <!-- Insert FAB -->
-    <style name="InsertFabStyle" parent="BaseFabStyle">
-        <item name="android:src">@drawable/ic_insert_note</item>
-    </style>
-
-    <!-- Actions FAB -->
-    <style name="ActionFabStyle" parent="BaseFabStyle">
-        <item name="android:src">@drawable/ic_add</item>
-    </style>
-
-    <!-- Add Labels FAB -->
-    <style name="AddLabelFabStyle" parent="BaseFabStyle">
-        <item name="android:src">@drawable/ic_label</item>
-        <item name="android:layout_marginBottom">@dimen/fab_bottom_margin_level_1</item>
-        <item name="android:visibility">invisible</item>
-    </style>
-
-    <!-- Change Color FAB -->
-    <style name="ChangeColorFabStyle" parent="BaseFabStyle">
-        <item name="android:src">@drawable/ic_color</item>
-        <item name="android:layout_marginBottom">@dimen/fab_bottom_margin_level_2</item>
-        <item name="android:visibility">invisible</item>
-    </style>
-
-    <!-- Share FAB -->
-    <style name="ShareFabStyle" parent="BaseFabStyle">
-        <item name="android:src">@drawable/ic_share</item>
-        <item name="android:layout_marginBottom">@dimen/fab_bottom_margin_level_3</item>
-        <item name="android:visibility">invisible</item>
-    </style>
-
-    <!-- Pick Color FAB -->
-    <style name="PickColorFabStyle" parent="BaseFabStyle">
-        <item name="android:layout_marginStart">@dimen/margin_16</item>
-        <item name="android:layout_marginEnd">@dimen/margin_16</item>
-        <item name="android:layout_marginTop">@dimen/margin_16</item>
-        <item name="android:layout_marginBottom">@dimen/margin_32</item>
-    </style>
-
     <!-- Note list style -->
     <style name="NoteList">
         <item name="android:layout_width">@dimen/match_constraint_size</item>
