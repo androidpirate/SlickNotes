@@ -31,6 +31,13 @@
         <item name="android:visibility">gone</item>
     </style>
 
+    <!-- NoteListHeader style -->
+    <style name="NoteListHeader" parent="TextAppearance.AppCompat.Subhead">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
     <!-- Note card border style -->
     <style name="NoteCardBorder">
         <item name="android:background">@drawable/card_border</item>
