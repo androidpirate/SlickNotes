@@ -11,10 +11,10 @@
     <!-- Color Picker Dialog -->
     <color name="colorFabWhite">#FAFAFA</color>
     <color name="colorFabPink">#F2B4F7</color>
-    <color name="colorFabYellow">#F8EDB2</color>
-    <color name="colorFabBlue">#B6CDFC</color>
-    <color name="colorFabOrange">#FAB266</color>
-    <color name="colorFabGreen">#B6FCB9</color>
+    <color name="colorFabYellow">#FFC107</color>
+    <color name="colorFabBlue">#49B8F5</color>
+    <color name="colorFabOrange">#FF8909</color>
+    <color name="colorFabGreen">#42ADA4</color>
     <color name="colorFabPurple">#C9B0F7</color>
-    <color name="colorFabGray">#D5D5D5</color>
+    <color name="colorFabGray">#D3CECE</color>
 </resources>

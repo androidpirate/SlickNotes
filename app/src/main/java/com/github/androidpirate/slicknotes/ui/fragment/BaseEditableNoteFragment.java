@@ -40,21 +40,13 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 public abstract class BaseEditableNoteFragment extends Fragment
     implements View.OnClickListener {
-
-    private static final String FAB_WHITE_COLOR_ID = "#FAFAFA";
-    private static final String FAB_PINK_COLOR_ID = "#F2B4F7";
-    private static final String FAB_YELLOW_COLOR_ID = "#F8EDB2";
-    private static final String FAB_BLUE_COLOR_ID = "#B6CDFC";
-    private static final String FAB_ORANGE_COLOR_ID = "#FAB266";
-    private static final String FAB_GREEN_COLOR_ID = "#B6FCB9";
-    private static final String FAB_PURPLE_COLOR_ID = "#C9B0F7";
-    private static final String FAB_GRAY_COLOR_ID = "#D5D5D5";
 
     boolean isKeyboardOn = false;
     EditText title;
@@ -117,28 +109,49 @@ public abstract class BaseEditableNoteFragment extends Fragment
             case R.id.fab_share:
                 break;
             case R.id.fab_white:
-                onColorPickerFabClick(Color.parseColor(FAB_WHITE_COLOR_ID));
+                onColorPickerFabClick(ContextCompat.getColor(
+                        Objects.requireNonNull(getContext()),
+                        R.color.colorFabWhite));
                 break;
             case R.id.fab_pink:
-                onColorPickerFabClick(Color.parseColor(FAB_PINK_COLOR_ID));
+                onColorPickerFabClick(ContextCompat.getColor(
+                        Objects.requireNonNull(getContext()),
+                        R.color.colorFabPink)
+                );
                 break;
             case R.id.fab_yellow:
-                onColorPickerFabClick(Color.parseColor(FAB_YELLOW_COLOR_ID));
+                onColorPickerFabClick(ContextCompat.getColor(
+                        Objects.requireNonNull(getContext()),
+                        R.color.colorFabYellow)
+                );
                 break;
             case R.id.fab_blue:
-                onColorPickerFabClick(Color.parseColor(FAB_BLUE_COLOR_ID));
+                onColorPickerFabClick(ContextCompat.getColor(
+                        Objects.requireNonNull(getContext()),
+                        R.color.colorFabBlue)
+                );
                 break;
             case R.id.fab_orange:
-                onColorPickerFabClick(Color.parseColor(FAB_ORANGE_COLOR_ID));
+                onColorPickerFabClick(ContextCompat.getColor(
+                        Objects.requireNonNull(getContext()),
+                        R.color.colorFabOrange));
                 break;
             case R.id.fab_green:
-                onColorPickerFabClick(Color.parseColor(FAB_GREEN_COLOR_ID));
+                onColorPickerFabClick(ContextCompat.getColor(
+                        Objects.requireNonNull(getContext()),
+                        R.color.colorFabGreen)
+                );
                 break;
             case R.id.fab_purple:
-                onColorPickerFabClick(Color.parseColor(FAB_PURPLE_COLOR_ID));
+                onColorPickerFabClick(ContextCompat.getColor(
+                        Objects.requireNonNull(getContext()),
+                        R.color.colorFabPurple)
+                );
                 break;
             case R.id.fab_gray:
-                onColorPickerFabClick(Color.parseColor(FAB_GRAY_COLOR_ID));
+                onColorPickerFabClick(ContextCompat.getColor(
+                        Objects.requireNonNull(getContext()),
+                        R.color.colorFabGray));
                 break;
         }
     }
