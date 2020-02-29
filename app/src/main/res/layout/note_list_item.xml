@@ -29,6 +29,8 @@
 
     <FrameLayout
         android:id="@+id/card_view_border"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         style="@style/NoteCardBorder"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
