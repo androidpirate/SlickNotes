@@ -36,6 +36,8 @@
 
     <TextView
         android:id="@+id/tv_empty_trash_list_message"
+        android:layout_width="@dimen/match_constraint_size"
+        android:layout_height="@dimen/match_constraint_size"
         style="@style/EmptyListMessage"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

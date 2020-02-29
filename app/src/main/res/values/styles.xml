@@ -25,8 +25,6 @@
 
     <!-- Empty list message style -->
     <style name="EmptyListMessage">
-        <item name="android:layout_width">@dimen/match_constraint_size</item>
-        <item name="android:layout_height">@dimen/match_constraint_size</item>
         <item name="android:text">@string/empty_list_message</item>
         <item name="android:textSize">@dimen/nav_header_title</item>
         <item name="android:textStyle">bold</item>
