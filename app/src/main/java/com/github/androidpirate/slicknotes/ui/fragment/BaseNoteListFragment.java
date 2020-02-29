@@ -30,7 +30,6 @@ import androidx.fragment.app.Fragment;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.androidpirate.slicknotes.R;
@@ -46,19 +45,13 @@ public abstract class BaseNoteListFragment extends Fragment
 
     static final int NOTE_LIST_BASE = 0;
     static final int TRASH_LIST_BASE = 1;
-
     private RecyclerView recyclerView;
     private NoteListAdapter adapter;
     private TextView emptyListMessage;
+    private FloatingActionButton fab;
     private NavController navController;
     private int navigationBase;
     BaseListViewModel baseViewModel;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     @Nullable
     @Override
@@ -66,29 +59,19 @@ public abstract class BaseNoteListFragment extends Fragment
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_note_list_base, container, false);
-        recyclerView = view.findViewById(R.id.rv_note_list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        emptyListMessage = view.findViewById(R.id.tv_empty_list_message);
-        FloatingActionButton fab = view.findViewById(R.id.fab);
-        if(navigationBase == NOTE_LIST_BASE) {
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    navigateToCreateNote();
-                }
-            });
-        } else {
-            fab.hide();
-        }
-        return view;
+        View rootView = inflater.inflate(R.layout.fragment_note_list_base, container, false);
+        // Setup vies
+        setupViews(rootView);
+        // Setup FAB
+        setupFab();
+        return rootView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        navController = Navigation
-                .findNavController(
+        // Find navigation controller
+        navController = Navigation.findNavController(
                         Objects.requireNonNull(getActivity()),
                         R.id.nav_host_fragment);
     }
@@ -99,11 +82,6 @@ public abstract class BaseNoteListFragment extends Fragment
 
     void setNavigationBase(int navigationBase) {
         this.navigationBase = navigationBase;
-    }
-
-    void displayEmptyListMessage() {
-        recyclerView.setVisibility(View.GONE);
-        emptyListMessage.setVisibility(View.VISIBLE);
     }
 
     void displayNotes(List<Note> notes) {
@@ -121,9 +99,33 @@ public abstract class BaseNoteListFragment extends Fragment
         recyclerView.setAdapter(adapter);
     }
 
+    private void setupViews(View rootView) {
+        recyclerView = rootView.findViewById(R.id.rv_note_list);
+        emptyListMessage = rootView.findViewById(R.id.tv_empty_list_message);
+        fab = rootView.findViewById(R.id.fab);
+    }
+
+    private void setupFab() {
+        if(navigationBase == NOTE_LIST_BASE) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    navigateToCreateNote();
+                }
+            });
+        } else {
+            fab.hide();
+        }
+    }
+
     private void displayRecyclerView(){
         recyclerView.setVisibility(View.VISIBLE);
         emptyListMessage.setVisibility(View.GONE);
+    }
+
+    void displayEmptyListMessage() {
+        recyclerView.setVisibility(View.GONE);
+        emptyListMessage.setVisibility(View.VISIBLE);
     }
 
     private void navigateToCreateNote() {
@@ -146,9 +148,9 @@ public abstract class BaseNoteListFragment extends Fragment
     @Override
     public void onNoteClick(int noteId, boolean notePinStatus) {
         Bundle args = new Bundle();
-        args.putInt("noteId", noteId);
-        args.putBoolean("notePinStatus", notePinStatus);
-        args.putInt("navigationBase", navigationBase);
+        args.putInt(BaseEditableNoteFragment.EXTRA_NOTE_ID, noteId);
+        args.putBoolean(BaseEditableNoteFragment.NOTE_PIN_STATUS, notePinStatus);
+        args.putInt(BaseEditableNoteFragment.NAVIGATION_BASE, navigationBase);
         navigateToNoteDetails(args);
     }
 
