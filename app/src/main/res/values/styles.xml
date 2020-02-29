@@ -17,13 +17,10 @@
 
     <!-- Navigation title style -->
     <style name="NavHeaderTitle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
         <item name="android:text">@string/nav_header_title_text</item>
         <item name="android:textSize">@dimen/nav_header_title</item>
         <item name="android:textColor">@color/colorToolbarFont</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:layout_marginTop">@dimen/margin_16</item>
     </style>
 
     <!-- Fab styles -->
