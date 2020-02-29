@@ -42,11 +42,15 @@
 
     <EditText
         android:id="@+id/et_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         style="@style/EditNoteDetails"
+        android:layout_marginTop="@dimen/margin_8"
+        android:layout_marginStart="@dimen/margin_8"
+        android:layout_marginEnd="@dimen/margin_8"
         app:layout_constraintTop_toBottomOf="@id/et_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         tools:text="Note Details Goes Here"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
