@@ -18,6 +18,7 @@
 
 package com.github.androidpirate.slicknotes.ui.fragment;
 
+import android.app.Application;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,7 +29,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.github.androidpirate.slicknotes.R;
+import com.github.androidpirate.slicknotes.util.NoteViewModelFactory;
 import com.github.androidpirate.slicknotes.viewmodel.NoteCreateViewModel;
+
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,7 +54,9 @@ public class NoteCreateFragment extends BaseEditableNoteFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = ViewModelProviders.of(this).get(NoteCreateViewModel.class);
+        NoteViewModelFactory factory = new NoteViewModelFactory(
+                Objects.requireNonNull(getActivity()).getApplication());
+        viewModel = ViewModelProviders.of(this, factory).get(NoteCreateViewModel.class);
     }
 
     @Override

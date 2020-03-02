@@ -32,6 +32,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Note;
 import com.github.androidpirate.slicknotes.util.CustomTextWatcher;
+import com.github.androidpirate.slicknotes.util.NoteViewModelFactory;
 import com.github.androidpirate.slicknotes.viewmodel.NoteDetailViewModel;
 
 import java.util.Objects;
@@ -65,7 +66,9 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = ViewModelProviders.of(this).get(NoteDetailViewModel.class);
+        NoteViewModelFactory factory = new NoteViewModelFactory(
+                Objects.requireNonNull(getActivity()).getApplication());
+        viewModel = ViewModelProviders.of(this, factory).get(NoteDetailViewModel.class);
         viewModel.getDatabaseNote(noteId).observe(this, new Observer<Note>() {
             @Override
             public void onChanged(final Note note) {

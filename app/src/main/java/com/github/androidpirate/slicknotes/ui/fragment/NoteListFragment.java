@@ -33,6 +33,7 @@ import android.widget.Toast;
 
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Note;
+import com.github.androidpirate.slicknotes.util.NoteViewModelFactory;
 import com.github.androidpirate.slicknotes.viewmodel.NoteListViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -64,7 +65,9 @@ public class NoteListFragment extends BaseNoteListFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = ViewModelProviders.of(this).get(NoteListViewModel.class);
+        NoteViewModelFactory factory = new NoteViewModelFactory(
+                Objects.requireNonNull(getActivity()).getApplication());
+        viewModel = ViewModelProviders.of(this, factory).get(NoteListViewModel.class);
         // Set baseViewModel
         baseViewModel = viewModel;
         viewModel.getDatabaseNotes().observe(this, new Observer<List<Note>>() {

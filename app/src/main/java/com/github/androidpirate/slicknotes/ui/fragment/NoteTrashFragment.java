@@ -31,6 +31,7 @@ import android.view.MenuItem;
 
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Note;
+import com.github.androidpirate.slicknotes.util.NoteViewModelFactory;
 import com.github.androidpirate.slicknotes.viewmodel.NoteTrashViewModel;
 
 import java.util.List;
@@ -57,7 +58,9 @@ public class NoteTrashFragment extends BaseNoteListFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = ViewModelProviders.of(this).get(NoteTrashViewModel.class);
+        NoteViewModelFactory factory = new NoteViewModelFactory(
+                Objects.requireNonNull(getActivity()).getApplication());
+        viewModel = ViewModelProviders.of(this, factory).get(NoteTrashViewModel.class);
         // Set baseViewModel
         baseViewModel = viewModel;
         viewModel.getDatabaseTrashNotes().observe(this, new Observer<List<Note>>() {
