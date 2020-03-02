@@ -32,9 +32,17 @@ import androidx.lifecycle.LiveData;
 public class NoteRepository {
     private NoteDao dao;
     private Executor executor;
+    private static NoteRepository INSTANCE;
 
-    public NoteRepository(Context context) {
-        this.dao = NoteDatabase.getInstance(context).dao();
+    public static NoteRepository getInstance(Context context) {
+        if(INSTANCE == null) {
+            INSTANCE = new NoteRepository(context);
+        }
+        return INSTANCE;
+    }
+
+    private NoteRepository(Context context) {
+        dao = NoteDatabase.getInstance(context).dao();
         executor = Executors.newSingleThreadExecutor();
     }
 
