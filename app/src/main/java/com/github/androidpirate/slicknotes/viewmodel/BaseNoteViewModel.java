@@ -22,20 +22,18 @@ import android.app.Application;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.github.androidpirate.slicknotes.data.Note;
 import com.github.androidpirate.slicknotes.repo.NoteRepository;
 
-public abstract class BaseNoteViewModel extends AndroidViewModel {
+public abstract class BaseNoteViewModel extends ViewModel {
     NoteRepository repo;
     LiveData<Note> uiModel;
     Note databaseModel;
 
-    BaseNoteViewModel(@NonNull Application application) {
-        super(application);
-        repo = new NoteRepository(application);
+    BaseNoteViewModel() {
     }
 
     public void updateNoteColor(int colorId) {
@@ -47,9 +45,9 @@ public abstract class BaseNoteViewModel extends AndroidViewModel {
     }
 
     void displayEmptyNoteDiscardedToast() {
-        Toast.makeText(getApplication(),
-                "Empty note is discarded.",
-                Toast.LENGTH_SHORT)
-                .show();
+//        Toast.makeText(getApplication(),
+//                "Empty note is discarded.",
+//                Toast.LENGTH_SHORT)
+//                .show();
     }
 }

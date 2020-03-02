@@ -18,14 +18,12 @@
 
 package com.github.androidpirate.slicknotes.viewmodel;
 
-import android.app.Application;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.github.androidpirate.slicknotes.data.Note;
 import com.github.androidpirate.slicknotes.repo.NoteRepository;
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 public class NoteListViewModel extends BaseListViewModel {
@@ -33,10 +31,9 @@ public class NoteListViewModel extends BaseListViewModel {
     private LiveData<List<Note>> uiModel;
     private List<Note> databaseModel;
 
-    public NoteListViewModel(@NonNull Application application) {
-        super(application);
-        repo = new NoteRepository(application);
-        initialize();
+    public NoteListViewModel(NoteRepository noteRepository) {
+        repo = noteRepository;
+        uiModel = repo.getDatabaseNotes();
     }
 
     public LiveData<List<Note>> getDatabaseNotes() {
@@ -70,7 +67,4 @@ public class NoteListViewModel extends BaseListViewModel {
        repo.updateNoteTrashStatus(noteId, false);
     }
 
-    private void initialize() {
-        uiModel = repo.getDatabaseNotes();
-    }
 }

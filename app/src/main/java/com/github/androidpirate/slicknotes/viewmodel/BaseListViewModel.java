@@ -21,8 +21,8 @@ package com.github.androidpirate.slicknotes.viewmodel;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.github.androidpirate.slicknotes.data.Note;
 import com.github.androidpirate.slicknotes.repo.NoteRepository;
@@ -30,7 +30,7 @@ import com.github.androidpirate.slicknotes.repo.NoteRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseListViewModel extends AndroidViewModel {
+public abstract class BaseListViewModel extends ViewModel {
     NoteRepository repo;
     LiveData<List<Note>> uiModel;
     List<Note> databaseModel;
@@ -38,9 +38,7 @@ public abstract class BaseListViewModel extends AndroidViewModel {
     List<Note> selectedNotes;
     private boolean hasAlternateMenu;
 
-    BaseListViewModel(@NonNull Application application) {
-        super(application);
-        repo = new NoteRepository(application);
+    BaseListViewModel() {
         selectedNotes = new ArrayList<>();
         selectedNoteIds = new ArrayList<>();
     }

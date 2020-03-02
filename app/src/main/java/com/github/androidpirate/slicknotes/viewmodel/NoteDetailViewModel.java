@@ -24,13 +24,14 @@ import java.util.Date;
 import java.util.List;
 
 import com.github.androidpirate.slicknotes.data.Note;
-import androidx.annotation.NonNull;
+import com.github.androidpirate.slicknotes.repo.NoteRepository;
+
 import androidx.lifecycle.LiveData;
 
 public class NoteDetailViewModel extends BaseNoteViewModel {
 
-    public NoteDetailViewModel(@NonNull Application application) {
-        super(application);
+    public NoteDetailViewModel(NoteRepository noteRepository) {
+        repo = noteRepository;
     }
 
     public LiveData<Note> getDatabaseNote(int noteId) {

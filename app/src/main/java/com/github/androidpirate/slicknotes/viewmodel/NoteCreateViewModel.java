@@ -18,22 +18,19 @@
 
 package com.github.androidpirate.slicknotes.viewmodel;
 
-import android.app.Application;
-
-import androidx.annotation.NonNull;
-
 import com.github.androidpirate.slicknotes.data.Note;
+import com.github.androidpirate.slicknotes.repo.NoteRepository;
 
 import java.util.Date;
 
 public class NoteCreateViewModel extends BaseNoteViewModel {
-
     private static final String DEFAULT_NOTE_TITLE = "";
     private static final String DEFAULT_NOTE_DETAILS = "";
+    private NoteRepository repo;
 
-    public NoteCreateViewModel(@NonNull Application application) {
-        super(application);
-        initialize();
+    public NoteCreateViewModel(NoteRepository noteRepository) {
+        repo = noteRepository;
+        databaseModel = new Note(DEFAULT_NOTE_TITLE, DEFAULT_NOTE_DETAILS, new Date());
     }
 
     public void insertNote(String title, String details) {
@@ -46,7 +43,4 @@ public class NoteCreateViewModel extends BaseNoteViewModel {
         }
     }
 
-    private void initialize() {
-        databaseModel = new Note(DEFAULT_NOTE_TITLE, DEFAULT_NOTE_DETAILS, new Date());
-    }
 }
