@@ -22,8 +22,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -106,7 +106,7 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         if(navigationBase == NOTE_LIST_BASE) {
             inflater.inflate(R.menu.note_details_list_base_menu, menu);
@@ -124,7 +124,7 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
             case R.id.action_pin:
                 pinStatus = viewModel.updateNotePinStatus();
                 setPinIcon(pinStatus, item);
-                displayPinToast();
+                displayPinToast(pinStatus);
                 break;
             case R.id.action_set_reminder:
                 break;
@@ -160,23 +160,4 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
         hideColorPickerDialog();
     }
 
-    private void setPinIcon(boolean isPinned, MenuItem item) {
-        if(isPinned) {
-            item.setIcon(R.drawable.ic_pin_selected);
-        } else {
-            item.setIcon(R.drawable.ic_pin);
-        }
-    }
-
-    private void displayPinToast() {
-        if(pinStatus) {
-            Toast.makeText(getContext(),
-                    getResources().getString(R.string.note_pinned_toast),
-                    Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getContext(),
-                    getResources().getString(R.string.note_unpinned_toast),
-                    Toast.LENGTH_SHORT).show();
-        }
-    }
 }

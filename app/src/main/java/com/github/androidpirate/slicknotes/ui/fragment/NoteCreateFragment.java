@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -48,6 +49,7 @@ public class NoteCreateFragment extends BaseEditableNoteFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        pinStatus = false;
     }
 
     @Override
@@ -59,7 +61,7 @@ public class NoteCreateFragment extends BaseEditableNoteFragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.note_create_menu, menu);
     }
@@ -68,6 +70,9 @@ public class NoteCreateFragment extends BaseEditableNoteFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_pin:
+                pinStatus = viewModel.updateNotePinStatus();
+                setPinIcon(pinStatus, item);
+                displayPinToast(pinStatus);
                 break;
             case R.id.action_set_reminder:
                 break;

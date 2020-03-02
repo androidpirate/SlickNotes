@@ -24,6 +24,7 @@ import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -31,6 +32,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.github.androidpirate.slicknotes.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -66,6 +68,7 @@ public abstract class BaseEditableNoteFragment extends Fragment
     private AlertDialog colorPickerDialog;
     private boolean isFabActionOpen = false;
     private boolean isFabOn = true;
+    boolean pinStatus;
 
     /**
      * Abstract methods for color picker dialog
@@ -162,6 +165,26 @@ public abstract class BaseEditableNoteFragment extends Fragment
 
     void setFabActionVisibility() {
         hideFabAction();
+    }
+
+    void setPinIcon(boolean isPinned, MenuItem item) {
+        if(isPinned) {
+            item.setIcon(R.drawable.ic_pin_selected);
+        } else {
+            item.setIcon(R.drawable.ic_pin);
+        }
+    }
+
+    void displayPinToast(boolean pinStatus) {
+        if(pinStatus) {
+            Toast.makeText(getContext(),
+                    getResources().getString(R.string.note_pinned_toast),
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(),
+                    getResources().getString(R.string.note_unpinned_toast),
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     void hideSoftKeyboard() {
