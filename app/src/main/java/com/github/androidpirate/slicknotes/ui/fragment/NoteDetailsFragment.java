@@ -27,7 +27,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Note;
@@ -68,8 +68,8 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
         super.onActivityCreated(savedInstanceState);
         NoteViewModelFactory factory = new NoteViewModelFactory(
                 Objects.requireNonNull(getActivity()).getApplication());
-        viewModel = ViewModelProviders.of(this, factory).get(NoteDetailViewModel.class);
-        viewModel.getDatabaseNote(noteId).observe(this, new Observer<Note>() {
+        viewModel = new ViewModelProvider(this, factory).get(NoteDetailViewModel.class);
+        viewModel.getDatabaseNote(noteId).observe(getViewLifecycleOwner(), new Observer<Note>() {
             @Override
             public void onChanged(final Note note) {
                 setBackgroundColor(note.getColorId());

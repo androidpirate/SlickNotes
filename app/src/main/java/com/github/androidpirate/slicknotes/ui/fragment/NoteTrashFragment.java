@@ -23,6 +23,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.view.Menu;
@@ -60,10 +61,10 @@ public class NoteTrashFragment extends BaseNoteListFragment {
         super.onActivityCreated(savedInstanceState);
         NoteViewModelFactory factory = new NoteViewModelFactory(
                 Objects.requireNonNull(getActivity()).getApplication());
-        viewModel = ViewModelProviders.of(this, factory).get(NoteTrashViewModel.class);
+        viewModel = new ViewModelProvider(this, factory).get(NoteTrashViewModel.class);
         // Set baseViewModel
         baseViewModel = viewModel;
-        viewModel.getDatabaseTrashNotes().observe(this, new Observer<List<Note>>() {
+        viewModel.getDatabaseTrashNotes().observe(getViewLifecycleOwner(), new Observer<List<Note>>() {
             @Override
             public void onChanged(List<Note> notes) {
                 if(notes == null || notes.size() == 0){
