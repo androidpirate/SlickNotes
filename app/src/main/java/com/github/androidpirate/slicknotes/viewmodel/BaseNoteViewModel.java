@@ -18,10 +18,6 @@
 
 package com.github.androidpirate.slicknotes.viewmodel;
 
-import android.app.Application;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -42,6 +38,11 @@ public abstract class BaseNoteViewModel extends ViewModel {
 
     boolean checkDatabaseModelIsEmpty() {
         return databaseModel.getTitle().isEmpty() && databaseModel.getDetails().isEmpty();
+    }
+
+    public boolean updateNotePinStatus() {
+        databaseModel.setPinned(!databaseModel.isPinned());
+        return databaseModel.isPinned();
     }
 
     void displayEmptyNoteDiscardedToast() {

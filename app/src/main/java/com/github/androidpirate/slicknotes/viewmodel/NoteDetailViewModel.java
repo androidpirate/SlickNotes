@@ -18,8 +18,6 @@
 
 package com.github.androidpirate.slicknotes.viewmodel;
 
-import android.app.Application;
-
 import java.util.Date;
 import java.util.List;
 
@@ -41,11 +39,6 @@ public class NoteDetailViewModel extends BaseNoteViewModel {
 
     public void updateDatabaseNote(Note note) {
         this.databaseModel = note;
-    }
-
-    public boolean updateNotePinStatus() {
-        databaseModel.setPinned(!databaseModel.isPinned());
-        return databaseModel.isPinned();
     }
 
     public void updateNoteLabels(List<String> labels) {
