@@ -45,7 +45,8 @@ import java.util.Objects;
  * A simple {@link BaseNoteListFragment} subclass.
  */
 public class NoteListFragment extends BaseNoteListFragment {
-
+    private static final String ADD_LABEL_MESSAGE = "Adding labels will be available soon";
+    private static final String SEND_TO_TRASH_MESSAGE = "Selected notes are sent to trash";
     private NoteListViewModel viewModel;
 
     public NoteListFragment() {
@@ -58,8 +59,10 @@ public class NoteListFragment extends BaseNoteListFragment {
         setHasOptionsMenu(true);
         setNavigationBase(NOTE_LIST_BASE);
         // If a note is deleted before navigating to list, then display snack bar
-        if(getArguments() != null && getArguments().getInt("deletedNoteId") != -1) {
-            displayTrashSnackBar(getArguments().getInt("deletedNoteId"));
+        if(getArguments() != null) {
+            if (getArguments().getInt(BaseEditableNoteFragment.DELETED_NOTE_ID) != -1) {
+                displayTrashSnackBar(getArguments().getInt(BaseEditableNoteFragment.DELETED_NOTE_ID));
+            }
         }
     }
 
@@ -101,15 +104,12 @@ public class NoteListFragment extends BaseNoteListFragment {
                 toggleAlternateMenu();
             break;
             case R.id.action_add_label:
-                Toast.makeText(
-                        getContext(),
-                        "Action add label is clicked",
-                        Toast.LENGTH_SHORT)
-                        .show();
+                displayToast(ADD_LABEL_MESSAGE);
                 break;
             case R.id.action_send_to_trash:
                 viewModel.sendNotesToTrash(baseViewModel.getSelectedNotes());
                 toggleAlternateMenu();
+                displayToast(SEND_TO_TRASH_MESSAGE);
                 break;
         }
         return super.onOptionsItemSelected(item);

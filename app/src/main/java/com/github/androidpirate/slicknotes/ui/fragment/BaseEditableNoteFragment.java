@@ -50,6 +50,7 @@ import androidx.navigation.Navigation;
 public abstract class BaseEditableNoteFragment extends Fragment
     implements View.OnClickListener {
     static final String EXTRA_NOTE_ID = "note_id";
+    static final String DELETED_NOTE_ID = "deletedNoteId";
     static final String NOTE_PIN_STATUS = "note_pin_status";
     static final String NAVIGATION_BASE = "navigation_base";
     private static final String PICKER_DIALOG_TITLE = "Pick Card Background";
@@ -155,7 +156,7 @@ public abstract class BaseEditableNoteFragment extends Fragment
 
     void navigateToList(int deletedNoteId) {
         Bundle args = new Bundle();
-        args.putInt(EXTRA_NOTE_ID, deletedNoteId);
+        args.putInt(DELETED_NOTE_ID, deletedNoteId);
         navController.navigate(R.id.nav_details_to_home, args);
     }
 
