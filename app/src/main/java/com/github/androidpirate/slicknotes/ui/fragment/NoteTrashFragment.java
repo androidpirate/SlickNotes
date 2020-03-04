@@ -42,7 +42,7 @@ import java.util.Objects;
  * A simple {@link BaseNoteListFragment} subclass.
  */
 public class NoteTrashFragment extends BaseNoteListFragment {
-
+    private static final String NOTES_RESTORED_MESSAGE = "Selected notes are restored";
     private NoteTrashViewModel viewModel;
 
     public NoteTrashFragment() {
@@ -91,6 +91,7 @@ public class NoteTrashFragment extends BaseNoteListFragment {
         switch (item.getItemId()) {
             case R.id.action_restore:
                 viewModel.restoreNotes(baseViewModel.getSelectedNotes());
+                displayToast(NOTES_RESTORED_MESSAGE);
                 break;
             case R.id.action_delete:
                 viewModel.deleteNotes(baseViewModel.getSelectedNotes());

@@ -45,16 +45,10 @@ public class NoteTrashViewModel extends BaseListViewModel {
 
     public void restoreNotes(List<Note> notes) {
         databaseModel = new ArrayList<>(notes);
-        for (Note note:
-                databaseModel) {
+        for (Note note: databaseModel) {
             note.setTrash(false);
         }
         repo.updateDatabaseNotes(databaseModel);
     }
 
-//    private void initialize() {
-//        selectedNotes = new ArrayList<>();
-//        selectedNoteIds = new ArrayList<>();
-//        uiModel = repo.getDatabaseTrashNotes();
-//    }
 }
