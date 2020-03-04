@@ -68,9 +68,7 @@ public class NoteDetailViewModel extends BaseNoteViewModel {
 
     public void updateNote() {
         if(checkDatabaseModelIsEmpty()) {
-            moveNoteToTrash();
-            repo.updateDatabaseNote(databaseModel);
-            displayEmptyNoteDiscardedToast();
+            deleteNote();
         } else {
             repo.updateDatabaseNote(databaseModel);
         }
