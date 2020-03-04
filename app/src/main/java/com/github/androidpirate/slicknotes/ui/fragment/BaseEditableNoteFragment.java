@@ -21,6 +21,7 @@ package com.github.androidpirate.slicknotes.ui.fragment;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -117,6 +118,13 @@ public abstract class BaseEditableNoteFragment extends Fragment
             case R.id.fab_change_color: displayColorPickerDialog();
                 break;
             case R.id.fab_share:
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_SUBJECT, title.getText().toString());
+                sendIntent.putExtra(Intent.EXTRA_TEXT, details.getText().toString());
+                sendIntent.setType("text/plain");
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                startActivity(shareIntent);
                 break;
             case R.id.fab_white:
                 onColorPickerFabClick(ContextCompat.getColor(context, R.color.colorFabWhite));
