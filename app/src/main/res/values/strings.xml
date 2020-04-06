@@ -7,6 +7,7 @@
     <string name="nav_header_title_text">Welcome to Slick Notes</string>
     <!-- NoteListFragment resources -->
     <string name="empty_list_message">Currently there are no notes in the list.</string>
+    <string name="empty_trash_message">Currently there are no notes in the trash.</string>
     <!-- NoteDetailsFragment resources -->
     <string name="note_pinned_toast">Note is pinned.</string>
     <string name="note_unpinned_toast">Note is unpinned.</string>

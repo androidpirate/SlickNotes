@@ -126,6 +126,7 @@ public abstract class BaseNoteListFragment extends Fragment
 
     void displayEmptyListMessage() {
         recyclerView.setVisibility(View.GONE);
+        setEmptyListMessage();
         emptyListMessage.setVisibility(View.VISIBLE);
     }
 
@@ -144,6 +145,14 @@ public abstract class BaseNoteListFragment extends Fragment
             navController.navigate(R.id.nav_home_to_details, args);
         } else if (navigationBase == TRASH_LIST_BASE) {
             navController.navigate(R.id.nav_trash_to_details, args);
+        }
+    }
+
+    private void setEmptyListMessage() {
+        if(navigationBase == NOTE_LIST_BASE) {
+            emptyListMessage.setText(getString(R.string.empty_list_message));
+        } else if (navigationBase == TRASH_LIST_BASE) {
+            emptyListMessage.setText(getString(R.string.empty_trash_message));
         }
     }
 

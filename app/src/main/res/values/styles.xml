@@ -29,7 +29,6 @@
 
     <!-- Empty list message style -->
     <style name="EmptyListMessage" parent="TextAppearance.AppCompat.Headline">
-        <item name="android:text">@string/empty_list_message</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorEmptyListMessage</item>
         <item name="android:gravity">center</item>
