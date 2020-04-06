@@ -46,6 +46,7 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private List<Note> notes;
     private List<Object> contentList;
     private List<Integer> selectedNoteIds;
+    private boolean isLinearLayout = true;
     private NoteClickListener listener;
 
     interface NoteClickListener {
@@ -65,11 +66,16 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View itemView;
         if (viewType == TYPE_CARD) {
-            View itemView = inflater.inflate(R.layout.note_list_item, parent, false);
+            if(isLinearLayout) {
+                itemView = inflater.inflate(R.layout.note_list_item, parent, false);
+            } else {
+                itemView = inflater.inflate(R.layout.note_grid_item, parent, false);
+            }
             return new NoteCardHolder(itemView);
         } else if (viewType == TYPE_HEADER) {
-            View itemView = inflater.inflate(R.layout.note_list_header, parent, false);
+            itemView = inflater.inflate(R.layout.note_list_header, parent, false);
             return new NoteListHeaderHolder(itemView);
         }
         throw new IllegalArgumentException("Unsupported view type is used as an argument");
@@ -114,23 +120,21 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.selectedNoteIds = selectedNoteIds;
     }
 
+    void setLayoutStyle(boolean linearLayout) {
+        isLinearLayout = linearLayout;
+    }
+
     private void initializeContentList() {
         if(contentList.size() != 0) {
             contentList.clear();
         }
         boolean isPinnedHeaderCreated = false;
         boolean isOthersHeaderCreated = false;
-        for (Note note:
-             notes) {
-            if(
-                note.isPinned() &&
-                !isPinnedHeaderCreated ) {
+        for (Note note: notes) {
+            if(note.isPinned() && !isPinnedHeaderCreated ) {
                     contentList.add(PINNED_HEADER_TAG);
                     isPinnedHeaderCreated = true;
-            } else if (
-                isPinnedHeaderCreated &&
-                !note.isPinned() &&
-                !isOthersHeaderCreated) {
+            } else if (isPinnedHeaderCreated && !note.isPinned() && !isOthersHeaderCreated) {
                     contentList.add(OTHERS_HEADER_TAG);
                     isOthersHeaderCreated = true;
             }

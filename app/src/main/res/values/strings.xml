@@ -11,6 +11,7 @@
     <!-- NoteDetailsFragment resources -->
     <string name="note_pinned_toast">Note is pinned.</string>
     <string name="note_unpinned_toast">Note is unpinned.</string>
+    <string name="action_change_layout">Change Layout</string>
     <!-- NoteCreateFragment resources -->
     <string name="titleHint">Enter note title</string>
     <string name="detailsHint">Enter note details</string>
@@ -22,4 +23,5 @@
     <string name="action_delete">Delete Forever</string>
     <string name="action_set_reminder">Set Reminder</string>
     <string name="action_discard_note_title">Discard Note</string>
+
 </resources>

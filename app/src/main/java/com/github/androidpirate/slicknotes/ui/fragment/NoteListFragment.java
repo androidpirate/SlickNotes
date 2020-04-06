@@ -24,13 +24,11 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Note;
@@ -91,7 +89,14 @@ public class NoteListFragment extends BaseNoteListFragment {
         MenuInflater inflater = Objects.requireNonNull(getActivity()).getMenuInflater();
         menu.clear();
         if(baseViewModel.hasAlternateMenu()) {
+            inflater.inflate(R.menu.note_list_selected_menu, menu);
+        } else {
             inflater.inflate(R.menu.note_list_menu, menu);
+            if(getLayout()) {
+                menu.findItem(R.id.action_change_layout).setIcon(R.drawable.ic_grid);
+            } else {
+                menu.findItem(R.id.action_change_layout).setIcon(R.drawable.ic_list);
+            }
         }
         super.onPrepareOptionsMenu(menu);
     }
@@ -99,10 +104,12 @@ public class NoteListFragment extends BaseNoteListFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_change_layout:
+                setLayout();
             case R.id.action_pin:
                 viewModel.setNotePinStatus(baseViewModel.getSelectedNotes());
                 toggleAlternateMenu();
-            break;
+                break;
             case R.id.action_add_label:
                 displayToast(ADD_LABEL_MESSAGE);
                 break;

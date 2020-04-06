@@ -31,7 +31,9 @@ import androidx.fragment.app.Fragment;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Note;
@@ -52,6 +54,7 @@ public abstract class BaseNoteListFragment extends Fragment
     private FloatingActionButton fab;
     private NavController navController;
     private int navigationBase;
+    private boolean isLinearLayout = true;
     BaseListViewModel baseViewModel;
 
     @Nullable
@@ -89,6 +92,7 @@ public abstract class BaseNoteListFragment extends Fragment
         if(recyclerView.getVisibility() == View.GONE) {
             displayRecyclerView();
         }
+        setRecyclerViewLayoutManager();
         if(adapter == null) {
             adapter = new NoteListAdapter(notes, this);
         } else {
@@ -98,6 +102,32 @@ public abstract class BaseNoteListFragment extends Fragment
             adapter.loadSelectedNoteIds(baseViewModel.getSelectedNoteIds());
         }
         recyclerView.setAdapter(adapter);
+    }
+
+    void displayEmptyListMessage() {
+        recyclerView.setVisibility(View.GONE);
+        setEmptyListMessage();
+        emptyListMessage.setVisibility(View.VISIBLE);
+    }
+
+    void displayToast(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    boolean getLayout() {
+        return isLinearLayout;
+    }
+
+    void setLayout() {
+        isLinearLayout = !isLinearLayout;
+        adapter.setLayoutStyle(isLinearLayout);
+        setRecyclerViewLayoutManager();
+    }
+
+    private void setRecyclerViewLayoutManager() {
+        recyclerView.setLayoutManager(isLinearLayout ? new LinearLayoutManager(getContext()) :
+                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.getRecycledViewPool().clear();
     }
 
     private void setupViews(View rootView) {
@@ -122,16 +152,6 @@ public abstract class BaseNoteListFragment extends Fragment
     private void displayRecyclerView(){
         recyclerView.setVisibility(View.VISIBLE);
         emptyListMessage.setVisibility(View.GONE);
-    }
-
-    void displayEmptyListMessage() {
-        recyclerView.setVisibility(View.GONE);
-        setEmptyListMessage();
-        emptyListMessage.setVisibility(View.VISIBLE);
-    }
-
-    void displayToast(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     private void navigateToCreateNote() {
