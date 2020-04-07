@@ -37,6 +37,7 @@ public abstract class BaseListViewModel extends ViewModel {
     List<Integer> selectedNoteIds;
     List<Note> selectedNotes;
     private boolean hasAlternateMenu;
+    private int itemPosition = 0;
 
     BaseListViewModel() {
         selectedNotes = new ArrayList<>();
@@ -66,6 +67,14 @@ public abstract class BaseListViewModel extends ViewModel {
 
     public List<Integer> getSelectedNoteIds() {
         return selectedNoteIds;
+    }
+
+    public void setItemPosition(int position) {
+        itemPosition = position;
+    }
+
+    public int getItemPosition() {
+        return itemPosition;
     }
 
     public void clearSelections() {

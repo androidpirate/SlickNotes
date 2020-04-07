@@ -32,6 +32,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -48,6 +49,7 @@ public abstract class BaseNoteListFragment extends Fragment
 
     static final int NOTE_LIST_BASE = 0;
     static final int TRASH_LIST_BASE = 1;
+    private static final int TOP_OF_THE_LIST = 0;
     private RecyclerView recyclerView;
     private NoteListAdapter adapter;
     private TextView emptyListMessage;
@@ -102,6 +104,7 @@ public abstract class BaseNoteListFragment extends Fragment
             adapter.loadSelectedNoteIds(baseViewModel.getSelectedNoteIds());
         }
         recyclerView.setAdapter(adapter);
+        recyclerView.scrollToPosition(getItemScrollPosition());
     }
 
     void displayEmptyListMessage() {
@@ -176,11 +179,20 @@ public abstract class BaseNoteListFragment extends Fragment
         }
     }
 
+    private void setItemScrollPosition(int position) {
+        baseViewModel.setItemPosition(position);
+    }
+
+    private int getItemScrollPosition() {
+        return baseViewModel.getItemPosition();
+    }
+
     /**
      * ---- NoteListAdapter Click Listener Interface Implementation ----
      */
     @Override
-    public void onNoteClick(int noteId, boolean notePinStatus) {
+    public void onNoteClick(int noteId, boolean notePinStatus, int position) {
+        setItemScrollPosition(position);
         Bundle args = new Bundle();
         args.putInt(BaseEditableNoteFragment.EXTRA_NOTE_ID, noteId);
         args.putBoolean(BaseEditableNoteFragment.NOTE_PIN_STATUS, notePinStatus);
