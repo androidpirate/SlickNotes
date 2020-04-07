@@ -34,6 +34,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int EMPTY_LIST_SIZE = 0;
@@ -76,6 +77,11 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return new NoteCardHolder(itemView);
         } else if (viewType == TYPE_HEADER) {
             itemView = inflater.inflate(R.layout.note_list_header, parent, false);
+            if(!isLinearLayout) {
+                StaggeredGridLayoutManager.LayoutParams layoutParams =
+                        (StaggeredGridLayoutManager.LayoutParams) itemView.getLayoutParams();
+                layoutParams.setFullSpan(true);
+            }
             return new NoteListHeaderHolder(itemView);
         }
         throw new IllegalArgumentException("Unsupported view type is used as an argument");
