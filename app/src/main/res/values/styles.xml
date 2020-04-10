@@ -9,6 +9,24 @@
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
+    <style name="AppTheme.Default">
+        <item name="noteListHeader">@style/NoteListHeader</item>
+        <item name="noteTitle">@style/NoteTitle</item>
+        <item name="noteDetails">@style/NoteDetails</item>
+        <item name="editableNoteTitle">@style/EditNoteTitle</item>
+        <item name="editableNoteDetails">@style/EditNoteDetails</item>
+        <item name="emptyListMessage">@style/EmptyListMessage</item>
+    </style>
+
+    <style name="AppTheme.Large">
+        <item name="noteListHeader">@style/NoteListHeaderLarge</item>
+        <item name="noteTitle">@style/NoteTitleLarge</item>
+        <item name="noteDetails">@style/NoteDetailsLarge</item>
+        <item name="editableNoteTitle">@style/EditNoteTitleLarge</item>
+        <item name="editableNoteDetails">@style/EditNoteDetailsLarge</item>
+        <item name="emptyListMessage">@style/EmptyListMessageLarge</item>
+    </style>
+
     <!-- NavigationView style -->
     <style name="NavView">
         <item name="android:layout_gravity">start</item>
@@ -17,7 +35,6 @@
 
     <!-- Navigation title style -->
     <style name="NavHeaderTitle" parent="TextAppearance.AppCompat.Headline">
-        <item name="android:text">@string/nav_header_title_text</item>
         <item name="android:textColor">@color/colorToolbarFont</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -27,16 +44,31 @@
         <item name="android:textColorSecondary">@color/colorToolbarFont</item>
     </style>
 
-    <!-- Empty list message style -->
-    <style name="EmptyListMessage" parent="TextAppearance.AppCompat.Headline">
+    <!-- Empty list message default style -->
+    <style name="EmptyListMessage" parent="TextAppearance.AppCompat.Title">
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorEmptyListMessage</item>
         <item name="android:gravity">center</item>
         <item name="android:visibility">gone</item>
     </style>
 
-    <!-- NoteListHeader style -->
-    <style name="NoteListHeader" parent="TextAppearance.AppCompat.Subhead">
+    <!-- Empty list message large style -->
+    <style name="EmptyListMessageLarge" parent="TextAppearance.AppCompat.Headline">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorEmptyListMessage</item>
+        <item name="android:gravity">center</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <!-- NoteListHeader default style -->
+    <style name="NoteListHeader" parent="TextAppearance.AppCompat.Body2">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
+    <!-- NoteListHeader large style -->
+    <style name="NoteListHeaderLarge" parent="TextAppearance.AppCompat.Subhead">
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
@@ -48,15 +80,29 @@
         <item name="android:visibility">gone</item>
     </style>
 
-    <!-- Note header style -->
-    <style name="NoteHeader" parent="TextAppearance.AppCompat.Title">
+    <!-- Note title default style -->
+    <style name="NoteTitle" parent="TextAppearance.AppCompat.Subhead">
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/contentFontColor</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 
-    <!-- Note details style -->
-    <style name="NoteDetails" parent="TextAppearance.AppCompat.Subhead">
+    <!-- Note title large style -->
+    <style name="NoteTitleLarge" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/contentFontColor</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
+    <!-- Note details default style -->
+    <style name="NoteDetails" parent="TextAppearance.AppCompat.Body2">
+        <item name="android:ellipsize">end</item>
+        <item name="android:textColor">@color/contentFontColor</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
+    <!-- Note details large style -->
+    <style name="NoteDetailsLarge" parent="TextAppearance.AppCompat.Subhead">
         <item name="android:ellipsize">end</item>
         <item name="android:textColor">@color/contentFontColor</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
@@ -69,8 +115,8 @@
         <item name="android:visibility">gone</item>
     </style>
 
-    <!-- Editable note header text style-->
-    <style name="EditNoteHeader" parent="NoteHeader">
+    <!-- Editable note header text default style-->
+    <style name="EditNoteTitle" parent="NoteTitle">
         <item name="android:hint">@string/titleHint</item>
         <item name="android:maxLines">10</item>
         <item name="android:isScrollContainer">true</item>
@@ -78,8 +124,27 @@
         <item name="android:inputType">textMultiLine</item>
     </style>
 
-    <!-- Editable note detail text style -->
+    <!-- Editable note header text large style-->
+    <style name="EditNoteTitleLarge" parent="NoteTitleLarge">
+        <item name="android:hint">@string/titleHint</item>
+        <item name="android:maxLines">10</item>
+        <item name="android:isScrollContainer">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:inputType">textMultiLine</item>
+    </style>
+
+    <!-- Editable note detail text default style -->
     <style name="EditNoteDetails" parent="NoteDetails">
+        <item name="android:hint">@string/detailsHint</item>
+        <item name="android:layout_height">@dimen/match_constraint_size</item>
+        <item name="android:isScrollContainer">true</item>
+        <item name="android:maxLines">15</item>
+        <item name="android:gravity">top</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <!-- Editable note detail text large style -->
+    <style name="EditNoteDetailsLarge" parent="NoteDetailsLarge">
         <item name="android:hint">@string/detailsHint</item>
         <item name="android:layout_height">@dimen/match_constraint_size</item>
         <item name="android:isScrollContainer">true</item>

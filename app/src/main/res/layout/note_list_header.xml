@@ -27,7 +27,7 @@
         android:id="@+id/tv_list_header"
         android:layout_width="@dimen/match_constraint_size"
         android:layout_height="wrap_content"
-        style="@style/NoteListHeader"
+        style="?noteListHeader"
         android:layout_marginStart="@dimen/margin_16"
         android:layout_marginTop="@dimen/margin_16"
         app:layout_constraintStart_toStartOf="parent"

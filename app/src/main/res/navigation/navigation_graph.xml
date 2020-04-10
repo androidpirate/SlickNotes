@@ -41,6 +41,9 @@
         <action
             android:id="@+id/nav_home_to_details"
             app:destination="@+id/nav_details"/>
+        <action
+            android:id="@+id/action_nav_home_to_nav_settings"
+            app:destination="@id/nav_settings" />
 
     </fragment>
 
@@ -96,5 +99,11 @@
             app:destination="@+id/nav_details"/>
 
     </fragment>
+
+    <activity
+        android:id="@+id/nav_settings"
+        android:name="com.github.androidpirate.slicknotes.ui.activity.SettingsActivity"
+        android:label="Settings"
+        tools:layout="@layout/activity_settings"/>
 
 </navigation>

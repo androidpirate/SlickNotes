@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.github.androidpirate.slicknotes">
+    package="com.github.androidpirate.slicknotes">
 
     <application
         android:allowBackup="true"
@@ -11,14 +11,16 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.activity.MainActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
-            android:screenOrientation="portrait">
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.activity.SettingsActivity"
+            android:screenOrientation="sensorPortrait"
+            android:parentActivityName=".ui.activity.MainActivity"/>
     </application>
 
 </manifest>

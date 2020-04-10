@@ -20,6 +20,7 @@ package com.github.androidpirate.slicknotes.ui.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -27,7 +28,9 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
 
 import com.github.androidpirate.slicknotes.R;
@@ -38,11 +41,16 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navView;
     private NavController navController;
+    private SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // Set default Shared Preferences
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, true);
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        setAppTheme();
         // Setup views
         setupViews();
         // Setup navigation controller and app navigation with drawer
@@ -77,17 +85,35 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.nav_home:
                         navController.navigate(R.id.nav_home);
-                        drawerLayout.closeDrawers();
                         break;
                     case R.id.nav_trash:
                         navController.navigate(R.id.nav_trash);
-                        drawerLayout.closeDrawers();
                         break;
                     case R.id.nav_settings:
+                        navController.navigate(R.id.nav_settings);
                         break;
                 }
+                drawerLayout.closeDrawers();
                 return true;
             }
         });
+    }
+
+    private void setAppTheme() {
+        boolean darkTheme = sharedPref.getBoolean(getString(R.string.pref_theme_key), false);
+        if(darkTheme) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+        String defaultTextSize = getString(R.string.pref_text_size_default);
+        String textSize = sharedPref.getString(
+                getString(R.string.pref_text_size_key),
+                defaultTextSize);
+        if(textSize != null && textSize.equals(defaultTextSize)) {
+            setTheme(R.style.AppTheme_Default);
+        } else {
+            setTheme(R.style.AppTheme_Large);
+        }
     }
 }

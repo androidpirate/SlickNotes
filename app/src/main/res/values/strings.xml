@@ -23,5 +23,11 @@
     <string name="action_delete">Delete Forever</string>
     <string name="action_set_reminder">Set Reminder</string>
     <string name="action_discard_note_title">Discard Note</string>
-
+    <!-- Preferences resources -->
+    <string name="pref_theme_key">pref_theme</string>
+    <string name="pref_text_size_key">pref_text_size</string>
+    <string name="pref_text_size_default">Default</string>
+    <string name="pref_text_size_large">Large</string>
+    <string name="pref_theme_title">Dark Theme</string>
+    <string name="pref_text_size_title">Text Size</string>
 </resources>

@@ -37,4 +37,6 @@ dependencies {
     implementation "android.arch.navigation:navigation-ui:$nav_version"
     // NoteListViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    // Preference library
+    implementation "androidx.preference:preference:$preference_version"
 }
