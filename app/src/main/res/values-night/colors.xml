@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~
+  ~  Copyright (C) 2016 The Android Open Source Project
+  ~
+  ~      Licensed under the Apache License, Version 2.0 (the "License");
+  ~      you may not use this file except in compliance with the License.
+  ~      You may obtain a copy of the License at
+  ~
+  ~           http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~      Unless required by applicable law or agreed to in writing, software
+  ~      distributed under the License is distributed on an "AS IS" BASIS,
+  ~      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~      See the License for the specific language governing permissions and
+  ~      limitations under the License.
+  ~
+  -->
+
+<resources>
+    <!-- App Theme -->
+    <color name="colorPrimary">#010101</color>
+    <color name="colorPrimaryDark">#121212</color>
+    <color name="colorAccent">#DC8D19</color>
+    <!-- Basic -->
+    <color name="colorToolbarFont">#FDFDFD</color>
+    <color name="colorEmptyListMessage">#B6B6B6</color>
+    <color name="contentFontColor">#1D1D1D</color>
+    <!-- Color Picker Dialog -->
+    <color name="colorFabWhite">#FAFAFA</color>
+    <color name="colorFabPink">#F2B4F7</color>
+    <color name="colorFabYellow">#FFC107</color>
+    <color name="colorFabBlue">#49B8F5</color>
+    <color name="colorFabOrange">#FF8909</color>
+    <color name="colorFabGreen">#42ADA4</color>
+    <color name="colorFabPurple">#C9B0F7</color>
+    <color name="colorFabGray">#D3CECE</color>
+</resources>
