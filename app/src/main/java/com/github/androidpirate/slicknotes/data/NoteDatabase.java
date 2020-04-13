@@ -20,10 +20,18 @@ package com.github.androidpirate.slicknotes.data;
 
 import android.content.Context;
 
+import com.github.androidpirate.slicknotes.util.FakeData;
+
+import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
+import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 @Database(entities = {Note.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
@@ -31,12 +39,31 @@ public abstract class NoteDatabase extends RoomDatabase {
     private static NoteDatabase INSTANCE;
     public abstract NoteDao dao();
 
-    public static NoteDatabase getInstance(Context context) {
+    public static NoteDatabase getInstance(final Context context) {
         if(INSTANCE == null) {
             INSTANCE = Room.databaseBuilder(
                     context.getApplicationContext(),
                     NoteDatabase.class,
-                    "note-database").build();
+                    "note-database")
+                    // TODO: Make sure to use this callback only with debug version
+                    .addCallback(new Callback() {
+                        @Override
+                        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                            super.onCreate(db);
+                            Executor executor = Executors.newSingleThreadExecutor();
+                            executor.execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    List<Note> fakeNotes = FakeData.getNotes();
+                                    NoteDao dao = getInstance(context).dao();
+                                    for(Note note: fakeNotes) {
+                                        dao.insertDatabaseNote(note);
+                                    }
+                                }
+                            });
+                        }
+                    })
+                    .build();
         }
         return INSTANCE;
     }
