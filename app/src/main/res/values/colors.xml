@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App Theme -->
-    <color name="colorPrimary">#D62E24</color>
-    <color name="colorPrimaryDark">#B31107</color>
-    <color name="colorAccent">#FF9800</color>
+    <color name="colorPrimary">#7F0909</color>
+    <color name="colorPrimaryDark">#650C07</color>
+    <color name="colorAccent">#F3A406</color>
     <!-- Basic -->
     <color name="colorToolbarFont">#FDFDFD</color>
     <color name="colorEmptyListMessage">#B6B6B6</color>
