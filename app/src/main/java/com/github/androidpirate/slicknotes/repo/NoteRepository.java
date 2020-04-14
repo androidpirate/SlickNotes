@@ -69,7 +69,15 @@ public class NoteRepository {
                 dao.updateTrashStatus(noteId, isTrash);
             }
         });
+    }
 
+    public void updateNotePinStatus(final int noteId, final boolean isPinned) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                dao.updatePinStatus(noteId, isPinned);
+            }
+        });
     }
 
     public void insertDatabaseNote(final Note note) {
