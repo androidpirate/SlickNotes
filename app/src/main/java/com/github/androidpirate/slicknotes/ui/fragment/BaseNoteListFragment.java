@@ -172,6 +172,7 @@ public abstract class BaseNoteListFragment extends Fragment
 
     private void navigateToCreateNote() {
         baseViewModel.clearSelections();
+        baseViewModel.setItemPosition(adapter.getItemCount());
         navController.navigate(R.id.nav_home_to_create);
     }
 
