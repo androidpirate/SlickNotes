@@ -25,6 +25,7 @@
     <!-- Basic -->
     <color name="colorToolbarFont">#FDFDFD</color>
     <color name="colorEmptyListMessage">#B6B6B6</color>
+    <color name="colorCardBorder">#AE130A</color>
     <!-- Color Picker Dialog -->
     <color name="colorCardBgDefault">#1E1E1E</color>
     <color name="colorCardBgBlue">#49B8F5</color>

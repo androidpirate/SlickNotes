@@ -16,8 +16,16 @@
   ~      limitations under the License.
   ~
   -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@android:color/transparent"/>
-    <stroke android:width="3dp" android:color="@color/colorPrimary"/>
-    <padding android:bottom="0dp" android:left="0dp" android:right="0dp" android:top="0dp"/>
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid
+        android:color="@android:color/transparent"/>
+    <stroke
+        android:width="@dimen/card_border_stroke_width"
+        android:color="@color/colorCardBorder"/>
+    <padding
+        android:bottom="@dimen/padding_0"
+        android:left="@dimen/padding_0"
+        android:right="@dimen/padding_0"
+        android:top="@dimen/padding_0"/>
 </shape >

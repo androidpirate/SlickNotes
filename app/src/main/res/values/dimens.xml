@@ -37,4 +37,6 @@
     <!-- Nav Header -->
     <dimen name="nav_header_height">192dp</dimen>
     <dimen name="nav_header_icon_width">160dp</dimen>
+    <dimen name="card_border_stroke_width">4dp</dimen>
+    <dimen name="padding_0">0dp</dimen>
 </resources>
