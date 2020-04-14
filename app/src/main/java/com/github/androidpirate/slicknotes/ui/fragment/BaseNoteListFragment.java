@@ -18,7 +18,9 @@
 
 package com.github.androidpirate.slicknotes.ui.fragment;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +34,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -50,14 +51,22 @@ public abstract class BaseNoteListFragment extends Fragment
     static final int NOTE_LIST_BASE = 0;
     static final int TRASH_LIST_BASE = 1;
     private static final int TOP_OF_THE_LIST = 0;
+    private SharedPreferences sharedPref;
     private RecyclerView recyclerView;
     private NoteListAdapter adapter;
     private TextView emptyListMessage;
     private FloatingActionButton fab;
     private NavController navController;
     private int navigationBase;
-    private boolean isLinearLayout = true;
+    private boolean isLinearLayout;
     BaseListViewModel baseViewModel;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        isLinearLayout = sharedPref.getBoolean(getString(R.string.pref_layout_key), true);
+    }
 
     @Nullable
     @Override
@@ -94,12 +103,12 @@ public abstract class BaseNoteListFragment extends Fragment
         if(recyclerView.getVisibility() == View.GONE) {
             displayRecyclerView();
         }
-        setRecyclerViewLayoutManager();
         if(adapter == null) {
             adapter = new NoteListAdapter(notes, this);
         } else {
             adapter.loadNotes(notes);
         }
+        setLayoutStyle();
         if(baseViewModel.hasAlternateMenu()) {
             adapter.loadSelectedNoteIds(baseViewModel.getSelectedNoteIds());
         }
@@ -121,13 +130,17 @@ public abstract class BaseNoteListFragment extends Fragment
         return isLinearLayout;
     }
 
-    void setLayout() {
+    void setLayoutPreference() {
         isLinearLayout = !isLinearLayout;
-        adapter.setLayoutStyle(isLinearLayout);
-        setRecyclerViewLayoutManager();
+        sharedPref
+                .edit()
+                .putBoolean(getString(R.string.pref_layout_key), isLinearLayout)
+                .apply();
+        setLayoutStyle();
     }
 
-    private void setRecyclerViewLayoutManager() {
+    private void setLayoutStyle() {
+        adapter.setLayoutStyle(isLinearLayout);
         recyclerView.setLayoutManager(isLinearLayout ? new LinearLayoutManager(getContext()) :
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.getRecycledViewPool().clear();

@@ -105,7 +105,7 @@ public class NoteListFragment extends BaseNoteListFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_change_layout:
-                setLayout();
+                setLayoutPreference();
             case R.id.action_pin:
                 viewModel.setNotePinStatus(baseViewModel.getSelectedNotes());
                 toggleAlternateMenu();
