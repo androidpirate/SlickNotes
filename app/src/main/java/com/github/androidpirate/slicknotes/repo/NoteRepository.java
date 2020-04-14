@@ -58,14 +58,6 @@ public class NoteRepository {
         return dao.getTrashNotes();
     }
 
-    public LiveData<List<Note>> getPinnedDatabaseNotes() {
-        return dao.getPinnedNotes();
-    }
-
-    public LiveData<List<Note>> getNonPinnedDatabaseNotes() {
-        return dao.getNonPinnedNotes();
-    }
-
     public LiveData<Note> getDatabaseNote(int noteId) {
         return dao.getDatabaseNote(noteId);
     }
