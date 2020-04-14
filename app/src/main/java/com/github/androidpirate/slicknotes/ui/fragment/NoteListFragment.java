@@ -19,12 +19,14 @@
 package com.github.androidpirate.slicknotes.ui.fragment;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -45,6 +47,7 @@ import java.util.Objects;
 public class NoteListFragment extends BaseNoteListFragment {
     private static final String ADD_LABEL_MESSAGE = "Adding labels will be available soon";
     private static final String SEND_TO_TRASH_MESSAGE = "Selected notes are sent to trash";
+    private SharedPreferences sharedPref;
     private NoteListViewModel viewModel;
 
     public NoteListFragment() {
@@ -54,6 +57,7 @@ public class NoteListFragment extends BaseNoteListFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
         setHasOptionsMenu(true);
         setNavigationBase(NOTE_LIST_BASE);
         // If a note is deleted before navigating to list, then display snack bar
@@ -72,7 +76,11 @@ public class NoteListFragment extends BaseNoteListFragment {
         viewModel = new ViewModelProvider(this, factory).get(NoteListViewModel.class);
         // Set baseViewModel
         baseViewModel = viewModel;
-        viewModel.getDatabaseNotes().observe(getViewLifecycleOwner(), new Observer<List<Note>>() {
+        boolean addNewItemsOnTop = sharedPref
+                .getBoolean(getString(R.string.pref_item_order_key), false);
+        viewModel
+                .getDatabaseNotes(addNewItemsOnTop)
+                .observe(getViewLifecycleOwner(), new Observer<List<Note>>() {
             @Override
             public void onChanged(List<Note> notes) {
                 if(notes == null || notes.size() == 0){

@@ -43,8 +43,10 @@ import java.util.Objects;
 public class SettingsFragment extends PreferenceFragmentCompat {
     private SharedPreferences sharedPref;
     private SwitchPreference themePref;
+    private SwitchPreference itemOrderPref;
     private ListPreference textSizePref;
     private String themePrefKey;
+    private String itemOrderPrefKey;
     private String textSizePrefKey;
 
     public SettingsFragment() {
@@ -71,11 +73,13 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     private void getPreferences() {
         themePref = findPreference(themePrefKey);
+        itemOrderPref = findPreference(itemOrderPrefKey);
         textSizePref = findPreference(textSizePrefKey);
     }
 
     private void getPreferenceKeys() {
         themePrefKey = getString(R.string.pref_theme_key);
+        itemOrderPrefKey = getString(R.string.pref_item_order_key);
         textSizePrefKey = getString(R.string.pref_text_size_key);
     }
 
@@ -88,6 +92,16 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                         .putBoolean(themePrefKey, (Boolean) newValue)
                         .apply();
                 Objects.requireNonNull(getActivity()).recreate();
+                return true;
+            }
+        });
+        itemOrderPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                sharedPref
+                        .edit()
+                        .putBoolean(itemOrderPrefKey, (Boolean) newValue)
+                        .apply();
                 return true;
             }
         });

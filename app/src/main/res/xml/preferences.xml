@@ -26,6 +26,12 @@
         android:title="@string/pref_theme_title"
         android:summary="Switches app theme to light/dark theme."/>
 
+    <SwitchPreference
+        android:key="@string/pref_item_order_key"
+        android:defaultValue="false"
+        android:title="@string/pref_item_order_title"
+        android:summary="Adds recently created notes of top of the list."/>
+
     <ListPreference
         android:key="@string/pref_text_size_key"
         android:defaultValue="Default"

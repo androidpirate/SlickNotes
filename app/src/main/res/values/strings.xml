@@ -31,6 +31,7 @@
     <string name="pref_theme_title">Dark Theme</string>
     <string name="pref_text_size_title">Text Size</string>
     <string name="pref_layout_key">pref_layout</string>
+    <string name="pref_item_order_key">pref_item_order</string>
     <!-- Card background color resources -->
     <string name="color_default">default_color</string>
     <string name="color_blue">blue</string>
@@ -40,4 +41,5 @@
     <string name="color_pink">pink</string>
     <string name="color_purple">purple</string>
     <string name="color_yellow">yellow</string>
+    <string name="pref_item_order_title">Add New Items On Top</string>
 </resources>

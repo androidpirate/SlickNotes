@@ -46,8 +46,12 @@ public class NoteRepository {
         executor = Executors.newSingleThreadExecutor();
     }
 
-    public LiveData<List<Note>> getDatabaseNotes() {
-        return dao.getDatabaseNotes();
+    public LiveData<List<Note>> getDatabaseNotesDescending() {
+        return dao.getDatabaseNotesDescending();
+    }
+
+    public LiveData<List<Note>> getDatabaseNotesAscending() {
+        return dao.getDatabaseNotesAscending();
     }
 
     public LiveData<List<Note>> getDatabaseTrashNotes() {

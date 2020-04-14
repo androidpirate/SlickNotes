@@ -33,10 +33,14 @@ public class NoteListViewModel extends BaseListViewModel {
 
     public NoteListViewModel(NoteRepository noteRepository) {
         repo = noteRepository;
-        uiModel = repo.getDatabaseNotes();
     }
 
-    public LiveData<List<Note>> getDatabaseNotes() {
+    public LiveData<List<Note>> getDatabaseNotes(boolean addNewItemsOnTop) {
+        if(addNewItemsOnTop) {
+            uiModel = repo.getDatabaseNotesAscending();
+        } else {
+            uiModel = repo.getDatabaseNotesDescending();
+        }
         return uiModel;
     }
 
