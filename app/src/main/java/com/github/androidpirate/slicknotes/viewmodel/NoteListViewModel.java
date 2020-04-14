@@ -18,8 +18,6 @@
 
 package com.github.androidpirate.slicknotes.viewmodel;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 import com.github.androidpirate.slicknotes.data.Note;
@@ -27,9 +25,6 @@ import com.github.androidpirate.slicknotes.repo.NoteRepository;
 import androidx.lifecycle.LiveData;
 
 public class NoteListViewModel extends BaseListViewModel {
-    private NoteRepository repo;
-    private LiveData<List<Note>> uiModel;
-    private List<Note> databaseModel;
 
     public NoteListViewModel(NoteRepository noteRepository) {
         repo = noteRepository;
@@ -45,30 +40,22 @@ public class NoteListViewModel extends BaseListViewModel {
     }
 
     public void sendNotesToTrash(List<Note> notes) {
-        // TODO 1: Try to set trash status at Dao level
-        databaseModel = new ArrayList<>(notes);
         for (Note note:
-             databaseModel) {
-            note.setPinned(false);
-            note.setTrash(true);
+             notes) {
+            repo.updateNoteTrashStatus(note.getNoteId(), true);
         }
-        repo.updateDatabaseNotes(databaseModel);
         clearSelections();
     }
 
     public void setNotePinStatus(List<Note> notes) {
-        // TODO 2: Try to set pin status at Dao level
-        databaseModel = new ArrayList<>(notes);
         for (Note note:
-             databaseModel) {
-            note.setPinned(!note.isPinned());
+             notes) {
+            repo.updateNotePinStatus(note.getNoteId(), !note.isPinned());
         }
-        repo.updateDatabaseNotes(databaseModel);
         clearSelections();
     }
 
     public void restoreNote(int noteId) {
        repo.updateNoteTrashStatus(noteId, false);
     }
-
 }
