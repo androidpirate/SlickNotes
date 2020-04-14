@@ -83,28 +83,24 @@
     <!-- Note title default style -->
     <style name="NoteTitle" parent="TextAppearance.AppCompat.Subhead">
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/contentFontColor</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 
     <!-- Note title large style -->
     <style name="NoteTitleLarge" parent="TextAppearance.AppCompat.Title">
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/contentFontColor</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 
     <!-- Note details default style -->
     <style name="NoteDetails" parent="TextAppearance.AppCompat.Body2">
         <item name="android:ellipsize">end</item>
-        <item name="android:textColor">@color/contentFontColor</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 
     <!-- Note details large style -->
     <style name="NoteDetailsLarge" parent="TextAppearance.AppCompat.Subhead">
         <item name="android:ellipsize">end</item>
-        <item name="android:textColor">@color/contentFontColor</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 

@@ -7,7 +7,6 @@
     <!-- Basic -->
     <color name="colorToolbarFont">#FDFDFD</color>
     <color name="colorEmptyListMessage">#B6B6B6</color>
-    <color name="contentFontColor">#1D1D1D</color>
     <!-- Color Picker Dialog -->
     <color name="colorFabWhite">#FAFAFA</color>
     <color name="colorFabPink">#F2B4F7</color>
