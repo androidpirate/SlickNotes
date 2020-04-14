@@ -18,8 +18,7 @@
 
 package com.github.androidpirate.slicknotes.ui.fragment;
 
-import android.content.res.Resources;
-import android.graphics.Color;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -151,6 +150,13 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     class NoteCardHolder extends RecyclerView.ViewHolder {
+        private static final String COLOR_BLUE = "blue";
+        private static final String COLOR_GRAY = "gray";
+        private static final String COLOR_GREEN = "green";
+        private static final String COLOR_ORANGE = "orange";
+        private static final String COLOR_PINK = "pink";
+        private static final String COLOR_PURPLE = "purple";
+        private static final String COLOR_YELLOW = "yellow";
         private TextView title;
         private TextView details;
         private FrameLayout cardBorder;
@@ -197,37 +203,37 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         private void setCardBackgroundColor(String color) {
             switch (color) {
-                case "blue":
+                case COLOR_BLUE:
                     cardView.setCardBackgroundColor(
                             ContextCompat.getColor(
                                     itemView.getContext(), R.color.colorCardBgBlue));
                     break;
-                case "gray":
+                case COLOR_GRAY:
                     cardView.setCardBackgroundColor(
                             ContextCompat.getColor(
                                     itemView.getContext(), R.color.colorCardBgGray));
                     break;
-                case "green":
+                case COLOR_GREEN:
                     cardView.setCardBackgroundColor(
                             ContextCompat.getColor(
                                     itemView.getContext(), R.color.colorCardBgGreen));
                     break;
-                case "orange":
+                case COLOR_ORANGE:
                     cardView.setCardBackgroundColor(
                             ContextCompat.getColor(
                                     itemView.getContext(), R.color.colorCardBgOrange));
                     break;
-                case "pink":
+                case COLOR_PINK:
                     cardView.setCardBackgroundColor(
                             ContextCompat.getColor(
                                     itemView.getContext(), R.color.colorCardBgPink));
                     break;
-                case "purple":
+                case COLOR_PURPLE:
                     cardView.setCardBackgroundColor(
                             ContextCompat.getColor(
                                     itemView.getContext(), R.color.colorCardBgPurple));
                     break;
-                case "yellow":
+                case COLOR_YELLOW:
                     cardView.setCardBackgroundColor(
                             ContextCompat.getColor(
                                     itemView.getContext(), R.color.colorCardBgYellow));
