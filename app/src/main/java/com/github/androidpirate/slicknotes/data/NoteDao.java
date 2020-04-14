@@ -53,6 +53,8 @@ public interface NoteDao {
     void updateDatabaseNote(Note note);
     @Update
     void updateDatabaseNotes(List<Note> notes);
-    @Query("UPDATE Note SET note_trash_status = :isTrash WHERE noteId = :noteId")
+    @Query("UPDATE Note SET note_trash_status = :isTrash, note_pin_status = 0 WHERE noteId = :noteId")
     void updateTrashStatus(int noteId, boolean isTrash);
+    @Query("UPDATE Note SET note_pin_status = :pinStatus WHERE noteId = :noteId")
+    void updatePinStatus(int noteId, boolean pinStatus);
 }
