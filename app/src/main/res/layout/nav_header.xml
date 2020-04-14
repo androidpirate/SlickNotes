@@ -31,7 +31,9 @@
         android:layout_width="@dimen/nav_header_icon_width"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_slick_notes"
+        android:layout_marginTop="@dimen/margin_32"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
