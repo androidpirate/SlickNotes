@@ -72,7 +72,7 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
         viewModel.getDatabaseNote(noteId).observe(getViewLifecycleOwner(), new Observer<Note>() {
             @Override
             public void onChanged(final Note note) {
-                setBackgroundColor(note.getColorId());
+                setBackgroundColor(note.getColor());
                 title.setText(note.getTitle());
                 // Set cursor at the end of title
                 title.setSelection(title.getText().length());
@@ -154,9 +154,9 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
     }
 
     @Override
-    void onColorPickerFabClick(int colorId) {
-        viewModel.updateNoteColor(colorId);
-        setBackgroundColor(colorId);
+    void onColorPickerFabClick(String color) {
+        viewModel.updateNoteColor(color);
+        setBackgroundColor(color);
         hideColorPickerDialog();
     }
 

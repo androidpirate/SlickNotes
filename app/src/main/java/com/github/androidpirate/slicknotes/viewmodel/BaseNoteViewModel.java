@@ -29,11 +29,8 @@ public abstract class BaseNoteViewModel extends ViewModel {
     LiveData<Note> uiModel;
     Note databaseModel;
 
-    BaseNoteViewModel() {
-    }
-
-    public void updateNoteColor(int colorId) {
-        databaseModel.setColorId(colorId);
+    public void updateNoteColor(String color) {
+        databaseModel.setColor(color);
     }
 
     boolean checkDatabaseModelIsEmpty() {

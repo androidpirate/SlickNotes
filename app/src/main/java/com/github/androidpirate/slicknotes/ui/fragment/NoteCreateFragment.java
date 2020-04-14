@@ -92,9 +92,9 @@ public class NoteCreateFragment extends BaseEditableNoteFragment {
     }
 
     @Override
-    void onColorPickerFabClick(int colorId) {
-        viewModel.updateNoteColor(colorId);
-        setBackgroundColor(colorId);
+    void onColorPickerFabClick(String color) {
+        viewModel.updateNoteColor(color);
+        setBackgroundColor(color);
         hideColorPickerDialog();
     }
 }

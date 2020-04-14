@@ -30,4 +30,13 @@
     <string name="pref_text_size_large">Large</string>
     <string name="pref_theme_title">Dark Theme</string>
     <string name="pref_text_size_title">Text Size</string>
+    <!-- Card background color resources -->
+    <string name="color_default">default_color</string>
+    <string name="color_blue">blue</string>
+    <string name="color_gray">gray</string>
+    <string name="color_green">green</string>
+    <string name="color_orange">orange</string>
+    <string name="color_pink">pink</string>
+    <string name="color_purple">purple</string>
+    <string name="color_yellow">yellow</string>
 </resources>

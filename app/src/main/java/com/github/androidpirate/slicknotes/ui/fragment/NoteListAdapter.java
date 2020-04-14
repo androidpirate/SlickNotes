@@ -18,6 +18,8 @@
 
 package com.github.androidpirate.slicknotes.ui.fragment;
 
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,11 +30,11 @@ import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Note;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -164,7 +166,7 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         private void bindNote(final Note note) {
             // Set card background color
-            setCardBackgroundColor(note.getColorId());
+            setCardBackgroundColor(note.getColor());
             // Set card fields
             title.setText(note.getTitle());
             details.setText(note.getDetails());
@@ -193,8 +195,48 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
         }
 
-        private void setCardBackgroundColor(int colorId) {
-            cardView.setBackgroundColor(colorId);
+        private void setCardBackgroundColor(String color) {
+            switch (color) {
+                case "blue":
+                    cardView.setCardBackgroundColor(
+                            ContextCompat.getColor(
+                                    itemView.getContext(), R.color.colorCardBgBlue));
+                    break;
+                case "gray":
+                    cardView.setCardBackgroundColor(
+                            ContextCompat.getColor(
+                                    itemView.getContext(), R.color.colorCardBgGray));
+                    break;
+                case "green":
+                    cardView.setCardBackgroundColor(
+                            ContextCompat.getColor(
+                                    itemView.getContext(), R.color.colorCardBgGreen));
+                    break;
+                case "orange":
+                    cardView.setCardBackgroundColor(
+                            ContextCompat.getColor(
+                                    itemView.getContext(), R.color.colorCardBgOrange));
+                    break;
+                case "pink":
+                    cardView.setCardBackgroundColor(
+                            ContextCompat.getColor(
+                                    itemView.getContext(), R.color.colorCardBgPink));
+                    break;
+                case "purple":
+                    cardView.setCardBackgroundColor(
+                            ContextCompat.getColor(
+                                    itemView.getContext(), R.color.colorCardBgPurple));
+                    break;
+                case "yellow":
+                    cardView.setCardBackgroundColor(
+                            ContextCompat.getColor(
+                                    itemView.getContext(), R.color.colorCardBgYellow));
+                    break;
+                default:
+                    cardView.setCardBackgroundColor(
+                            ContextCompat.getColor(
+                                    itemView.getContext(), R.color.colorCardBgDefault));
+            }
         }
     }
 

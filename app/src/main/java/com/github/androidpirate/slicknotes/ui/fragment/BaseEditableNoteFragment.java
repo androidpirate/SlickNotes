@@ -74,9 +74,9 @@ public abstract class BaseEditableNoteFragment extends Fragment
 
     /**
      * Abstract methods for color picker dialog
-     * @param colorId Color resource id
+     * @param color Color string resource
      */
-    abstract void onColorPickerFabClick(int colorId);
+    abstract void onColorPickerFabClick(String color);
 
     @Nullable
     @Override
@@ -127,29 +127,29 @@ public abstract class BaseEditableNoteFragment extends Fragment
                 Intent shareIntent = Intent.createChooser(sendIntent, null);
                 startActivity(shareIntent);
                 break;
-            case R.id.fab_white:
-                onColorPickerFabClick(ContextCompat.getColor(context, R.color.colorFabWhite));
+            case R.id.fab_default:
+                onColorPickerFabClick(getString(R.string.color_default));
                 break;
             case R.id.fab_pink:
-                onColorPickerFabClick(ContextCompat.getColor(context, R.color.colorFabPink));
+                onColorPickerFabClick(getString(R.string.color_pink));
                 break;
             case R.id.fab_yellow:
-                onColorPickerFabClick(ContextCompat.getColor(context, R.color.colorFabYellow));
+                onColorPickerFabClick(getString(R.string.color_yellow));
                 break;
             case R.id.fab_blue:
-                onColorPickerFabClick(ContextCompat.getColor(context, R.color.colorFabBlue));
+                onColorPickerFabClick(getString(R.string.color_blue));
                 break;
             case R.id.fab_orange:
-                onColorPickerFabClick(ContextCompat.getColor(context, R.color.colorFabOrange));
+                onColorPickerFabClick(getString(R.string.color_orange));
                 break;
             case R.id.fab_green:
-                onColorPickerFabClick(ContextCompat.getColor(context, R.color.colorFabGreen));
+                onColorPickerFabClick(getString(R.string.color_green));
                 break;
             case R.id.fab_purple:
-                onColorPickerFabClick(ContextCompat.getColor(context, R.color.colorFabPurple));
+                onColorPickerFabClick(getString(R.string.color_purple));
                 break;
             case R.id.fab_gray:
-                onColorPickerFabClick(ContextCompat.getColor(context, R.color.colorFabGray));
+                onColorPickerFabClick(getString(R.string.color_gray));
                 break;
         }
     }
@@ -164,8 +164,48 @@ public abstract class BaseEditableNoteFragment extends Fragment
         navController.navigate(R.id.nav_details_to_trash);
     }
 
-    void setBackgroundColor(int colorId) {
-        rootView.setBackgroundColor(colorId);
+    void setBackgroundColor(String color) {
+        switch (color) {
+            case "blue":
+                rootView.setBackgroundColor(
+                        ContextCompat.getColor(
+                                Objects.requireNonNull(getContext()), R.color.colorCardBgBlue));
+                break;
+            case "gray":
+                rootView.setBackgroundColor(
+                        ContextCompat.getColor(
+                                Objects.requireNonNull(getContext()), R.color.colorCardBgGray));
+                break;
+            case "green":
+                rootView.setBackgroundColor(
+                        ContextCompat.getColor(
+                                Objects.requireNonNull(getContext()), R.color.colorCardBgGreen));
+                break;
+            case "orange":
+                rootView.setBackgroundColor(
+                        ContextCompat.getColor(
+                                Objects.requireNonNull(getContext()), R.color.colorCardBgOrange));
+                break;
+            case "pink":
+                rootView.setBackgroundColor(
+                        ContextCompat.getColor(
+                                Objects.requireNonNull(getContext()), R.color.colorCardBgPink));
+                break;
+            case "purple":
+                rootView.setBackgroundColor(
+                        ContextCompat.getColor(
+                                Objects.requireNonNull(getContext()), R.color.colorCardBgPurple));
+                break;
+            case "yellow":
+                rootView.setBackgroundColor(
+                        ContextCompat.getColor(
+                                Objects.requireNonNull(getContext()), R.color.colorCardBgYellow));
+                break;
+            default:
+                rootView.setBackgroundColor(
+                        ContextCompat.getColor(
+                                Objects.requireNonNull(getContext()), R.color.colorCardBgDefault));
+        }
     }
 
     void hideColorPickerDialog() {
@@ -292,7 +332,7 @@ public abstract class BaseEditableNoteFragment extends Fragment
     }
 
     private void setupColorPickerFABs(final View dialogView) {
-        FloatingActionButton fabWhite = dialogView.findViewById(R.id.fab_white);
+        FloatingActionButton fabWhite = dialogView.findViewById(R.id.fab_default);
         fabWhite.setOnClickListener(this);
         FloatingActionButton fabPink = dialogView.findViewById(R.id.fab_pink);
         fabPink.setOnClickListener(this);

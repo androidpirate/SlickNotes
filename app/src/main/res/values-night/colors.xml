@@ -26,12 +26,12 @@
     <color name="colorToolbarFont">#FDFDFD</color>
     <color name="colorEmptyListMessage">#B6B6B6</color>
     <!-- Color Picker Dialog -->
-    <color name="colorFabWhite">#FAFAFA</color>
-    <color name="colorFabPink">#F2B4F7</color>
-    <color name="colorFabYellow">#FFC107</color>
-    <color name="colorFabBlue">#49B8F5</color>
-    <color name="colorFabOrange">#FF8909</color>
-    <color name="colorFabGreen">#42ADA4</color>
-    <color name="colorFabPurple">#C9B0F7</color>
-    <color name="colorFabGray">#D3CECE</color>
+    <color name="colorCardBgDefault">#1E1E1E</color>
+    <color name="colorCardBgBlue">#49B8F5</color>
+    <color name="colorCardBgGray">#817F7F</color>
+    <color name="colorCardBgGreen">#42ADA4</color>
+    <color name="colorCardBgOrange">#FF8909</color>
+    <color name="colorCardBgPink">#F2B4F7</color>
+    <color name="colorCardBgPurple">#C9B0F7</color>
+    <color name="colorCardBgYellow">#FFC107</color>
 </resources>
