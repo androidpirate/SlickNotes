@@ -85,10 +85,15 @@ public class NoteCreateFragment extends BaseEditableNoteFragment {
     @Override
     public void onPause() {
         super.onPause();
-        viewModel.insertNote(title.getText().toString(), details.getText().toString());
         if(isKeyboardOn) {
             hideSoftKeyboard();
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        viewModel.insertNote(title.getText().toString(), details.getText().toString());
     }
 
     @Override
