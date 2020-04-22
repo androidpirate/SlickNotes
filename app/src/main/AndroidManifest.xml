@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.github.androidpirate.slicknotes">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,9 +11,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:launchMode="singleTask"
             android:name=".ui.activity.MainActivity"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
+            <nav-graph android:value="@navigation/navigation_graph"/>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -21,6 +24,6 @@
         <activity android:name=".ui.activity.SettingsActivity"
             android:screenOrientation="sensorPortrait"
             android:parentActivityName=".ui.activity.MainActivity"/>
+        <receiver android:name=".util.AlarmReceiver"/>
     </application>
-
 </manifest>

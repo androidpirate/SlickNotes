@@ -127,6 +127,10 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
                 displayPinToast(pinStatus);
                 break;
             case R.id.action_set_reminder:
+                displayDateAndTimePicker(
+                        noteId,
+                        title.getText().toString(),
+                        details.getText().toString());
                 break;
             case R.id.action_send_to_trash:
                 viewModel.moveNoteToTrash();
@@ -147,10 +151,15 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
     @Override
     public void onPause() {
         super.onPause();
-        viewModel.updateNote();
         if(isKeyboardOn) {
             hideSoftKeyboard();
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        viewModel.updateNote();
     }
 
     @Override

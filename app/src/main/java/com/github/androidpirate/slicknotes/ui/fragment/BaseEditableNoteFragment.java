@@ -18,7 +18,11 @@
 
 package com.github.androidpirate.slicknotes.ui.fragment;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.PendingIntent;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,13 +36,21 @@ import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.github.androidpirate.slicknotes.R;
+import com.github.androidpirate.slicknotes.util.AlarmReceiver;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.UUID;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -49,10 +61,14 @@ import androidx.navigation.Navigation;
 
 public abstract class BaseEditableNoteFragment extends Fragment
     implements View.OnClickListener {
-    static final String EXTRA_NOTE_ID = "note_id";
+    public static final String EXTRA_NOTE_ID = "note_id";
+    public static final String EXTRA_NOTE_TITLE = "note_title";
+    public static final String EXTRA_NOTE_DETAILS = "note_details";
     static final String DELETED_NOTE_ID = "deletedNoteId";
     static final String NOTE_PIN_STATUS = "note_pin_status";
     static final String NAVIGATION_BASE = "navigation_base";
+
+    static final int ALARM_REQUEST_CODE = 100;
     private static final String PICKER_DIALOG_TITLE = "Pick Card Background";
     private static final String PICKER_DIALOG_CANCEL = "Cancel";
 
@@ -236,6 +252,29 @@ public abstract class BaseEditableNoteFragment extends Fragment
         }
     }
 
+    void displayDateAndTimePicker(final int noteId, final String noteTitle, final String noteDetails) {
+        Calendar currentDateAndTime = Calendar.getInstance();
+        final int startYear = currentDateAndTime.get(Calendar.YEAR);
+        final int startMonth = currentDateAndTime.get(Calendar.MONTH);
+        final int startDay = currentDateAndTime.get(Calendar.DAY_OF_MONTH);
+        final int startHour = currentDateAndTime.get(Calendar.HOUR_OF_DAY);
+        final int startMinute = currentDateAndTime.get(Calendar.MINUTE);
+
+        new DatePickerDialog(Objects.requireNonNull(getContext()), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, final int year, final int month, final int dayOfMonth) {
+                new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        Calendar pickedDateAndTime = Calendar.getInstance();
+                        pickedDateAndTime.set(year, month, dayOfMonth, hourOfDay, minute);
+                        setReminder(pickedDateAndTime, noteId, noteTitle, noteDetails);
+                    }
+                }, startHour, startMinute, true).show();
+            }
+        }, startYear, startMonth, startDay).show();
+    }
+
     void hideSoftKeyboard() {
         @NonNull
         InputMethodManager inputManager = (InputMethodManager) Objects.requireNonNull(
@@ -348,6 +387,32 @@ public abstract class BaseEditableNoteFragment extends Fragment
         fabPurple.setOnClickListener(this);
         FloatingActionButton fabGray = dialogView.findViewById(R.id.fab_gray);
         fabGray.setOnClickListener(this);
+    }
+
+    private void setReminder(Calendar reminderDateAndTime, int noteId,
+                             String noteTitle, String noteDetails) {
+        AlarmManager alarmManager = (AlarmManager) Objects.requireNonNull(getActivity())
+                .getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(getContext(), AlarmReceiver.class);
+        intent.putExtra(EXTRA_NOTE_ID, noteId);
+        intent.putExtra(EXTRA_NOTE_TITLE, noteTitle);
+        intent.putExtra(EXTRA_NOTE_DETAILS, noteDetails);
+        int uniqueAlarmCode = getUniqueAlarmCode();
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                getContext(),
+                getUniqueAlarmCode(),
+                intent,
+                PendingIntent.FLAG_ONE_SHOT);
+        alarmManager.setExact(
+                AlarmManager.RTC_WAKEUP,
+                reminderDateAndTime.getTimeInMillis(),
+                pendingIntent);
+    }
+
+    private int getUniqueAlarmCode() {
+        long currentTime = Long.parseLong(
+                new SimpleDateFormat("ddHHmmssSS", Locale.US).format(new Date()));
+        return (int) (currentTime % Integer.MAX_VALUE);
     }
 
     private void setSoftKeyboardListener(final View view) {
