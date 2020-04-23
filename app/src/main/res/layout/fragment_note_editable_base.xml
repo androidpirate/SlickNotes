@@ -32,6 +32,7 @@
         android:id="@+id/et_title"
         android:layout_width="@dimen/match_constraint_size"
         android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
         style="?editableNoteTitle"
         android:layout_marginTop="@dimen/margin_8"
         android:layout_marginStart="@dimen/margin_8"
@@ -44,12 +45,14 @@
     <EditText
         android:id="@+id/et_details"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/match_constraint_size"
+        android:inputType="textMultiLine"
         style="?editableNoteDetails"
         android:layout_marginTop="@dimen/margin_8"
         android:layout_marginStart="@dimen/margin_8"
         android:layout_marginEnd="@dimen/margin_8"
         app:layout_constraintTop_toBottomOf="@id/et_title"
+        app:layout_constraintBottom_toTopOf="@id/line_separator"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="Note Details Goes Here"/>

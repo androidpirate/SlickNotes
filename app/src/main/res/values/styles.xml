@@ -132,9 +132,6 @@
     <!-- Editable note detail text default style -->
     <style name="EditNoteDetails" parent="NoteDetails">
         <item name="android:hint">@string/detailsHint</item>
-        <item name="android:layout_height">@dimen/match_constraint_size</item>
-        <item name="android:isScrollContainer">true</item>
-        <item name="android:maxLines">15</item>
         <item name="android:gravity">top</item>
         <item name="android:background">@android:color/transparent</item>
     </style>
@@ -142,9 +139,6 @@
     <!-- Editable note detail text large style -->
     <style name="EditNoteDetailsLarge" parent="NoteDetailsLarge">
         <item name="android:hint">@string/detailsHint</item>
-        <item name="android:layout_height">@dimen/match_constraint_size</item>
-        <item name="android:isScrollContainer">true</item>
-        <item name="android:maxLines">15</item>
         <item name="android:gravity">top</item>
         <item name="android:background">@android:color/transparent</item>
     </style>

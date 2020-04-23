@@ -76,12 +76,8 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
             public void onChanged(final Note note) {
                 setBackgroundColor(note.getColor());
                 title.setText(note.getTitle());
-                // Set cursor at the end of title
-                title.setSelection(title.getText().length());
                 title.clearFocus();
                 details.setText(note.getDetails());
-                // Set cursor at the end of details
-                details.setSelection(details.getText().length());
                 details.clearFocus();
                 title.addTextChangedListener(new CustomTextWatcher() {
                     @Override
