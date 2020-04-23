@@ -11,7 +11,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:launchMode="singleTask"
             android:name=".ui.activity.MainActivity"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
