@@ -54,6 +54,42 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="Note Details Goes Here"/>
 
+    <FrameLayout
+        android:id="@+id/line_separator"
+        android:layout_width="@dimen/match_constraint_size"
+        android:layout_height="@dimen/line_separator_height"
+        android:background="@color/colorPrimaryDark"
+        android:layout_marginBottom="?attr/actionBarSize"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_date_created"
+        android:layout_width="@dimen/match_constraint_size"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textAlignment="center"
+        tools:text="Date Created"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line_separator"
+        app:layout_constraintBottom_toTopOf="@id/tv_date_update"/>
+
+    <TextView
+        android:id="@+id/tv_date_update"
+        android:layout_width="@dimen/match_constraint_size"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textAlignment="center"
+        tools:text="Date Created"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_date_created"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_actions"
         android:layout_width="wrap_content"
@@ -62,7 +98,7 @@
         android:layout_marginEnd="@dimen/margin_16"
         android:layout_marginBottom="@dimen/margin_16"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toTopOf="@id/line_separator"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_label"
@@ -73,7 +109,7 @@
         android:layout_marginEnd="@dimen/margin_16"
         android:layout_marginBottom="@dimen/fab_bottom_margin_level_1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toTopOf="@id/line_separator"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_change_color"
@@ -84,7 +120,7 @@
         android:layout_marginEnd="@dimen/margin_16"
         android:layout_marginBottom="@dimen/fab_bottom_margin_level_2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toTopOf="@id/line_separator"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_share"
@@ -95,6 +131,6 @@
         android:layout_marginEnd="@dimen/margin_16"
         android:layout_marginBottom="@dimen/fab_bottom_margin_level_3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toTopOf="@id/line_separator"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

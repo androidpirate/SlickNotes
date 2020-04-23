@@ -35,6 +35,8 @@ import com.github.androidpirate.slicknotes.util.CustomTextWatcher;
 import com.github.androidpirate.slicknotes.util.NoteViewModelFactory;
 import com.github.androidpirate.slicknotes.viewmodel.NoteDetailViewModel;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -93,10 +95,17 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
                        note.setDetails(_after);
                    }
                });
+                String dateCreatedFormatString = new SimpleDateFormat("MMM dd, yy", Locale.US)
+                        .format(note.getDateCreated());
+                String dateCreatedString = "Created " + dateCreatedFormatString;
+                dateCreated.setText(dateCreatedString);
+                String dateEditedFormatString = new SimpleDateFormat("MMM dd, yy", Locale.US)
+                        .format(note.getDateEdited());
+                String dateEditedString = "Edited " + dateEditedFormatString;
+                dateEdited.setText(dateEditedString);
                 viewModel.updateDatabaseNote(note);
             }
         });
-
         if(navigationBase == TRASH_LIST_BASE) {
             title.setFocusable(false);
             details.setFocusable(false);

@@ -38,6 +38,7 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -50,7 +51,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.UUID;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -75,6 +75,8 @@ public abstract class BaseEditableNoteFragment extends Fragment
     boolean isKeyboardOn = false;
     EditText title;
     EditText details;
+    TextView dateCreated;
+    TextView dateEdited;
     private Animation fabExpand, fabCollapse, fabRotateLeft,
             fabRotateRight, fabActionShow, fabActionHide;
     private View rootView;
@@ -290,6 +292,8 @@ public abstract class BaseEditableNoteFragment extends Fragment
     private void setupViews(View rootView) {
         title = rootView.findViewById(R.id.et_title);
         details = rootView.findViewById(R.id.et_details);
+        dateCreated = rootView.findViewById(R.id.tv_date_created);
+        dateEdited = rootView.findViewById(R.id.tv_date_update);
     }
 
     private void setupFabAction(View view) {

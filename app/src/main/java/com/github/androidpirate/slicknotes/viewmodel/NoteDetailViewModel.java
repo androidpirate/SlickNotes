@@ -70,6 +70,7 @@ public class NoteDetailViewModel extends BaseNoteViewModel {
         if(checkDatabaseModelIsEmpty()) {
             deleteNote();
         } else {
+            databaseModel.setDateEdited(new Date());
             repo.updateDatabaseNote(databaseModel);
         }
     }
