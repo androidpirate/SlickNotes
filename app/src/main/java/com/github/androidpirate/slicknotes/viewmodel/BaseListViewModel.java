@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseListViewModel extends ViewModel {
+    private static final int EMPTY_SELECTION_SIZE = 0;
     NoteRepository repo;
     LiveData<List<Note>> uiModel;
     List<Note> databaseModel;
@@ -39,10 +40,6 @@ public abstract class BaseListViewModel extends ViewModel {
     BaseListViewModel() {
         selectedNotes = new ArrayList<>();
         selectedNoteIds = new ArrayList<>();
-    }
-
-    public boolean hasAlternateMenu() {
-        return hasAlternateMenu;
     }
 
     public void addToSelectedNotes(Note note) {
@@ -66,12 +63,12 @@ public abstract class BaseListViewModel extends ViewModel {
         return selectedNoteIds;
     }
 
-    public void setItemPosition(int position) {
-        itemPosition = position;
-    }
-
     public int getItemPosition() {
         return itemPosition;
+    }
+
+    public void setItemPosition(int position) {
+        itemPosition = position;
     }
 
     public void clearSelections() {
@@ -80,8 +77,12 @@ public abstract class BaseListViewModel extends ViewModel {
         setHasAlternateMenu();
     }
 
+    public boolean hasAlternateMenu() {
+        return hasAlternateMenu;
+    }
+
     private void setHasAlternateMenu() {
-        hasAlternateMenu = selectedNotes.size() > 0;
+        hasAlternateMenu = selectedNotes.size() > EMPTY_SELECTION_SIZE;
     }
 
     private void clearSelectedNotes() {
