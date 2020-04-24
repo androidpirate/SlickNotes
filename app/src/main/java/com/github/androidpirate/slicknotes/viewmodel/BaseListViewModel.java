@@ -27,7 +27,7 @@ import com.github.androidpirate.slicknotes.repo.NoteRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseListViewModel extends ViewModel {
+public class BaseListViewModel extends ViewModel {
     private static final int EMPTY_SELECTION_SIZE = 0;
     NoteRepository repo;
     LiveData<List<Note>> uiModel;
