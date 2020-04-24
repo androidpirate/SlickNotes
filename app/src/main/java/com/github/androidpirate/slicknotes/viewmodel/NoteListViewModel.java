@@ -31,11 +31,7 @@ public class NoteListViewModel extends BaseListViewModel {
     }
 
     public LiveData<List<Note>> getDatabaseNotes(boolean addNewItemsOnTop) {
-        if(addNewItemsOnTop) {
-            uiModel = repo.getDatabaseNotesOrderedByAscendingDate();
-        } else {
-            uiModel = repo.getDatabaseNotesOrderedByDescendingDate();
-        }
+        updateUIModel(addNewItemsOnTop);
         return uiModel;
     }
 
@@ -57,5 +53,13 @@ public class NoteListViewModel extends BaseListViewModel {
 
     public void restoreNote(int noteId) {
        repo.updateNoteTrashStatus(noteId, false);
+    }
+
+    private void updateUIModel(boolean newItemsOnTop) {
+        if(newItemsOnTop) {
+            uiModel = repo.getDatabaseNotesOrderedByAscendingDate();
+        } else {
+            uiModel = repo.getDatabaseNotesOrderedByDescendingDate();
+        }
     }
 }
