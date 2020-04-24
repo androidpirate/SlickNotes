@@ -32,9 +32,9 @@ public class NoteListViewModel extends BaseListViewModel {
 
     public LiveData<List<Note>> getDatabaseNotes(boolean addNewItemsOnTop) {
         if(addNewItemsOnTop) {
-            uiModel = repo.getDatabaseNotesAscending();
+            uiModel = repo.getDatabaseNotesOrderedByAscendingDate();
         } else {
-            uiModel = repo.getDatabaseNotesDescending();
+            uiModel = repo.getDatabaseNotesOrderedByDescendingDate();
         }
         return uiModel;
     }

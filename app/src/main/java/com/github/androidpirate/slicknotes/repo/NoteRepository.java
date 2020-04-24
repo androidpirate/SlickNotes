@@ -32,18 +32,17 @@ import androidx.lifecycle.LiveData;
 public class NoteRepository {
     private NoteDao dao;
     private Executor executor;
-    private static NoteRepository INSTANCE;
 
     public NoteRepository(Context context) {
         dao = NoteDatabase.getInstance(context).dao();
         executor = Executors.newSingleThreadExecutor();
     }
 
-    public LiveData<List<Note>> getDatabaseNotesDescending() {
+    public LiveData<List<Note>> getDatabaseNotesOrderedByAscendingDate() {
         return dao.getDatabaseNotesAscendingDate();
     }
 
-    public LiveData<List<Note>> getDatabaseNotesAscending() {
+    public LiveData<List<Note>> getDatabaseNotesOrderedByDescendingDate() {
         return dao.getDatabaseNotesDescendingDate();
     }
 
