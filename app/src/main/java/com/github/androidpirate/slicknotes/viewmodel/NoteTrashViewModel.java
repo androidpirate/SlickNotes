@@ -23,20 +23,17 @@ import androidx.lifecycle.LiveData;
 import com.github.androidpirate.slicknotes.data.Note;
 import com.github.androidpirate.slicknotes.repo.NoteRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class NoteTrashViewModel extends BaseListViewModel {
 
     public NoteTrashViewModel(NoteRepository noteRepository) {
         repo = noteRepository;
-        selectedNotes = new ArrayList<>();
-        selectedNoteIds = new ArrayList<>();
-        uiModel = repo.getDatabaseTrashNotes();
     }
 
     public LiveData<List<Note>> getDatabaseTrashNotes() {
-        return repo.getDatabaseTrashNotes();
+        uiModel = repo.getDatabaseTrashNotes();
+        return uiModel;
     }
 
     public void deleteNotes(List<Note> notes) {
@@ -44,11 +41,8 @@ public class NoteTrashViewModel extends BaseListViewModel {
     }
 
     public void restoreNotes(List<Note> notes) {
-        databaseModel = new ArrayList<>(notes);
-        for (Note note: databaseModel) {
-            note.setTrash(false);
+        for (Note note: notes) {
+            repo.updateNoteTrashStatus(note.getNoteId(), false);
         }
-        repo.updateDatabaseNotes(databaseModel);
     }
-
 }
