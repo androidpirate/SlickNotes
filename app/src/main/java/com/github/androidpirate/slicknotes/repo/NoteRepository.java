@@ -47,11 +47,11 @@ public class NoteRepository {
     }
 
     public LiveData<List<Note>> getDatabaseNotesDescending() {
-        return dao.getDatabaseNotesDescending();
+        return dao.getDatabaseNotesAscendingDate();
     }
 
     public LiveData<List<Note>> getDatabaseNotesAscending() {
-        return dao.getDatabaseNotesAscending();
+        return dao.getDatabaseNotesDescendingDate();
     }
 
     public LiveData<List<Note>> getDatabaseTrashNotes() {
