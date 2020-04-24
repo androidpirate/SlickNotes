@@ -54,11 +54,7 @@ public abstract class NoteDatabase extends RoomDatabase {
                             executor.execute(new Runnable() {
                                 @Override
                                 public void run() {
-                                    List<Note> fakeNotes = FakeData.getNotes();
-                                    NoteDao dao = getInstance(context).dao();
-                                    for(Note note: fakeNotes) {
-                                        dao.insertDatabaseNote(note);
-                                    }
+                                    insertFakeData(context);
                                 }
                             });
                         }
@@ -66,5 +62,13 @@ public abstract class NoteDatabase extends RoomDatabase {
                     .build();
         }
         return INSTANCE;
+    }
+
+    private static void insertFakeData(Context context) {
+        List<Note> fakeNotes = FakeData.getNotes();
+        NoteDao dao = getInstance(context).dao();
+        for(Note note: fakeNotes) {
+            dao.insertDatabaseNote(note);
+        }
     }
 }
