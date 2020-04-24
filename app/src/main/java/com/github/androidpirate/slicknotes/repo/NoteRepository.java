@@ -34,14 +34,7 @@ public class NoteRepository {
     private Executor executor;
     private static NoteRepository INSTANCE;
 
-    public static NoteRepository getInstance(Context context) {
-        if(INSTANCE == null) {
-            INSTANCE = new NoteRepository(context);
-        }
-        return INSTANCE;
-    }
-
-    private NoteRepository(Context context) {
+    public NoteRepository(Context context) {
         dao = NoteDatabase.getInstance(context).dao();
         executor = Executors.newSingleThreadExecutor();
     }

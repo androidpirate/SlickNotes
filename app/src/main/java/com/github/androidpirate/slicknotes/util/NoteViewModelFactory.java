@@ -35,7 +35,7 @@ public class NoteViewModelFactory implements ViewModelProvider.Factory {
     public NoteRepository repo;
 
     public NoteViewModelFactory(Application application) {
-        repo = NoteRepository.getInstance(application.getApplicationContext());
+        repo = ServiceLocator.provideNoteRepository(application);
     }
 
     @NonNull
