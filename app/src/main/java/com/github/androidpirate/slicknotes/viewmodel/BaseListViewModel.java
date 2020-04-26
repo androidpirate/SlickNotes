@@ -32,8 +32,8 @@ public class BaseListViewModel extends ViewModel {
     NoteRepository repo;
     LiveData<List<Note>> uiModel;
     List<Note> databaseModel;
-    List<Integer> selectedNoteIds;
-    List<Note> selectedNotes;
+    private List<Integer> selectedNoteIds;
+    private List<Note> selectedNotes;
     private boolean hasAlternateMenu;
     private int itemPosition = 0;
 
