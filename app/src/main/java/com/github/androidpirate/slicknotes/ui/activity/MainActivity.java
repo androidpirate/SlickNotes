@@ -48,8 +48,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Set default Shared Preferences
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, true);
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        setupSharedPreferences();
         setAppTheme();
         // Setup views
         setupViews();
@@ -57,6 +56,11 @@ public class MainActivity extends AppCompatActivity {
         setupNavigation();
         // Set drawer click listener
         setDrawerClickListener();
+    }
+
+    private void setupSharedPreferences() {
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, true);
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
     private void setupViews() {
@@ -110,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         String textSize = sharedPref.getString(
                 getString(R.string.pref_text_size_key),
                 defaultTextSize);
-        if(textSize != null && textSize.equals(defaultTextSize)) {
+        if(textSize.equals(defaultTextSize)) {
             setTheme(R.style.AppTheme_Default);
         } else {
             setTheme(R.style.AppTheme_Large);
