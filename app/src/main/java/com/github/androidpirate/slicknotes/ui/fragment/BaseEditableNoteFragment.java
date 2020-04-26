@@ -122,6 +122,7 @@ public abstract class BaseEditableNoteFragment extends Fragment
         navController = Navigation.findNavController(
                 Objects.requireNonNull(getActivity()),
                 R.id.nav_host_fragment);
+        setDateDataVisible();
     }
 
     @Override
@@ -294,6 +295,14 @@ public abstract class BaseEditableNoteFragment extends Fragment
         details = rootView.findViewById(R.id.et_details);
         dateCreated = rootView.findViewById(R.id.tv_date_created);
         dateEdited = rootView.findViewById(R.id.tv_date_update);
+    }
+
+    private void setDateDataVisible() {
+        if(Objects.requireNonNull(navController.getCurrentDestination()).getId() == R.id.nav_details) {
+            rootView.findViewById(R.id.line_separator).setVisibility(View.VISIBLE);
+            rootView.findViewById(R.id.tv_date_created).setVisibility(View.VISIBLE);
+            rootView.findViewById(R.id.tv_date_update).setVisibility(View.VISIBLE);
+        }
     }
 
     private void setupFabAction(View view) {
