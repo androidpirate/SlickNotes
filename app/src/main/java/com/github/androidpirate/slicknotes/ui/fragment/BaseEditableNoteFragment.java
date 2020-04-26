@@ -68,7 +68,6 @@ public abstract class BaseEditableNoteFragment extends Fragment
     static final String NOTE_PIN_STATUS = "note_pin_status";
     static final String NAVIGATION_BASE = "navigation_base";
 
-    static final int ALARM_REQUEST_CODE = 100;
     private static final String PICKER_DIALOG_TITLE = "Pick Card Background";
     private static final String PICKER_DIALOG_CANCEL = "Cancel";
 
@@ -137,13 +136,7 @@ public abstract class BaseEditableNoteFragment extends Fragment
             case R.id.fab_change_color: displayColorPickerDialog();
                 break;
             case R.id.fab_share:
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_SUBJECT, title.getText().toString());
-                sendIntent.putExtra(Intent.EXTRA_TEXT, details.getText().toString());
-                sendIntent.setType("text/plain");
-                Intent shareIntent = Intent.createChooser(sendIntent, null);
-                startActivity(shareIntent);
+                shareNote();
                 break;
             case R.id.fab_default:
                 onColorPickerFabClick(getString(R.string.color_default));
@@ -245,11 +238,11 @@ public abstract class BaseEditableNoteFragment extends Fragment
     void displayPinToast(boolean pinStatus) {
         if(pinStatus) {
             Toast.makeText(getContext(),
-                    getResources().getString(R.string.note_pinned_toast),
+                    R.string.note_pinned_toast,
                     Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getContext(),
-                    getResources().getString(R.string.note_unpinned_toast),
+                    R.string.note_unpinned_toast,
                     Toast.LENGTH_SHORT).show();
         }
     }
@@ -400,6 +393,16 @@ public abstract class BaseEditableNoteFragment extends Fragment
         fabPurple.setOnClickListener(this);
         FloatingActionButton fabGray = dialogView.findViewById(R.id.fab_gray);
         fabGray.setOnClickListener(this);
+    }
+
+    private void shareNote() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, title.getText().toString());
+        sendIntent.putExtra(Intent.EXTRA_TEXT, details.getText().toString());
+        sendIntent.setType("text/plain");
+        Intent shareIntent = Intent.createChooser(sendIntent, null);
+        startActivity(shareIntent);
     }
 
     private void setReminder(Calendar reminderDateAndTime, int noteId,
