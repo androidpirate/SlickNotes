@@ -126,8 +126,6 @@ public abstract class BaseEditableNoteFragment extends Fragment
 
     @Override
     public void onClick(View v) {
-        @NonNull
-        Context context = Objects.requireNonNull(getContext());
         switch (v.getId()) {
             case R.id.fab_actions: animateFab();
                 break;
@@ -413,13 +411,12 @@ public abstract class BaseEditableNoteFragment extends Fragment
         intent.putExtra(EXTRA_NOTE_ID, noteId);
         intent.putExtra(EXTRA_NOTE_TITLE, noteTitle);
         intent.putExtra(EXTRA_NOTE_DETAILS, noteDetails);
-        int uniqueAlarmCode = getUniqueAlarmCode();
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 getContext(),
                 getUniqueAlarmCode(),
                 intent,
                 PendingIntent.FLAG_ONE_SHOT);
-        alarmManager.setExact(
+        Objects.requireNonNull(alarmManager).setExact(
                 AlarmManager.RTC_WAKEUP,
                 reminderDateAndTime.getTimeInMillis(),
                 pendingIntent);
