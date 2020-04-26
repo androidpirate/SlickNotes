@@ -36,8 +36,7 @@ public class NoteListViewModel extends BaseListViewModel {
     }
 
     public void sendNotesToTrash(List<Note> notes) {
-        for (Note note:
-             notes) {
+        for (Note note: notes) {
             repo.updateNoteTrashStatus(note.getNoteId(), true);
         }
         clearSelections();
