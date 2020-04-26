@@ -254,6 +254,15 @@ public abstract class BaseEditableNoteFragment extends Fragment
         }
     }
 
+    void displayNoteDiscardToast() {
+        Toast.makeText(getContext(), R.string.discard_note_toast, Toast.LENGTH_SHORT).show();
+    }
+
+    boolean checkFieldsAreEmpty() {
+        return title.getText().toString().trim().length() == 0 &&
+                details.getText().toString().trim().length() == 0;
+    }
+
     void displayDateAndTimePicker(final int noteId, final String noteTitle, final String noteDetails) {
         Calendar currentDateAndTime = Calendar.getInstance();
         final int startYear = currentDateAndTime.get(Calendar.YEAR);

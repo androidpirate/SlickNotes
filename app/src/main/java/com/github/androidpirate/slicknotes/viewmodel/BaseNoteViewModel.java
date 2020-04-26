@@ -24,7 +24,7 @@ import androidx.lifecycle.ViewModel;
 import com.github.androidpirate.slicknotes.data.Note;
 import com.github.androidpirate.slicknotes.repo.NoteRepository;
 
-public abstract class BaseNoteViewModel extends ViewModel {
+public class BaseNoteViewModel extends ViewModel {
     NoteRepository repo;
     LiveData<Note> uiModel;
     Note databaseModel;
@@ -33,19 +33,8 @@ public abstract class BaseNoteViewModel extends ViewModel {
         databaseModel.setColor(color);
     }
 
-    boolean checkDatabaseModelIsEmpty() {
-        return databaseModel.getTitle().isEmpty() && databaseModel.getDetails().isEmpty();
-    }
-
     public boolean updateNotePinStatus() {
         databaseModel.setPinned(!databaseModel.isPinned());
         return databaseModel.isPinned();
-    }
-
-    void displayEmptyNoteDiscardedToast() {
-//        Toast.makeText(getApplication(),
-//                "Empty note is discarded.",
-//                Toast.LENGTH_SHORT)
-//                .show();
     }
 }

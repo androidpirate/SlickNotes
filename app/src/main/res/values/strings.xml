@@ -12,6 +12,7 @@
     <string name="note_pinned_toast">Note is pinned.</string>
     <string name="note_unpinned_toast">Note is unpinned.</string>
     <string name="action_change_layout">Change Layout</string>
+    <string name="discard_note_toast">Empty note discarded.</string>
     <!-- NoteCreateFragment resources -->
     <string name="titleHint">Enter note title</string>
     <string name="detailsHint">Enter note details</string>

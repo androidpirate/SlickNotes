@@ -34,13 +34,12 @@ public class NoteCreateViewModel extends BaseNoteViewModel {
     }
 
     public void insertNote(String title, String details) {
-        databaseModel.setTitle(title);
-        databaseModel.setDetails(details);
-        if(checkDatabaseModelIsEmpty()) {
-            displayEmptyNoteDiscardedToast();
-        } else {
-            repo.insertDatabaseNote(databaseModel);
-        }
+        updateDatabaseModel(title, details);
+        repo.insertDatabaseNote(databaseModel);
     }
 
+    private void updateDatabaseModel(String title, String details) {
+        databaseModel.setTitle(title);
+        databaseModel.setDetails(details);
+    }
 }

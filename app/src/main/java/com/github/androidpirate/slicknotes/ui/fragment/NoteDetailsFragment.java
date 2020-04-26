@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -99,7 +100,7 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
                         .format(note.getDateEdited());
                 String dateEditedString = "Edited " + dateEditedFormatString;
                 dateEdited.setText(dateEditedString);
-                viewModel.updateDatabaseNote(note);
+                viewModel.setDatabaseModel(note);
             }
         });
         if(navigationBase == TRASH_LIST_BASE) {
@@ -164,7 +165,12 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
     @Override
     public void onStop() {
         super.onStop();
-        viewModel.updateNote();
+        if(checkFieldsAreEmpty()) {
+            viewModel.deleteNote();
+            displayNoteDiscardToast();
+        } else {
+            viewModel.updateNote();
+        }
     }
 
     @Override

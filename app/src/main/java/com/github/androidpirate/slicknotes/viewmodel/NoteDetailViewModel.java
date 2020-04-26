@@ -19,7 +19,6 @@
 package com.github.androidpirate.slicknotes.viewmodel;
 
 import java.util.Date;
-import java.util.List;
 
 import com.github.androidpirate.slicknotes.data.Note;
 import com.github.androidpirate.slicknotes.repo.NoteRepository;
@@ -37,20 +36,8 @@ public class NoteDetailViewModel extends BaseNoteViewModel {
         return uiModel;
     }
 
-    public void updateDatabaseNote(Note note) {
+    public void setDatabaseModel(Note note) {
         this.databaseModel = note;
-    }
-
-    public void updateNoteLabels(List<String> labels) {
-        databaseModel.setLabels(labels);
-    }
-
-    public void updateNoteCreateDate(Date dateCreated) {
-        databaseModel.setDateCreated(dateCreated);
-    }
-
-    public void updateNoteEditDate(Date dateEdited) {
-        databaseModel.setDateEdited(dateEdited);
     }
 
     public void moveNoteToTrash() {
@@ -67,11 +54,11 @@ public class NoteDetailViewModel extends BaseNoteViewModel {
     }
 
     public void updateNote() {
-        if(checkDatabaseModelIsEmpty()) {
-            deleteNote();
-        } else {
-            databaseModel.setDateEdited(new Date());
-            repo.updateDatabaseNote(databaseModel);
-        }
+        updateDatabaseModel();
+        repo.updateDatabaseNote(databaseModel);
+    }
+
+    private void updateDatabaseModel() {
+        databaseModel.setDateEdited(new Date());
     }
 }

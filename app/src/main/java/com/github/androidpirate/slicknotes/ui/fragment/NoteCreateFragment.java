@@ -93,7 +93,11 @@ public class NoteCreateFragment extends BaseEditableNoteFragment {
     @Override
     public void onStop() {
         super.onStop();
-        viewModel.insertNote(title.getText().toString(), details.getText().toString());
+        if(checkFieldsAreEmpty()) {
+            displayNoteDiscardToast();
+        } else {
+            viewModel.insertNote(title.getText().toString(), details.getText().toString());
+        }
     }
 
     @Override
