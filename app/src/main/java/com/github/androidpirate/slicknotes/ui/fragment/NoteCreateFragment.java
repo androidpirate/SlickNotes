@@ -74,9 +74,7 @@ public class NoteCreateFragment extends BaseEditableNoteFragment {
                 setPinIcon(pinStatus, item);
                 displayPinToast(pinStatus);
                 break;
-            case R.id.action_set_reminder:
-                break;
-            case R.id.action_discard_note:
+            case R.id.action_add_label:
                 break;
         }
         return super.onOptionsItemSelected(item);
