@@ -62,7 +62,7 @@
         android:id="@+id/line_separator"
         android:layout_width="@dimen/match_constraint_size"
         android:layout_height="@dimen/line_separator_height"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/lineSeparatorColor"
         android:visibility="gone"
         android:layout_marginBottom="?attr/actionBarSize"
         android:layout_marginStart="@dimen/margin_16"
