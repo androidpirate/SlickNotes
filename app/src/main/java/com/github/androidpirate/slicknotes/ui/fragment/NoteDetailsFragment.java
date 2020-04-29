@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -92,14 +93,19 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
                        note.setDetails(_after);
                    }
                });
-                String dateCreatedFormatString = new SimpleDateFormat("MMM dd, yy", Locale.US)
-                        .format(note.getDateCreated());
-                String dateCreatedString = "Created " + dateCreatedFormatString;
-                dateCreated.setText(dateCreatedString);
-                String dateEditedFormatString = new SimpleDateFormat("MMM dd, yy", Locale.US)
-                        .format(note.getDateEdited());
-                String dateEditedString = "Edited " + dateEditedFormatString;
-                dateEdited.setText(dateEditedString);
+                if(note.getDateCreated().equals(note.getDateEdited())) {
+                    dateEdited.setVisibility(View.GONE);
+                    String dateCreatedFormatString = new SimpleDateFormat("MMM dd, yy", Locale.US)
+                            .format(note.getDateCreated());
+                    String dateCreatedString = "Created " + dateCreatedFormatString;
+                    dateCreated.setText(dateCreatedString);
+                } else {
+                    dateCreated.setVisibility(View.GONE);
+                    String dateEditedFormatString = new SimpleDateFormat("MMM dd, yy", Locale.US)
+                            .format(note.getDateEdited());
+                    String dateEditedString = "Edited " + dateEditedFormatString;
+                    dateEdited.setText(dateEditedString);
+                }
                 viewModel.setDatabaseModel(note);
             }
         });
