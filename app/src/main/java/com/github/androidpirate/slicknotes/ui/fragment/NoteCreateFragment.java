@@ -32,7 +32,6 @@ import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.util.NoteViewModelFactory;
 import com.github.androidpirate.slicknotes.viewmodel.NoteCreateViewModel;
 
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,7 +55,7 @@ public class NoteCreateFragment extends BaseEditableNoteFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         NoteViewModelFactory factory = new NoteViewModelFactory(
-                Objects.requireNonNull(getActivity()).getApplication());
+                requireActivity().getApplication());
         viewModel = new ViewModelProvider(this, factory).get(NoteCreateViewModel.class);
     }
 

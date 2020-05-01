@@ -39,7 +39,6 @@ import com.github.androidpirate.slicknotes.viewmodel.NoteListViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * A simple {@link BaseNoteListFragment} subclass.
@@ -74,7 +73,7 @@ public class NoteListFragment extends BaseNoteListFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         NoteViewModelFactory factory = new NoteViewModelFactory(
-                Objects.requireNonNull(getActivity()).getApplication());
+                requireActivity().getApplication());
         viewModel = new ViewModelProvider(this, factory).get(NoteListViewModel.class);
         // Set baseViewModel
         baseViewModel = viewModel;
@@ -95,7 +94,7 @@ public class NoteListFragment extends BaseNoteListFragment {
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        MenuInflater inflater = Objects.requireNonNull(getActivity()).getMenuInflater();
+        MenuInflater inflater = requireActivity().getMenuInflater();
         menu.clear();
         if(baseViewModel.hasAlternateMenu()) {
             inflater.inflate(R.menu.note_list_selected_menu, menu);
@@ -133,7 +132,7 @@ public class NoteListFragment extends BaseNoteListFragment {
 
     private void displayTrashSnackBar(final int deletedNoteId) {
         Snackbar.make(
-                Objects.requireNonNull(getActivity()).findViewById(android.R.id.content),
+                requireActivity().findViewById(android.R.id.content),
                 "Note is sent to Trash.",
                 Snackbar.LENGTH_SHORT)
                 .setAction("UNDO", new View.OnClickListener() {

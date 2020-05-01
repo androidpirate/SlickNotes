@@ -38,7 +38,6 @@ import com.github.androidpirate.slicknotes.viewmodel.NoteDetailViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -72,7 +71,7 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         NoteViewModelFactory factory = new NoteViewModelFactory(
-                Objects.requireNonNull(getActivity()).getApplication());
+                requireActivity().getApplication());
         viewModel = new ViewModelProvider(this, factory).get(NoteDetailViewModel.class);
         viewModel.getDatabaseNote(noteId).observe(getViewLifecycleOwner(), new Observer<Note>() {
             @Override
@@ -84,7 +83,7 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
         if(navigationBase == TRASH_LIST_BASE) {
             title.setFocusable(false);
             details.setFocusable(false);
-            Objects.requireNonNull(getActivity()).invalidateOptionsMenu();
+            requireActivity().invalidateOptionsMenu();
             setFabActionVisibility();
         }
     }

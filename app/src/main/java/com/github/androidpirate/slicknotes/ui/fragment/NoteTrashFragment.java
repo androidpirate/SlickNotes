@@ -62,7 +62,7 @@ public class NoteTrashFragment extends BaseNoteListFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         NoteViewModelFactory factory = new NoteViewModelFactory(
-                Objects.requireNonNull(getActivity()).getApplication());
+                requireActivity().getApplication());
         viewModel = new ViewModelProvider(this, factory).get(NoteTrashViewModel.class);
         // Set baseViewModel
         baseViewModel = viewModel;
@@ -80,7 +80,7 @@ public class NoteTrashFragment extends BaseNoteListFragment {
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        MenuInflater inflater = Objects.requireNonNull(getActivity()).getMenuInflater();
+        MenuInflater inflater = requireActivity().getMenuInflater();
         menu.clear();
         if(baseViewModel.hasAlternateMenu()) {
             inflater.inflate(R.menu.note_trash_list_menu, menu);

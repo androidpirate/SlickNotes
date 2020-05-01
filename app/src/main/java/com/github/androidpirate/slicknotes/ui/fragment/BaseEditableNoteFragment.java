@@ -120,7 +120,7 @@ public abstract class BaseEditableNoteFragment extends Fragment
         super.onActivityCreated(savedInstanceState);
         // Find navigation controller
         navController = Navigation.findNavController(
-                Objects.requireNonNull(getActivity()),
+                requireActivity(),
                 R.id.nav_host_fragment);
         setDateDataVisible();
     }
@@ -179,42 +179,42 @@ public abstract class BaseEditableNoteFragment extends Fragment
             case "blue":
                 rootView.setBackgroundColor(
                         ContextCompat.getColor(
-                                Objects.requireNonNull(getContext()), R.color.colorCardBgBlue));
+                                requireContext(), R.color.colorCardBgBlue));
                 break;
             case "gray":
                 rootView.setBackgroundColor(
                         ContextCompat.getColor(
-                                Objects.requireNonNull(getContext()), R.color.colorCardBgGray));
+                                requireContext(), R.color.colorCardBgGray));
                 break;
             case "green":
                 rootView.setBackgroundColor(
                         ContextCompat.getColor(
-                                Objects.requireNonNull(getContext()), R.color.colorCardBgGreen));
+                                requireContext(), R.color.colorCardBgGreen));
                 break;
             case "orange":
                 rootView.setBackgroundColor(
                         ContextCompat.getColor(
-                                Objects.requireNonNull(getContext()), R.color.colorCardBgOrange));
+                                requireContext(), R.color.colorCardBgOrange));
                 break;
             case "pink":
                 rootView.setBackgroundColor(
                         ContextCompat.getColor(
-                                Objects.requireNonNull(getContext()), R.color.colorCardBgPink));
+                                requireContext(), R.color.colorCardBgPink));
                 break;
             case "purple":
                 rootView.setBackgroundColor(
                         ContextCompat.getColor(
-                                Objects.requireNonNull(getContext()), R.color.colorCardBgPurple));
+                                requireContext(), R.color.colorCardBgPurple));
                 break;
             case "yellow":
                 rootView.setBackgroundColor(
                         ContextCompat.getColor(
-                                Objects.requireNonNull(getContext()), R.color.colorCardBgYellow));
+                                requireContext(), R.color.colorCardBgYellow));
                 break;
             default:
                 rootView.setBackgroundColor(
                         ContextCompat.getColor(
-                                Objects.requireNonNull(getContext()), R.color.colorCardBgDefault));
+                                requireContext(), R.color.colorCardBgDefault));
         }
     }
 
@@ -263,7 +263,7 @@ public abstract class BaseEditableNoteFragment extends Fragment
         final int startHour = currentDateAndTime.get(Calendar.HOUR_OF_DAY);
         final int startMinute = currentDateAndTime.get(Calendar.MINUTE);
 
-        new DatePickerDialog(Objects.requireNonNull(getContext()), new DatePickerDialog.OnDateSetListener() {
+        new DatePickerDialog(requireContext(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, final int year, final int month, final int dayOfMonth) {
                 new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
@@ -281,7 +281,7 @@ public abstract class BaseEditableNoteFragment extends Fragment
     void hideSoftKeyboard() {
         @NonNull
         InputMethodManager inputManager = (InputMethodManager) Objects.requireNonNull(
-                Objects.requireNonNull(getActivity()).getSystemService(Context.INPUT_METHOD_SERVICE));
+                requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE));
         View currentFocusedView = getActivity().getCurrentFocus();
         if(currentFocusedView != null) {
             inputManager.hideSoftInputFromWindow(
@@ -414,8 +414,7 @@ public abstract class BaseEditableNoteFragment extends Fragment
 
     private void setReminder(Calendar reminderDateAndTime, int noteId,
                              String noteTitle, String noteDetails) {
-        AlarmManager alarmManager = (AlarmManager) Objects.requireNonNull(getActivity())
-                .getSystemService(Context.ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) requireActivity().getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(getContext(), AlarmReceiver.class);
         intent.putExtra(EXTRA_NOTE_ID, noteId);
         intent.putExtra(EXTRA_NOTE_TITLE, noteTitle);

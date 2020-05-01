@@ -59,7 +59,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPref = PreferenceManager
-                .getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
+                .getDefaultSharedPreferences(requireContext());
         // Get preference keys
         getPreferenceKeys();
         // Get references to preferences
@@ -88,7 +88,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                         .edit()
                         .putBoolean(themePrefKey, (Boolean) newValue)
                         .apply();
-                Objects.requireNonNull(getActivity()).recreate();
+                requireActivity().recreate();
                 return true;
             }
         });

@@ -43,7 +43,6 @@ import com.github.androidpirate.slicknotes.viewmodel.BaseListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
-import java.util.Objects;
 
 public class BaseNoteListFragment extends Fragment
     implements NoteListAdapter.NoteClickListener {
@@ -87,12 +86,12 @@ public class BaseNoteListFragment extends Fragment
         super.onActivityCreated(savedInstanceState);
         // Find navigation controller
         navController = Navigation.findNavController(
-                        Objects.requireNonNull(getActivity()),
+                        requireActivity(),
                         R.id.nav_host_fragment);
     }
 
     void toggleAlternateMenu() {
-        Objects.requireNonNull(getActivity()).invalidateOptionsMenu();
+        requireActivity().invalidateOptionsMenu();
     }
 
     void setNavigationBase(int navigationBase) {
