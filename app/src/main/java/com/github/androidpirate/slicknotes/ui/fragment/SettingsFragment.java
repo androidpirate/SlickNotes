@@ -20,11 +20,7 @@ package com.github.androidpirate.slicknotes.ui.fragment;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.preference.ListPreference;
@@ -41,6 +37,7 @@ import java.util.Objects;
  * A simple {@link Fragment} subclass.
  */
 public class SettingsFragment extends PreferenceFragmentCompat {
+
     private SharedPreferences sharedPref;
     private SwitchPreference themePref;
     private SwitchPreference itemOrderPref;
