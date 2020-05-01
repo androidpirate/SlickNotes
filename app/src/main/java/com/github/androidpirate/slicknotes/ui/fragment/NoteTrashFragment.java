@@ -42,7 +42,9 @@ import java.util.Objects;
  * A simple {@link BaseNoteListFragment} subclass.
  */
 public class NoteTrashFragment extends BaseNoteListFragment {
+
     private static final String NOTES_RESTORED_MESSAGE = "Selected notes are restored";
+
     private NoteTrashViewModel viewModel;
 
     public NoteTrashFragment() {
