@@ -42,6 +42,7 @@ import com.github.androidpirate.slicknotes.data.Note;
 import com.github.androidpirate.slicknotes.viewmodel.BaseListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BaseNoteListFragment extends Fragment
@@ -65,6 +66,9 @@ public class BaseNoteListFragment extends Fragment
         super.onCreate(savedInstanceState);
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
         isLinearLayout = sharedPref.getBoolean(getString(R.string.pref_layout_key), true);
+        if(adapter == null) {
+            adapter = new NoteListAdapter(new ArrayList<Note>(), this);
+        }
     }
 
     @Nullable
@@ -102,11 +106,7 @@ public class BaseNoteListFragment extends Fragment
         if(recyclerView.getVisibility() == View.GONE) {
             displayRecyclerView();
         }
-        if(adapter == null) {
-            adapter = new NoteListAdapter(notes, this);
-        } else {
-            adapter.loadNotes(notes);
-        }
+        adapter.loadNotes(notes);
         setLayoutStyle();
         if(baseViewModel.hasAlternateMenu()) {
             setAlternateMenu();
