@@ -23,7 +23,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,8 +44,10 @@ import java.util.Objects;
  * A simple {@link Fragment} subclass.
  */
 public class NoteDetailsFragment extends BaseEditableNoteFragment {
+
     private static final int NOTE_LIST_BASE = 0;
     private static final int TRASH_LIST_BASE = 1;
+
     private NoteDetailViewModel viewModel;
     private boolean pinStatus;
     private int noteId;
@@ -76,36 +77,7 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
         viewModel.getDatabaseNote(noteId).observe(getViewLifecycleOwner(), new Observer<Note>() {
             @Override
             public void onChanged(final Note note) {
-                setBackgroundColor(note.getColor());
-                title.setText(note.getTitle());
-                title.clearFocus();
-                details.setText(note.getDetails());
-                details.clearFocus();
-                title.addTextChangedListener(new CustomTextWatcher() {
-                    @Override
-                    public void onTextChanged(String _after) {
-                        note.setTitle(_after);
-                   }
-                });
-                details.addTextChangedListener(new CustomTextWatcher() {
-                   @Override
-                    public void onTextChanged(String _after) {
-                       note.setDetails(_after);
-                   }
-               });
-                if(note.getDateCreated().equals(note.getDateEdited())) {
-                    dateEdited.setVisibility(View.GONE);
-                    String dateCreatedFormatString = new SimpleDateFormat("MMM dd, yy", Locale.US)
-                            .format(note.getDateCreated());
-                    String dateCreatedString = "Created " + dateCreatedFormatString;
-                    dateCreated.setText(dateCreatedString);
-                } else {
-                    dateCreated.setVisibility(View.GONE);
-                    String dateEditedFormatString = new SimpleDateFormat("MMM dd, yy", Locale.US)
-                            .format(note.getDateEdited());
-                    String dateEditedString = "Edited " + dateEditedFormatString;
-                    dateEdited.setText(dateEditedString);
-                }
+                setNoteValues(note);
                 viewModel.setDatabaseModel(note);
             }
         });
@@ -184,6 +156,47 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
         viewModel.updateNoteColor(color);
         setBackgroundColor(color);
         hideColorPickerDialog();
+    }
+
+    private void setNoteValues(final Note note) {
+        setBackgroundColor(note.getColor());
+        setNoteTitleAndDetails(note);
+        setNoteDate(note);
+    }
+
+    private void setNoteTitleAndDetails(final Note note) {
+        title.setText(note.getTitle());
+        title.clearFocus();
+        details.setText(note.getDetails());
+        details.clearFocus();
+        title.addTextChangedListener(new CustomTextWatcher() {
+            @Override
+            public void onTextChanged(String _after) {
+                note.setTitle(_after);
+            }
+        });
+        details.addTextChangedListener(new CustomTextWatcher() {
+            @Override
+            public void onTextChanged(String _after) {
+                note.setDetails(_after);
+            }
+        });
+    }
+
+    private void setNoteDate(final Note note) {
+        if(note.getDateCreated().equals(note.getDateEdited())) {
+            dateEdited.setVisibility(View.GONE);
+            String dateCreatedFormatString = new SimpleDateFormat("MMM dd, yy", Locale.US)
+                    .format(note.getDateCreated());
+            String dateCreatedString = "Created " + dateCreatedFormatString;
+            dateCreated.setText(dateCreatedString);
+        } else {
+            dateCreated.setVisibility(View.GONE);
+            String dateEditedFormatString = new SimpleDateFormat("MMM dd, yy", Locale.US)
+                    .format(note.getDateEdited());
+            String dateEditedString = "Edited " + dateEditedFormatString;
+            dateEdited.setText(dateEditedString);
+        }
     }
 
 }
