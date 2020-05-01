@@ -45,12 +45,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class BaseNoteListFragment extends Fragment
+public class BaseNoteListFragment extends Fragment
     implements NoteListAdapter.NoteClickListener {
 
     static final int NOTE_LIST_BASE = 0;
     static final int TRASH_LIST_BASE = 1;
-    private static final int TOP_OF_THE_LIST = 0;
+
     private SharedPreferences sharedPref;
     private RecyclerView recyclerView;
     private NoteListAdapter adapter;
@@ -110,7 +110,7 @@ public abstract class BaseNoteListFragment extends Fragment
         }
         setLayoutStyle();
         if(baseViewModel.hasAlternateMenu()) {
-            adapter.loadSelectedNoteIds(baseViewModel.getSelectedNoteIds());
+            setAlternateMenu();
         }
         recyclerView.setAdapter(adapter);
         recyclerView.scrollToPosition(getItemScrollPosition());
@@ -144,6 +144,10 @@ public abstract class BaseNoteListFragment extends Fragment
         recyclerView.setLayoutManager(isLinearLayout ? new LinearLayoutManager(getContext()) :
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.getRecycledViewPool().clear();
+    }
+
+    private void setAlternateMenu() {
+        adapter.loadSelectedNoteIds(baseViewModel.getSelectedNoteIds());
     }
 
     private void setupViews(View rootView) {
