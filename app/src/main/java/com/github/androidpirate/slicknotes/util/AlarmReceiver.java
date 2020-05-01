@@ -28,6 +28,7 @@ import com.github.androidpirate.slicknotes.ui.fragment.BaseEditableNoteFragment;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
@@ -44,7 +45,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         NotificationManager notificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         int notificationId = createUniqueNotificationId();
-        notificationManager.notify(notificationId,
+        Objects.requireNonNull(notificationManager).notify(notificationId,
                 notificationHelper.getNotificationBuilder().build());
     }
 
