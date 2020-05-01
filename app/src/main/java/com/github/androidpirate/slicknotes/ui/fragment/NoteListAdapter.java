@@ -18,7 +18,6 @@
 
 package com.github.androidpirate.slicknotes.ui.fragment;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,8 +37,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
     private static final int EMPTY_LIST_SIZE = 0;
-    private static final int MINIMUM_INDEX_NO = 0;
     private static final int TYPE_CARD = 100;
     private static final int TYPE_HEADER = 110;
     private static final String PINNED_HEADER_TAG = "PINNED";
