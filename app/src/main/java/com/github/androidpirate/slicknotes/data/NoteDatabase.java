@@ -20,8 +20,6 @@ package com.github.androidpirate.slicknotes.data;
 
 import android.content.Context;
 
-import com.github.androidpirate.slicknotes.util.FakeData;
-
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -45,30 +43,8 @@ public abstract class NoteDatabase extends RoomDatabase {
                     context.getApplicationContext(),
                     NoteDatabase.class,
                     "note-database")
-                    // TODO: Make sure to use this callback only with debug version
-                    .addCallback(new Callback() {
-                        @Override
-                        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                            super.onCreate(db);
-                            Executor executor = Executors.newSingleThreadExecutor();
-                            executor.execute(new Runnable() {
-                                @Override
-                                public void run() {
-                                    insertFakeData(context);
-                                }
-                            });
-                        }
-                    })
                     .build();
         }
         return INSTANCE;
-    }
-
-    private static void insertFakeData(Context context) {
-        List<Note> fakeNotes = FakeData.getNotes();
-        NoteDao dao = getInstance(context).dao();
-        for(Note note: fakeNotes) {
-            dao.insertDatabaseNote(note);
-        }
     }
 }
