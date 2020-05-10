@@ -29,17 +29,17 @@ import androidx.room.Update;
 
 @Dao
 public interface NoteDao {
-    @Query("SELECT * FROM Note WHERE note_trash_status = 0 " +
+    @Query("SELECT * FROM notes WHERE note_trash_status = 0 " +
             "ORDER BY note_pin_status DESC, note_create_date ASC")
     LiveData<List<Note>> getDatabaseNotesAscendingDate();
-    @Query("SELECT * FROM Note WHERE note_trash_status = 0 " +
+    @Query("SELECT * FROM notes WHERE note_trash_status = 0 " +
             "ORDER BY note_pin_status DESC, note_create_date DESC")
     LiveData<List<Note>> getDatabaseNotesDescendingDate();
-    @Query("SELECT * FROM Note WHERE noteId = :id")
+    @Query("SELECT * FROM notes WHERE noteId = :id")
     LiveData<Note> getDatabaseNote(int id);
-    @Query("SELECT * FROM Note WHERE note_trash_status = 1")
+    @Query("SELECT * FROM notes WHERE note_trash_status = 1")
     LiveData<List<Note>> getTrashNotes();
-    @Query("SELECT * FROM Note WHERE note_pin_status = 1")
+    @Query("SELECT * FROM notes WHERE note_pin_status = 1")
     LiveData<List<Note>> getPinnedNotes();
     @Insert
     void insertDatabaseNote(Note note);
@@ -51,8 +51,8 @@ public interface NoteDao {
     void updateDatabaseNote(Note note);
     @Update
     void updateDatabaseNotes(List<Note> notes);
-    @Query("UPDATE Note SET note_trash_status = :isTrash, note_pin_status = 0 WHERE noteId = :noteId")
+    @Query("UPDATE notes SET note_trash_status = :isTrash, note_pin_status = 0 WHERE noteId = :noteId")
     void updateTrashStatus(int noteId, boolean isTrash);
-    @Query("UPDATE Note SET note_pin_status = :pinStatus WHERE noteId = :noteId")
+    @Query("UPDATE notes SET note_pin_status = :pinStatus WHERE noteId = :noteId")
     void updatePinStatus(int noteId, boolean pinStatus);
 }

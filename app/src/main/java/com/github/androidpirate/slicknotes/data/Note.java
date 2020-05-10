@@ -26,7 +26,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "note")
+@Entity(tableName = "notes")
 public class Note {
     @PrimaryKey(autoGenerate = true)
     private int noteId;
