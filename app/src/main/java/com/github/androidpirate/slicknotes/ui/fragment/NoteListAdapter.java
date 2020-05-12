@@ -18,6 +18,7 @@
 
 package com.github.androidpirate.slicknotes.ui.fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,9 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.github.androidpirate.slicknotes.R;
+import com.github.androidpirate.slicknotes.data.Label;
 import com.github.androidpirate.slicknotes.data.Note;
+import com.github.androidpirate.slicknotes.data.NoteWithLabels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +47,7 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final String PINNED_HEADER_TAG = "PINNED";
     private static final String OTHERS_HEADER_TAG = "OTHERS";
 
-    private List<Note> notes;
+    private List<NoteWithLabels> notes;
     private List<Object> contentList;
     private List<Integer> selectedNoteIds;
     private boolean isLinearLayout = true;
@@ -55,7 +58,7 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         void onLongNoteClick(Note note, boolean isAdded);
     }
 
-    NoteListAdapter(List<Note> notes, NoteClickListener listener) {
+    NoteListAdapter(List<NoteWithLabels> notes, NoteClickListener listener) {
         this.notes = notes;
         this.listener = listener;
         selectedNoteIds = new ArrayList<>();
@@ -116,7 +119,9 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return super.getItemViewType(position);
     }
 
-    void loadNotes(List<Note> notes) {
+    // TODO 4: In favor of making NoteListFragment updating the argument type
+    // TODO 4: NoteTrashFragment will need a new adapter class
+    void loadNotes(List<NoteWithLabels> notes) {
         this.notes = notes;
         initializeContentList();
         notifyDataSetChanged();
@@ -136,15 +141,21 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
         boolean isPinnedHeaderCreated = false;
         boolean isOthersHeaderCreated = false;
-        for (Note note: notes) {
-            if(note.isPinned() && !isPinnedHeaderCreated ) {
+        for (NoteWithLabels noteWithLabel: notes) {
+            if(noteWithLabel.getNote().isPinned() && !isPinnedHeaderCreated ) {
                     contentList.add(PINNED_HEADER_TAG);
                     isPinnedHeaderCreated = true;
-            } else if (isPinnedHeaderCreated && !note.isPinned() && !isOthersHeaderCreated) {
+            } else if (isPinnedHeaderCreated && !noteWithLabel.getNote().isPinned() && !isOthersHeaderCreated) {
                     contentList.add(OTHERS_HEADER_TAG);
                     isOthersHeaderCreated = true;
             }
-            contentList.add(note);
+            // TODO 5: If inserting notes and labels work this is where we should start seeing some label info
+            // TODO 5: Debug result -> noteWithLabels.getLabels().size = 0, so NoteDao().insertDatabaseNote
+            // TODO 5: definitely needs to be updated
+            for(Label label: noteWithLabel.getLabels()) {
+                Log.d("NoteListAdapter,Line152", label.getTitle());
+            }
+            contentList.add(noteWithLabel.getNote());
         }
     }
 

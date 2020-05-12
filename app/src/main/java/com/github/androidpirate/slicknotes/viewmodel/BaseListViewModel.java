@@ -22,6 +22,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.github.androidpirate.slicknotes.data.Note;
+import com.github.androidpirate.slicknotes.data.NoteWithLabels;
 import com.github.androidpirate.slicknotes.repo.NoteRepository;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class BaseListViewModel extends ViewModel {
     private static final int EMPTY_SELECTION_SIZE = 0;
     NoteRepository repo;
     LiveData<List<Note>> uiModel;
+    LiveData<List<NoteWithLabels>> uiModelWitLabels;
     List<Note> databaseModel;
     private List<Integer> selectedNoteIds;
     private List<Note> selectedNotes;

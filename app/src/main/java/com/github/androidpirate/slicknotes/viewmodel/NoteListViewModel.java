@@ -21,6 +21,7 @@ package com.github.androidpirate.slicknotes.viewmodel;
 import java.util.List;
 
 import com.github.androidpirate.slicknotes.data.Note;
+import com.github.androidpirate.slicknotes.data.NoteWithLabels;
 import com.github.androidpirate.slicknotes.repo.NoteRepository;
 import androidx.lifecycle.LiveData;
 
@@ -30,9 +31,14 @@ public class NoteListViewModel extends BaseListViewModel {
         repo = noteRepository;
     }
 
-    public LiveData<List<Note>> getDatabaseNotes(boolean addNewItemsOnTop) {
+//    public LiveData<List<Note>> getDatabaseNotes(boolean addNewItemsOnTop) {
+//        updateUIModel(addNewItemsOnTop);
+//        return uiModel;
+//    }
+
+    public LiveData<List<NoteWithLabels>> getDatabaseNotes(boolean addNewItemsOnTop) {
         updateUIModel(addNewItemsOnTop);
-        return uiModel;
+        return uiModelWitLabels;
     }
 
     public void sendNotesToTrash(List<Note> notes) {
@@ -56,9 +62,9 @@ public class NoteListViewModel extends BaseListViewModel {
 
     private void updateUIModel(boolean newItemsOnTop) {
         if(newItemsOnTop) {
-            uiModel = repo.getDatabaseNotesOrderedByAscendingDate();
+            uiModelWitLabels = repo.getDatabaseNotesOrderedByAscendingDate();
         } else {
-            uiModel = repo.getDatabaseNotesOrderedByDescendingDate();
+            uiModelWitLabels = repo.getDatabaseNotesOrderedByDescendingDate();
         }
     }
 }

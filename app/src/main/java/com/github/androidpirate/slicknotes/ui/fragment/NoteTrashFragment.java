@@ -29,6 +29,7 @@ import androidx.lifecycle.ViewModelProviders;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Note;
@@ -72,7 +73,12 @@ public class NoteTrashFragment extends BaseNoteListFragment {
                 if(notes == null || notes.size() == 0){
                     displayEmptyListMessage();
                 } else {
-                    displayNotes(notes);
+                    // TODO 6: NoteTrashFragment won't be displaying notes at this time
+//                    displayNotes(notes);
+                    Toast.makeText(
+                            getContext(),
+                            "NoteTrashFragment can't display notes, needs a new adapter.",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });

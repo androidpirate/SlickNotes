@@ -39,6 +39,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Note;
+import com.github.androidpirate.slicknotes.data.NoteWithLabels;
 import com.github.androidpirate.slicknotes.viewmodel.BaseListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -67,7 +68,7 @@ public class BaseNoteListFragment extends Fragment
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
         isLinearLayout = sharedPref.getBoolean(getString(R.string.pref_layout_key), true);
         if(adapter == null) {
-            adapter = new NoteListAdapter(new ArrayList<Note>(), this);
+            adapter = new NoteListAdapter(new ArrayList<NoteWithLabels>(), this);
         }
     }
 
@@ -102,7 +103,20 @@ public class BaseNoteListFragment extends Fragment
         this.navigationBase = navigationBase;
     }
 
-    void displayNotes(List<Note> notes) {
+//    void displayNotes(List<Note> notes) {
+//        if(recyclerView.getVisibility() == View.GONE) {
+//            displayRecyclerView();
+//        }
+//        adapter.loadNotes(notes);
+//        setLayoutStyle();
+//        if(baseViewModel.hasAlternateMenu()) {
+//            setAlternateMenu();
+//        }
+//        recyclerView.setAdapter(adapter);
+//        recyclerView.scrollToPosition(getItemScrollPosition());
+//    }
+
+    void displayNotesWithLabels(List<NoteWithLabels> notes) {
         if(recyclerView.getVisibility() == View.GONE) {
             displayRecyclerView();
         }

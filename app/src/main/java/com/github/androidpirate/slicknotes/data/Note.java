@@ -44,8 +44,6 @@ public class Note {
     private boolean isPinned;
     @ColumnInfo(name = "note_color")
     private String color;
-    @ColumnInfo(name ="note_labels")
-    private List<String> labels;
 
     private static final String NOTE_DEFAULT_COLOR = "DEFAULT_BACKGROUND_COLOR";
 
@@ -57,7 +55,6 @@ public class Note {
         this.isTrash = false;
         this.isPinned = false;
         this.color = NOTE_DEFAULT_COLOR;
-        this.labels = new ArrayList<>();
     }
 
     public int getNoteId() {
@@ -92,10 +89,6 @@ public class Note {
         return color;
     }
 
-    public List<String> getLabels() {
-        return labels;
-    }
-
     public void setNoteId(int noteId) {
         this.noteId = noteId;
     }
@@ -126,9 +119,5 @@ public class Note {
 
     public void setColor(String color) {
         this.color = color;
-    }
-
-    public void setLabels(List<String> labels) {
-        this.labels = labels;
     }
 }

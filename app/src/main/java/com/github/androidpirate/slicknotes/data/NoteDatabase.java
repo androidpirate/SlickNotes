@@ -20,6 +20,8 @@ package com.github.androidpirate.slicknotes.data;
 
 import android.content.Context;
 
+import com.github.androidpirate.slicknotes.util.FakeData;
+
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -31,7 +33,8 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Note.class}, version = 1, exportSchema = false)
+// TODO 2: New entities, Label and NoteLabelCrossRef are added into database
+@Database(entities = {Note.class, Label.class, NoteLabelCrossRef.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class NoteDatabase extends RoomDatabase {
     private static NoteDatabase INSTANCE;
@@ -43,8 +46,31 @@ public abstract class NoteDatabase extends RoomDatabase {
                     context.getApplicationContext(),
                     NoteDatabase.class,
                     "notes-database")
+                    .addCallback(new Callback() {
+                        @Override
+                        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                            super.onCreate(db);
+                            Executor executor = Executors.newSingleThreadExecutor();
+                            executor.execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    insertFakeData(context);
+                                }
+                            });
+                        }
+                    })
                     .build();
         }
         return INSTANCE;
+    }
+
+    // TODO 3: This method still uses NoteDao's original insertDatabaseNote(Note note) method
+    // TODO 3: May result in notes with no labels
+    private static void insertFakeData(Context context) {
+        List<NoteWithLabels> fakeNotes = FakeData.getNotes();
+        NoteDao dao = getInstance(context).dao();
+        for(NoteWithLabels noteWtLabels: fakeNotes) {
+            dao.insertDatabaseNote(noteWtLabels.getNote());
+        }
     }
 }
