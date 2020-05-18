@@ -43,7 +43,7 @@ public class NoteWithLabels {
         return note;
     }
 
-    public long getNoteId() {
+    public int getNoteId() {
         return note.getNoteId();
     }
 
