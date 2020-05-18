@@ -34,7 +34,7 @@ import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 // TODO 2: New entities, Label and NoteLabelCrossRef are added into database
-@Database(entities = {Note.class, Label.class, NoteLabelCrossRef.class}, version = 1, exportSchema = false)
+@Database(entities = {Note.class, Label.class, NoteLabelCrossRef.class}, version = 2, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class NoteDatabase extends RoomDatabase {
     private static NoteDatabase INSTANCE;
@@ -59,6 +59,8 @@ public abstract class NoteDatabase extends RoomDatabase {
                             });
                         }
                     })
+                    // TODO create real migrations, don't publish with this option
+                    .fallbackToDestructiveMigration()
                     .build();
         }
         return INSTANCE;
