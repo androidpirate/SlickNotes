@@ -25,6 +25,11 @@ public class NoteLabelCrossRef {
     private int noteId;
     private int labelId;
 
+    public NoteLabelCrossRef(int noteId, int labelId) {
+        this.noteId = noteId;
+        this.labelId = labelId;
+    }
+
     public int getNoteId() {
         return noteId;
     }

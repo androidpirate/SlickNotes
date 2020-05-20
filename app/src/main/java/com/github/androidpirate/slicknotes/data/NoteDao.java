@@ -20,11 +20,13 @@ package com.github.androidpirate.slicknotes.data;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 @Dao
@@ -51,7 +53,7 @@ public interface NoteDao {
     @Query("SELECT * FROM notes WHERE note_pin_status = 1")
     LiveData<List<Note>> getPinnedNotes();
     @Insert
-    void insertDatabaseNote(Note note);
+    long insertDatabaseNote(Note note);
     @Delete
     void deleteDatabaseNote(Note note);
     @Delete
@@ -64,4 +66,15 @@ public interface NoteDao {
     void updateTrashStatus(int noteId, boolean isTrash);
     @Query("UPDATE notes SET note_pin_status = :pinStatus WHERE noteId = :noteId")
     void updatePinStatus(int noteId, boolean pinStatus);
+
+    @Insert
+    long insertLabel(@NonNull Label label);
+
+    @Insert
+    void insertNoteLabelCrossRef(@NonNull NoteLabelCrossRef noteLabelRef);
+
+    @NonNull
+    @Transaction
+    @Query("SELECT * FROM notes ORDER BY note_title")
+    List<NoteWithLabels> getAllNotesWithLabels();
 }
