@@ -21,6 +21,7 @@ package com.github.androidpirate.slicknotes.viewmodel;
 import androidx.lifecycle.LiveData;
 
 import com.github.androidpirate.slicknotes.data.Note;
+import com.github.androidpirate.slicknotes.data.NoteWithLabels;
 import com.github.androidpirate.slicknotes.repo.NoteRepository;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class NoteTrashViewModel extends BaseListViewModel {
         repo = noteRepository;
     }
 
-    public LiveData<List<Note>> getDatabaseTrashNotes() {
+    public LiveData<List<NoteWithLabels>> getDatabaseTrashNotes() {
         uiModel = repo.getDatabaseTrashNotes();
         return uiModel;
     }

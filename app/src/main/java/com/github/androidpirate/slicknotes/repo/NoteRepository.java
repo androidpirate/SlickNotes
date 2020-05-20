@@ -36,7 +36,7 @@ public class NoteRepository {
     private Executor executor;
 
     public NoteRepository(Context context) {
-        dao = NoteDatabase.getInstance(context).dao();
+        dao = NoteDatabase.getInstance(context).noteDao();
         executor = Executors.newSingleThreadExecutor();
     }
 
@@ -56,11 +56,11 @@ public class NoteRepository {
         return dao.getDatabaseNotesDescendingDate();
     }
 
-    public LiveData<List<Note>> getDatabaseTrashNotes() {
+    public LiveData<List<NoteWithLabels>> getDatabaseTrashNotes() {
         return dao.getTrashNotes();
     }
 
-    public LiveData<Note> getDatabaseNote(int noteId) {
+    public LiveData<NoteWithLabels> getDatabaseNote(int noteId) {
         return dao.getDatabaseNote(noteId);
     }
 

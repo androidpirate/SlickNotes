@@ -24,20 +24,17 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.github.androidpirate.slicknotes.R;
-import com.github.androidpirate.slicknotes.data.Note;
+import com.github.androidpirate.slicknotes.data.NoteWithLabels;
 import com.github.androidpirate.slicknotes.util.NoteViewModelFactory;
 import com.github.androidpirate.slicknotes.viewmodel.NoteTrashViewModel;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * A simple {@link BaseNoteListFragment} subclass.
@@ -67,18 +64,13 @@ public class NoteTrashFragment extends BaseNoteListFragment {
         viewModel = new ViewModelProvider(this, factory).get(NoteTrashViewModel.class);
         // Set baseViewModel
         baseViewModel = viewModel;
-        viewModel.getDatabaseTrashNotes().observe(getViewLifecycleOwner(), new Observer<List<Note>>() {
+        viewModel.getDatabaseTrashNotes().observe(getViewLifecycleOwner(), new Observer<List<NoteWithLabels>>() {
             @Override
-            public void onChanged(List<Note> notes) {
+            public void onChanged(List<NoteWithLabels> notes) {
                 if(notes == null || notes.size() == 0){
                     displayEmptyListMessage();
                 } else {
-                    // TODO 6: NoteTrashFragment won't be displaying notes at this time
-//                    displayNotes(notes);
-                    Toast.makeText(
-                            getContext(),
-                            "NoteTrashFragment can't display notes, needs a new adapter.",
-                            Toast.LENGTH_SHORT).show();
+                    displayNotes(notes);
                 }
             }
         });

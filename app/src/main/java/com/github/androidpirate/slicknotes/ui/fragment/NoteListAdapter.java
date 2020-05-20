@@ -103,10 +103,10 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        if(contentList != null) {
-            return contentList.size();
+        if(contentList == null || contentList.size() == 0) {
+            return EMPTY_LIST_SIZE;
         }
-        return EMPTY_LIST_SIZE;
+        return contentList.size();
     }
 
     @Override

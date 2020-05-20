@@ -82,6 +82,10 @@
             android:id="@+id/nav_details_to_trash"
             app:destination="@id/nav_trash"/>
 
+        <action
+            android:id="@+id/nav_details_to_label_list"
+            app:destination="@id/nav_label_list"/>
+
     </fragment>
 
     <fragment
@@ -97,6 +101,19 @@
         <action
             android:id="@+id/nav_trash_to_details"
             app:destination="@+id/nav_details"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_label_list"
+        android:label="Labels"
+        android:name="com.github.androidpirate.slicknotes.ui.fragment.LabelFragment"
+        tools:layout="@layout/fragment_label">
+
+        <argument
+            android:name="noteId"
+            app:argType="integer"
+            android:defaultValue="0"/>
 
     </fragment>
 

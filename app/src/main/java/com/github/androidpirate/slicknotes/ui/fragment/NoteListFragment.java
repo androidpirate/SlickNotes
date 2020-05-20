@@ -98,7 +98,7 @@ public class NoteListFragment extends BaseNoteListFragment {
                         if(notes == null || notes.size() == 0){
                             displayEmptyListMessage();
                         } else {
-                            displayNotesWithLabels(notes);
+                            displayNotes(notes);
                         }
                     }
                 });

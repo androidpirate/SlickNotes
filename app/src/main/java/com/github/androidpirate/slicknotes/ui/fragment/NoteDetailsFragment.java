@@ -31,7 +31,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.github.androidpirate.slicknotes.R;
+import com.github.androidpirate.slicknotes.data.Label;
 import com.github.androidpirate.slicknotes.data.Note;
+import com.github.androidpirate.slicknotes.data.NoteWithLabels;
 import com.github.androidpirate.slicknotes.util.CustomTextWatcher;
 import com.github.androidpirate.slicknotes.util.NoteViewModelFactory;
 import com.github.androidpirate.slicknotes.viewmodel.NoteDetailViewModel;
@@ -73,11 +75,11 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
         NoteViewModelFactory factory = new NoteViewModelFactory(
                 requireActivity().getApplication());
         viewModel = new ViewModelProvider(this, factory).get(NoteDetailViewModel.class);
-        viewModel.getDatabaseNote(noteId).observe(getViewLifecycleOwner(), new Observer<Note>() {
+        viewModel.getDatabaseNote(noteId).observe(getViewLifecycleOwner(), new Observer<NoteWithLabels>() {
             @Override
-            public void onChanged(final Note note) {
-                setNoteValues(note);
-                viewModel.setDatabaseModel(note);
+            public void onChanged(final NoteWithLabels noteWithLabels) {
+                setNoteValues(noteWithLabels);
+                viewModel.setDatabaseModel(noteWithLabels.getNote());
             }
         });
         if(navigationBase == TRASH_LIST_BASE) {
@@ -157,27 +159,38 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
         hideColorPickerDialog();
     }
 
-    private void setNoteValues(final Note note) {
-        setBackgroundColor(note.getColor());
-        setNoteTitleAndDetails(note);
-        setNoteDate(note);
+    @Override
+    void onAddLabelFabClick() {
+        navigateToLabelList(noteId);
     }
 
-    private void setNoteTitleAndDetails(final Note note) {
-        title.setText(note.getTitle());
+    private void setNoteValues(final NoteWithLabels noteWithLabels) {
+        setBackgroundColor(noteWithLabels.getNote().getColor());
+        setNoteTitleAndDetails(noteWithLabels);
+        setNoteDate(noteWithLabels.getNote());
+    }
+
+    private void setNoteTitleAndDetails(final NoteWithLabels noteWithLabels) {
+        title.setText(noteWithLabels.getNote().getTitle());
         title.clearFocus();
-        details.setText(note.getDetails());
+        details.setText(noteWithLabels.getNote().getDetails());
+        // TODO : Added for testing purposes, remove later
+        details.append("\n\n");
+        for(Label label: noteWithLabels.getLabels()) {
+            details.append(label.getTitle() + " ");
+        }
+        // TODO : Added for testing purposes, remove later
         details.clearFocus();
         title.addTextChangedListener(new CustomTextWatcher() {
             @Override
             public void onTextChanged(String _after) {
-                note.setTitle(_after);
+                noteWithLabels.getNote().setTitle(_after);
             }
         });
         details.addTextChangedListener(new CustomTextWatcher() {
             @Override
             public void onTextChanged(String _after) {
-                note.setDetails(_after);
+                noteWithLabels.getNote().setDetails(_after);
             }
         });
     }

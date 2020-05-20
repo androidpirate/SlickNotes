@@ -16,26 +16,27 @@
  * -->
  */
 
-package com.github.androidpirate.slicknotes.viewmodel;
+package com.github.androidpirate.slicknotes.data;
 
+import java.util.List;
+
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
+import androidx.room.Dao;
+import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
+import androidx.room.Query;
 
-import com.github.androidpirate.slicknotes.data.Note;
-import com.github.androidpirate.slicknotes.data.NoteWithLabels;
-import com.github.androidpirate.slicknotes.repo.NoteRepository;
+@Dao
+public interface LabelDao {
 
-public class BaseNoteViewModel extends ViewModel {
-    NoteRepository repo;
-    LiveData<NoteWithLabels> uiModel;
-    Note databaseModel;
+    @Query("SELECT * FROM labels")
+    LiveData<List<Label>> getAllLabels();
 
-    public void updateNoteColor(String color) {
-        databaseModel.setColor(color);
-    }
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    long insertLabel(@NonNull Label label);
 
-    public boolean updateNotePinStatus() {
-        databaseModel.setPinned(!databaseModel.isPinned());
-        return databaseModel.isPinned();
-    }
+    @Delete
+    void deleteLabel(@NonNull Label label);
 }

@@ -48,7 +48,7 @@ public class NotesWithLabelsTest {
     public void createDb() {
         Context context = ApplicationProvider.getApplicationContext();
         db = Room.inMemoryDatabaseBuilder(context, NoteDatabase.class).build();
-        dao = db.dao();
+        dao = db.noteDao();
     }
 
     @After

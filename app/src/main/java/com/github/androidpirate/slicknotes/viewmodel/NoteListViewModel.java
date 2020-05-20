@@ -38,7 +38,7 @@ public class NoteListViewModel extends BaseListViewModel {
 
     public LiveData<List<NoteWithLabels>> getDatabaseNotes(boolean addNewItemsOnTop) {
         updateUIModel(addNewItemsOnTop);
-        return uiModelWitLabels;
+        return uiModel;
     }
 
     public void sendNotesToTrash(List<Note> notes) {
@@ -62,9 +62,9 @@ public class NoteListViewModel extends BaseListViewModel {
 
     private void updateUIModel(boolean newItemsOnTop) {
         if(newItemsOnTop) {
-            uiModelWitLabels = repo.getDatabaseNotesOrderedByAscendingDate();
+            uiModel = repo.getDatabaseNotesOrderedByAscendingDate();
         } else {
-            uiModelWitLabels = repo.getDatabaseNotesOrderedByDescendingDate();
+            uiModel = repo.getDatabaseNotesOrderedByDescendingDate();
         }
     }
 }

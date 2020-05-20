@@ -103,20 +103,7 @@ public class BaseNoteListFragment extends Fragment
         this.navigationBase = navigationBase;
     }
 
-//    void displayNotes(List<Note> notes) {
-//        if(recyclerView.getVisibility() == View.GONE) {
-//            displayRecyclerView();
-//        }
-//        adapter.loadNotes(notes);
-//        setLayoutStyle();
-//        if(baseViewModel.hasAlternateMenu()) {
-//            setAlternateMenu();
-//        }
-//        recyclerView.setAdapter(adapter);
-//        recyclerView.scrollToPosition(getItemScrollPosition());
-//    }
-
-    void displayNotesWithLabels(List<NoteWithLabels> notes) {
+    void displayNotes(List<NoteWithLabels> notes) {
         if(recyclerView.getVisibility() == View.GONE) {
             displayRecyclerView();
         }

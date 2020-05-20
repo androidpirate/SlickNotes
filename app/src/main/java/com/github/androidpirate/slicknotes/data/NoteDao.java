@@ -35,6 +35,8 @@ public interface NoteDao {
 //    @Query("SELECT * FROM notes WHERE note_trash_status = 0 " +
 //            "ORDER BY note_pin_status DESC, note_create_date ASC")
 //    LiveData<List<Note>> getDatabaseNotesAscendingDate();
+    @NonNull
+    @Transaction
     @Query("SELECT * FROM notes WHERE note_trash_status = 0 " +
             "ORDER BY note_pin_status DESC, note_create_date ASC")
     LiveData<List<NoteWithLabels>> getDatabaseNotesAscendingDate();
@@ -42,16 +44,24 @@ public interface NoteDao {
 //    @Query("SELECT * FROM notes WHERE note_trash_status = 0 " +
 //            "ORDER BY note_pin_status DESC, note_create_date DESC")
 //    LiveData<List<Note>> getDatabaseNotesDescendingDate();
+    @NonNull
+    @Transaction
     @Query("SELECT * FROM notes WHERE note_trash_status = 0 " +
         "ORDER BY note_pin_status DESC, note_create_date DESC")
     LiveData<List<NoteWithLabels>> getDatabaseNotesDescendingDate();
 
+    @Transaction
     @Query("SELECT * FROM notes WHERE noteId = :id")
-    LiveData<Note> getDatabaseNote(int id);
+    LiveData<NoteWithLabels> getDatabaseNote(int id);
+
+    @Transaction
     @Query("SELECT * FROM notes WHERE note_trash_status = 1")
-    LiveData<List<Note>> getTrashNotes();
+    LiveData<List<NoteWithLabels>> getTrashNotes();
+
+    @Transaction
     @Query("SELECT * FROM notes WHERE note_pin_status = 1")
-    LiveData<List<Note>> getPinnedNotes();
+    LiveData<List<NoteWithLabels>> getPinnedNotes();
+
     @Insert
     long insertDatabaseNote(Note note);
     @Delete
@@ -67,8 +77,8 @@ public interface NoteDao {
     @Query("UPDATE notes SET note_pin_status = :pinStatus WHERE noteId = :noteId")
     void updatePinStatus(int noteId, boolean pinStatus);
 
-    @Insert
-    long insertLabel(@NonNull Label label);
+//    @Insert
+//    long insertLabel(@NonNull Label label);
 
     @Insert
     void insertNoteLabelCrossRef(@NonNull NoteLabelCrossRef noteLabelRef);

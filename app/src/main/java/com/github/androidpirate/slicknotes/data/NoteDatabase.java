@@ -34,11 +34,12 @@ import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 // TODO 2: New entities, Label and NoteLabelCrossRef are added into database
-@Database(entities = {Note.class, Label.class, NoteLabelCrossRef.class}, version = 2, exportSchema = false)
+@Database(entities = {Note.class, Label.class, NoteLabelCrossRef.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class NoteDatabase extends RoomDatabase {
     private static NoteDatabase INSTANCE;
-    public abstract NoteDao dao();
+    public abstract NoteDao noteDao();
+    public abstract LabelDao labelDao();
 
     public static NoteDatabase getInstance(final Context context) {
         if(INSTANCE == null) {
@@ -59,20 +60,22 @@ public abstract class NoteDatabase extends RoomDatabase {
                             });
                         }
                     })
-                    // TODO create real migrations, don't publish with this option
-                    .fallbackToDestructiveMigration()
                     .build();
         }
         return INSTANCE;
     }
 
-    // TODO 3: This method still uses NoteDao's original insertDatabaseNote(Note note) method
-    // TODO 3: May result in notes with no labels
+    // TODO : Make sure to check if the labels exist when inserting labels
     private static void insertFakeData(Context context) {
         List<NoteWithLabels> fakeNotes = FakeData.getNotes();
-        NoteDao dao = getInstance(context).dao();
+        NoteDao noteDao = getInstance(context).noteDao();
+        LabelDao labelDao = getInstance(context).labelDao();
         for(NoteWithLabels noteWtLabels: fakeNotes) {
-            dao.insertDatabaseNote(noteWtLabels.getNote());
+            int noteId = Long.valueOf(noteDao.insertDatabaseNote(noteWtLabels.getNote())).intValue();
+            for(Label label: noteWtLabels.getLabels()) {
+                int labelId = Long.valueOf(labelDao.insertLabel(label)).intValue();
+                noteDao.insertNoteLabelCrossRef(new NoteLabelCrossRef(noteId, labelId));
+            }
         }
     }
 }

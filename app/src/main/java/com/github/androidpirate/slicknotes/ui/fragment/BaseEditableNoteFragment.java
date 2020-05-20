@@ -95,6 +95,8 @@ public abstract class BaseEditableNoteFragment extends Fragment
      */
     abstract void onColorPickerFabClick(String color);
 
+    abstract void onAddLabelFabClick();
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -131,8 +133,10 @@ public abstract class BaseEditableNoteFragment extends Fragment
             case R.id.fab_actions: animateFab();
                 break;
             case R.id.fab_add_label:
+                onAddLabelFabClick();
                 break;
-            case R.id.fab_change_color: displayColorPickerDialog();
+            case R.id.fab_change_color:
+                displayColorPickerDialog();
                 break;
             case R.id.fab_share:
                 shareNote();
@@ -172,6 +176,13 @@ public abstract class BaseEditableNoteFragment extends Fragment
 
     void navigateToTrash() {
         navController.navigate(R.id.nav_details_to_trash);
+    }
+
+    void navigateToLabelList(int noteId) {
+        Bundle args = new Bundle();
+        args.putInt(EXTRA_NOTE_ID, noteId);
+        hideFabAction();
+        navController.navigate(R.id.nav_details_to_label_list, args);
     }
 
     void setBackgroundColor(String color) {

@@ -103,4 +103,9 @@ public class NoteCreateFragment extends BaseEditableNoteFragment {
         setBackgroundColor(color);
         hideColorPickerDialog();
     }
+
+    @Override
+    void onAddLabelFabClick() {
+        // TODO: Do something here
+    }
 }

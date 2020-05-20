@@ -43,4 +43,8 @@
     <string name="color_purple">purple</string>
     <string name="color_yellow">yellow</string>
     <string name="pref_item_order_title">Add New Items On Top</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="empty_labels_message">No label available for this note.</string>
 </resources>
