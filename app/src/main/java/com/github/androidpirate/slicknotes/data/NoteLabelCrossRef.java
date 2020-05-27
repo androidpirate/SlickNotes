@@ -27,7 +27,7 @@ public class NoteLabelCrossRef {
     @NonNull
     private String labelTitle;
 
-    public NoteLabelCrossRef(int noteId, String labelTitle) {
+    public NoteLabelCrossRef(int noteId, @NonNull String labelTitle) {
         this.noteId = noteId;
         this.labelTitle = labelTitle;
     }

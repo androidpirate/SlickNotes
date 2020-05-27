@@ -40,7 +40,6 @@ import com.github.androidpirate.slicknotes.viewmodel.NoteDetailViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -166,6 +165,7 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
     @Override
     void onAddLabelFabClick() {
         navigateToLabelList(noteId, new ArrayList<String>(noteLabels));
+        noteLabels.clear();
     }
 
     private void setNoteValues(final NoteWithLabels noteWithLabels) {
@@ -178,10 +178,12 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
         title.setText(noteWithLabels.getNote().getTitle());
         title.clearFocus();
         details.setText(noteWithLabels.getNote().getDetails());
-        // TODO : Added for testing purposes, remove later
+        // TODO: Added for testing purposes, replace it with
+        // TODO: creating chips for each label
         details.append("\n\n");
         for(Label label: noteWithLabels.getLabels()) {
             details.append(label.getLabelTitle() + " ");
+            // TODO: Adding label titles to noteLabels is required, DO NOT DELETE
             noteLabels.add(label.getLabelTitle());
         }
         // TODO : Added for testing purposes, remove later

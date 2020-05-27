@@ -33,7 +33,6 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-// TODO 2: New entities, Label and NoteLabelCrossRef are added into database
 @Database(entities = {Note.class, Label.class, NoteLabelCrossRef.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class NoteDatabase extends RoomDatabase {
@@ -65,7 +64,7 @@ public abstract class NoteDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    // TODO : Make sure to check if the labels exist when inserting labels
+    // TODO : Remove this method from the release build
     private static void insertFakeData(Context context) {
         List<NoteWithLabels> fakeNotes = FakeData.getNotes();
         NoteDao noteDao = getInstance(context).noteDao();

@@ -86,7 +86,7 @@ public class FakeData {
                 "A Note To Self",
                 "Love yourself!",
                 new Date()),
-                new ArrayList<>(Collections.singletonList(labels.get(2)))));
+                new ArrayList<Label>()));
         notes.add(new NoteWithLabels(
                 new Note(
                 "By Order of The Peaky Blinders",

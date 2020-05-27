@@ -27,6 +27,7 @@ import java.util.concurrent.Executors;
 import com.github.androidpirate.slicknotes.data.Note;
 import com.github.androidpirate.slicknotes.data.NoteDao;
 import com.github.androidpirate.slicknotes.data.NoteDatabase;
+import com.github.androidpirate.slicknotes.data.NoteLabelCrossRef;
 import com.github.androidpirate.slicknotes.data.NoteWithLabels;
 
 import androidx.lifecycle.LiveData;
@@ -40,17 +41,9 @@ public class NoteRepository {
         executor = Executors.newSingleThreadExecutor();
     }
 
-//    public LiveData<List<Note>> getDatabaseNotesOrderedByAscendingDate() {
-//        return dao.getDatabaseNotesAscendingDate();
-//    }
-
     public LiveData<List<NoteWithLabels>> getDatabaseNotesOrderedByAscendingDate() {
         return dao.getDatabaseNotesAscendingDate();
     }
-
-//    public LiveData<List<Note>> getDatabaseNotesOrderedByDescendingDate() {
-//        return dao.getDatabaseNotesDescendingDate();
-//    }
 
     public LiveData<List<NoteWithLabels>> getDatabaseNotesOrderedByDescendingDate() {
         return dao.getDatabaseNotesDescendingDate();
@@ -123,6 +116,24 @@ public class NoteRepository {
             @Override
             public void run() {
                 dao.updateDatabaseNotes(notes);
+            }
+        });
+    }
+
+    public void insertNoteLabelCrossRef(final int noteId, final String labelTitle) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                dao.insertNoteLabelCrossRef(new NoteLabelCrossRef(noteId, labelTitle));
+            }
+        });
+    }
+
+    public void deleteNoteLabelCrossRef(final int noteId, final String labelTitle) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                dao.deleteNoteLabelCrossRef(new NoteLabelCrossRef(noteId, labelTitle));
             }
         });
     }

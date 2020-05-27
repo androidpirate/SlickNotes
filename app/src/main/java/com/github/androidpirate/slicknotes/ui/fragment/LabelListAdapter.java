@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.github.androidpirate.slicknotes.R;
@@ -34,13 +35,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class LabelListAdapter extends RecyclerView.Adapter<LabelListAdapter.LabelHolder> {
+
     private static final int EMPTY_LIST_SIZE = 0;
 
     private List<Label> labels;
     private ArrayList<String> noteLabels;
+    private OnLabelClickListener listener;
 
-    public LabelListAdapter(List<Label> labels) {
+    interface OnLabelClickListener {
+        void onCheckBoxChecked(boolean isChecked, Label label);
+    }
+
+    public LabelListAdapter(List<Label> labels, OnLabelClickListener listener) {
         this.labels = labels;
+        this.listener = listener;
     }
 
     @NonNull
@@ -83,9 +91,15 @@ public class LabelListAdapter extends RecyclerView.Adapter<LabelListAdapter.Labe
             checkBox = itemView.findViewById(R.id.cb_label);
         }
 
-        private void onBindLabel(Label label) {
+        private void onBindLabel(final Label label) {
             title.setText(label.getLabelTitle());
             checkNoteLabel(label);
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    listener.onCheckBoxChecked(isChecked, label);
+                }
+            });
         }
 
         private void checkNoteLabel(Label label) {

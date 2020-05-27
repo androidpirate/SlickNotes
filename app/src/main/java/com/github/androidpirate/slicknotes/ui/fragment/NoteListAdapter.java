@@ -18,7 +18,6 @@
 
 package com.github.androidpirate.slicknotes.ui.fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.github.androidpirate.slicknotes.R;
-import com.github.androidpirate.slicknotes.data.Label;
 import com.github.androidpirate.slicknotes.data.Note;
 import com.github.androidpirate.slicknotes.data.NoteWithLabels;
 
@@ -119,8 +117,6 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return super.getItemViewType(position);
     }
 
-    // TODO 4: In favor of making NoteListFragment updating the argument type
-    // TODO 4: NoteTrashFragment will need a new adapter class
     void loadNotes(List<NoteWithLabels> notes) {
         this.notes = notes;
         initializeContentList();
@@ -148,12 +144,6 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             } else if (isPinnedHeaderCreated && !noteWithLabel.getNote().isPinned() && !isOthersHeaderCreated) {
                     contentList.add(OTHERS_HEADER_TAG);
                     isOthersHeaderCreated = true;
-            }
-            // TODO 5: If inserting notes and labels work this is where we should start seeing some label info
-            // TODO 5: Debug result -> noteWithLabels.getLabels().size = 0, so NoteDao().insertDatabaseNote
-            // TODO 5: definitely needs to be updated
-            for(Label label: noteWithLabel.getLabels()) {
-                Log.d("NoteListAdapter,Line152", label.getLabelTitle());
             }
             contentList.add(noteWithLabel.getNote());
         }

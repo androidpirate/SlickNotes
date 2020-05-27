@@ -18,7 +18,6 @@
 
 package com.github.androidpirate.slicknotes.data;
 
-import java.util.Date;
 import java.util.List;
 
 import androidx.room.Embedded;
@@ -71,53 +70,4 @@ public class NoteWithLabels {
         this.labels = labels;
     }
 
-// TODO : Following getters and setters are here just in case they needed
-
-//    public String getDetails() {
-//        return note.getDetails();
-//    }
-
-//    public Date getDateCreated() {
-//        return note.getDateCreated();
-//    }
-
-//    public Date getDateEdited() {
-//        return note.getDateEdited();
-//    }
-
-//    public boolean isTrash() {
-//        return note.isTrash();
-//    }
-
-//    public boolean isPinned() {
-//        return note.isPinned();
-//    }
-
-//    public String getColor() {
-//        return note.getColor();
-//    }
-
-//    public void setDetails(String details) {
-//        note.setDetails(details);
-//    }
-
-//    public void setDateCreated(Date dateCreated) {
-//        note.setDateCreated(dateCreated);
-//    }
-
-//    public void setDateEdited(Date dateEdited) {
-//        note.setDateEdited(dateEdited);
-//    }
-
-//    public void setTrash(boolean trash) {
-//        note.setTrash(trash);
-//    }
-
-//    public void setPinned(boolean pinned) {
-//        note.setPinned(pinned);
-//    }
-
-//    public void setColor(String color) {
-//        note.setColor(color);
-//    }
 }

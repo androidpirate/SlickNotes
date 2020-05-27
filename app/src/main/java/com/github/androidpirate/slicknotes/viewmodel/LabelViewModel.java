@@ -19,10 +19,13 @@
 package com.github.androidpirate.slicknotes.viewmodel;
 
 import com.github.androidpirate.slicknotes.data.Label;
+import com.github.androidpirate.slicknotes.data.Note;
+import com.github.androidpirate.slicknotes.data.NoteLabelCrossRef;
 import com.github.androidpirate.slicknotes.data.NoteWithLabels;
 import com.github.androidpirate.slicknotes.repo.LabelRepository;
 import com.github.androidpirate.slicknotes.repo.NoteRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
@@ -31,6 +34,7 @@ import androidx.lifecycle.ViewModel;
 public class LabelViewModel extends ViewModel {
     private NoteRepository noteRepository;
     private LabelRepository labelRepository;
+    private NoteWithLabels databaseNote;
 
     public LabelViewModel(NoteRepository noteRepository, LabelRepository labelRepository) {
         this.noteRepository = noteRepository;
@@ -43,5 +47,25 @@ public class LabelViewModel extends ViewModel {
 
     public LiveData<NoteWithLabels> getDatabaseNote(int noteId) {
         return noteRepository.getDatabaseNote(noteId);
+    }
+
+    public void setDatabaseNote(NoteWithLabels note) {
+        databaseNote = note;
+    }
+
+    // TODO: This method should also handle creating new notes
+    // TODO: and inserting to the labels table
+    public void insertNoteLabel(Label label) {
+        noteRepository.insertNoteLabelCrossRef(
+                databaseNote.getNoteId(),
+                label.getLabelTitle()
+        );
+    }
+
+    public void removeNoteLabel(Label label) {
+        noteRepository.deleteNoteLabelCrossRef(
+                databaseNote.getNoteId(),
+                label.getLabelTitle()
+        );
     }
 }

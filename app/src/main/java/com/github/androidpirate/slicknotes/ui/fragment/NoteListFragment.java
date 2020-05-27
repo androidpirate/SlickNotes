@@ -33,7 +33,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.github.androidpirate.slicknotes.R;
-import com.github.androidpirate.slicknotes.data.Note;
 import com.github.androidpirate.slicknotes.data.NoteWithLabels;
 import com.github.androidpirate.slicknotes.util.NoteViewModelFactory;
 import com.github.androidpirate.slicknotes.viewmodel.NoteListViewModel;
@@ -80,28 +79,17 @@ public class NoteListFragment extends BaseNoteListFragment {
         baseViewModel = viewModel;
         // Get preference to order notes
         boolean addNewItemsOnTop = sharedPref.getBoolean(getString(R.string.pref_item_order_key), false);
-//        viewModel.getDatabaseNotes(addNewItemsOnTop)
-//                .observe(getViewLifecycleOwner(), new Observer<List<Note>>() {
-//            @Override
-//            public void onChanged(List<Note> notes) {
-//                if(notes == null || notes.size() == 0){
-//                    displayEmptyListMessage();
-//                } else {
-//                    displayNotes(notes);
-//                }
-//            }
-//        });
         viewModel.getDatabaseNotes(addNewItemsOnTop)
-                .observe(getViewLifecycleOwner(), new Observer<List<NoteWithLabels>>() {
-                    @Override
-                    public void onChanged(List<NoteWithLabels> notes) {
-                        if(notes == null || notes.size() == 0){
-                            displayEmptyListMessage();
-                        } else {
-                            displayNotes(notes);
-                        }
+            .observe(getViewLifecycleOwner(), new Observer<List<NoteWithLabels>>() {
+                @Override
+                public void onChanged(List<NoteWithLabels> notes) {
+                    if(notes == null || notes.size() == 0){
+                        displayEmptyListMessage();
+                    } else {
+                        displayNotes(notes);
                     }
-                });
+                }
+            });
     }
 
     @Override
