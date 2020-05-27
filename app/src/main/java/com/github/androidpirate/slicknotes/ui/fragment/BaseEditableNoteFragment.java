@@ -47,6 +47,7 @@ import com.github.androidpirate.slicknotes.util.AlarmReceiver;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -65,6 +66,7 @@ public abstract class BaseEditableNoteFragment extends Fragment
     public static final String EXTRA_NOTE_ID = "note_id";
     public static final String EXTRA_NOTE_TITLE = "note_title";
     public static final String EXTRA_NOTE_DETAILS = "note_details";
+    public static final String EXTRA_NOTE_LABELS = "note_labels";
     static final String DELETED_NOTE_ID = "deletedNoteId";
     static final String NOTE_PIN_STATUS = "note_pin_status";
     static final String NAVIGATION_BASE = "navigation_base";
@@ -178,9 +180,10 @@ public abstract class BaseEditableNoteFragment extends Fragment
         navController.navigate(R.id.nav_details_to_trash);
     }
 
-    void navigateToLabelList(int noteId) {
+    void navigateToLabelList(int noteId, ArrayList<String> noteLabels) {
         Bundle args = new Bundle();
         args.putInt(EXTRA_NOTE_ID, noteId);
+        args.putStringArrayList(EXTRA_NOTE_LABELS, noteLabels);
         hideFabAction();
         navController.navigate(R.id.nav_details_to_label_list, args);
     }

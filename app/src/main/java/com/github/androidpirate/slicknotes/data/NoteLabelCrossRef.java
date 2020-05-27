@@ -18,31 +18,33 @@
 
 package com.github.androidpirate.slicknotes.data;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 
-@Entity(primaryKeys = {"noteId", "labelId"})
+@Entity(primaryKeys = {"noteId", "labelTitle"})
 public class NoteLabelCrossRef {
     private int noteId;
-    private int labelId;
+    @NonNull
+    private String labelTitle;
 
-    public NoteLabelCrossRef(int noteId, int labelId) {
+    public NoteLabelCrossRef(int noteId, String labelTitle) {
         this.noteId = noteId;
-        this.labelId = labelId;
+        this.labelTitle = labelTitle;
     }
 
     public int getNoteId() {
         return noteId;
     }
 
-    public int getLabelId() {
-        return labelId;
+    public String getLabelTitle() {
+        return labelTitle;
     }
 
     public void setNoteId(int noteId) {
         this.noteId = noteId;
     }
 
-    public void setLabelId(int labelId) {
-        this.labelId = labelId;
+    public void setLabelId(String labelTitle) {
+        this.labelTitle = labelTitle;
     }
 }

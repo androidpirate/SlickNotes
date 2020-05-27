@@ -153,7 +153,7 @@ public class NoteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // TODO 5: Debug result -> noteWithLabels.getLabels().size = 0, so NoteDao().insertDatabaseNote
             // TODO 5: definitely needs to be updated
             for(Label label: noteWithLabel.getLabels()) {
-                Log.d("NoteListAdapter,Line152", label.getTitle());
+                Log.d("NoteListAdapter,Line152", label.getLabelTitle());
             }
             contentList.add(noteWithLabel.getNote());
         }

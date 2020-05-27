@@ -29,7 +29,7 @@ public class NoteWithLabels {
     @Embedded private Note note;
     @Relation(
             parentColumn = "noteId",
-            entityColumn = "labelId",
+            entityColumn = "labelTitle",
             associateBy = @Junction(NoteLabelCrossRef.class)
     )
     private List<Label> labels;

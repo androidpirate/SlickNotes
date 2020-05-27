@@ -18,34 +18,38 @@
 
 package com.github.androidpirate.slicknotes.data;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "labels")
+@Entity(tableName = "labels",
+        indices = {@Index(value = {"labelTitle"}, unique = true)}
+        )
 public class Label {
-    @PrimaryKey(autoGenerate = true)
-    private int labelId;
-    @ColumnInfo(name = "label_title")
-    private String title;
+    @NonNull
+    @PrimaryKey
+//    private int labelId;
+    private String labelTitle;
 
-    public Label(String title) {
-        this.title = title;
+    public Label(@NonNull String labelTitle) {
+        this.labelTitle = labelTitle;
     }
 
-    public int getLabelId() {
-        return labelId;
+//    public int getLabelId() {
+//        return labelId;
+//    }
+
+    public String getLabelTitle() {
+        return labelTitle;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setLabelId(int labelId) {
-        this.labelId = labelId;
-    }
+//    public void setLabelId(int labelId) {
+//        this.labelId = labelId;
+//    }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.labelTitle = title;
     }
 }

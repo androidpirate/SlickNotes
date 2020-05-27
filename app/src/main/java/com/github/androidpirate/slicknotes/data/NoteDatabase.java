@@ -71,10 +71,10 @@ public abstract class NoteDatabase extends RoomDatabase {
         NoteDao noteDao = getInstance(context).noteDao();
         LabelDao labelDao = getInstance(context).labelDao();
         for(NoteWithLabels noteWtLabels: fakeNotes) {
-            int noteId = Long.valueOf(noteDao.insertDatabaseNote(noteWtLabels.getNote())).intValue();
+            int noteId = (int) noteDao.insertDatabaseNote(noteWtLabels.getNote());
             for(Label label: noteWtLabels.getLabels()) {
-                int labelId = Long.valueOf(labelDao.insertLabel(label)).intValue();
-                noteDao.insertNoteLabelCrossRef(new NoteLabelCrossRef(noteId, labelId));
+                labelDao.insertLabel(label);
+                noteDao.insertNoteLabelCrossRef(new NoteLabelCrossRef(noteId, label.getLabelTitle()));
             }
         }
     }

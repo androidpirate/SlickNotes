@@ -39,6 +39,8 @@ import com.github.androidpirate.slicknotes.util.NoteViewModelFactory;
 import com.github.androidpirate.slicknotes.viewmodel.NoteDetailViewModel;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -50,6 +52,7 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
     private static final int TRASH_LIST_BASE = 1;
 
     private NoteDetailViewModel viewModel;
+    private ArrayList<String> noteLabels;
     private boolean pinStatus;
     private int noteId;
     private int navigationBase;
@@ -67,6 +70,7 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
             noteId = getArguments().getInt(EXTRA_NOTE_ID);
             navigationBase = getArguments().getInt(NAVIGATION_BASE);
         }
+        noteLabels = new ArrayList<>();
     }
 
     @Override
@@ -161,7 +165,7 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
 
     @Override
     void onAddLabelFabClick() {
-        navigateToLabelList(noteId);
+        navigateToLabelList(noteId, new ArrayList<String>(noteLabels));
     }
 
     private void setNoteValues(final NoteWithLabels noteWithLabels) {
@@ -177,7 +181,8 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
         // TODO : Added for testing purposes, remove later
         details.append("\n\n");
         for(Label label: noteWithLabels.getLabels()) {
-            details.append(label.getTitle() + " ");
+            details.append(label.getLabelTitle() + " ");
+            noteLabels.add(label.getLabelTitle());
         }
         // TODO : Added for testing purposes, remove later
         details.clearFocus();

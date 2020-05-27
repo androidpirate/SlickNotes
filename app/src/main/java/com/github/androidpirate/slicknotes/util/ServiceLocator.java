@@ -20,10 +20,12 @@ package com.github.androidpirate.slicknotes.util;
 
 import android.content.Context;
 
+import com.github.androidpirate.slicknotes.repo.LabelRepository;
 import com.github.androidpirate.slicknotes.repo.NoteRepository;
 
 public class ServiceLocator {
     private static NoteRepository noteRepository;
+    private static LabelRepository labelRepository;
 
     public static NoteRepository provideNoteRepository(Context context) {
         if(noteRepository == null) {
@@ -32,9 +34,22 @@ public class ServiceLocator {
         return noteRepository;
     }
 
+    public static LabelRepository provideLabelRepository(Context context) {
+        if(labelRepository == null) {
+            return createLabelRepository(context);
+        }
+        return labelRepository;
+    }
+
     private static NoteRepository createNoteRepository(Context context) {
         NoteRepository newRepo = new NoteRepository(context);
         noteRepository = newRepo;
+        return newRepo;
+    }
+
+    private static LabelRepository createLabelRepository(Context context) {
+        LabelRepository newRepo = new LabelRepository(context);
+        labelRepository = newRepo;
         return newRepo;
     }
 }

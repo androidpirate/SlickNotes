@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Label;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -36,6 +37,7 @@ public class LabelListAdapter extends RecyclerView.Adapter<LabelListAdapter.Labe
     private static final int EMPTY_LIST_SIZE = 0;
 
     private List<Label> labels;
+    private ArrayList<String> noteLabels;
 
     public LabelListAdapter(List<Label> labels) {
         this.labels = labels;
@@ -67,6 +69,10 @@ public class LabelListAdapter extends RecyclerView.Adapter<LabelListAdapter.Labe
         notifyDataSetChanged();
     }
 
+    void loadNoteLabels(ArrayList<String> noteLabels) {
+        this.noteLabels = noteLabels;
+    }
+
     class LabelHolder extends RecyclerView.ViewHolder {
         private TextView title;
         private CheckBox checkBox;
@@ -78,7 +84,14 @@ public class LabelListAdapter extends RecyclerView.Adapter<LabelListAdapter.Labe
         }
 
         private void onBindLabel(Label label) {
-            title.setText(label.getTitle());
+            title.setText(label.getLabelTitle());
+            checkNoteLabel(label);
+        }
+
+        private void checkNoteLabel(Label label) {
+            if(noteLabels.contains(label.getLabelTitle())) {
+                checkBox.setChecked(true);
+            }
         }
     }
 }

@@ -35,25 +35,28 @@ import android.widget.TextView;
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Label;
 import com.github.androidpirate.slicknotes.data.NoteWithLabels;
-import com.github.androidpirate.slicknotes.repo.NoteRepository;
-import com.github.androidpirate.slicknotes.util.NoteViewModelFactory;
-import com.github.androidpirate.slicknotes.viewmodel.NoteDetailViewModel;
+import com.github.androidpirate.slicknotes.util.LabelViewModelFactory;
+import com.github.androidpirate.slicknotes.viewmodel.LabelViewModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.github.androidpirate.slicknotes.ui.fragment.BaseEditableNoteFragment.EXTRA_NOTE_ID;
+import static com.github.androidpirate.slicknotes.ui.fragment.BaseEditableNoteFragment.EXTRA_NOTE_LABELS;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class LabelFragment extends Fragment {
-
+    private static final int EMPTY_LIST_SIZE = 0;
     private RecyclerView recyclerView;
     private TextView emptyLabelsMessage;
     private LabelListAdapter adapter;
-    private NoteDetailViewModel viewModel;
+    private LabelViewModel viewModel;
+    // TODO: Might not need noteId
     private int noteId;
+    private ArrayList<String> noteLabels;
 
     public LabelFragment() {
         // Required empty public constructor
@@ -64,6 +67,7 @@ public class LabelFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if(getArguments() != null) {
             noteId = getArguments().getInt(EXTRA_NOTE_ID);
+            noteLabels = getArguments().getStringArrayList(EXTRA_NOTE_LABELS);
         }
         if(adapter == null) {
             adapter = new LabelListAdapter(new ArrayList<Label>());
@@ -81,14 +85,14 @@ public class LabelFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        NoteViewModelFactory factory = new NoteViewModelFactory(
-                requireActivity().getApplication());
-        viewModel = new ViewModelProvider(this, factory).get(NoteDetailViewModel.class);
-        viewModel.getDatabaseNote(noteId).observe(getViewLifecycleOwner(), new Observer<NoteWithLabels>() {
+        LabelViewModelFactory factory = new LabelViewModelFactory(requireActivity().getApplication());
+        viewModel = new ViewModelProvider(this, factory).get(LabelViewModel.class);
+
+        viewModel.getDatabaseLabels().observe(getViewLifecycleOwner(), new Observer<List<Label>>() {
             @Override
-            public void onChanged(NoteWithLabels noteWithLabels) {
-                if(noteWithLabels != null && noteWithLabels.getLabels().size() != 0) {
-                    displayLabels(noteWithLabels.getLabels());
+            public void onChanged(List<Label> labels) {
+                if(labels != null && labels.size() != EMPTY_LIST_SIZE) {
+                    displayLabels(labels);
                 } else {
                     displayEmptyLabelsMessage();
                 }
@@ -105,6 +109,7 @@ public class LabelFragment extends Fragment {
         if(recyclerView.getVisibility() == View.GONE) {
             displayRecyclerView();
         }
+        adapter.loadNoteLabels(noteLabels);
         adapter.loadLabels(labels);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
