@@ -18,11 +18,13 @@
 
 package com.github.androidpirate.slicknotes.ui.fragment;
 
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.github.androidpirate.slicknotes.R;
@@ -34,12 +36,15 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class LabelListAdapter extends RecyclerView.Adapter<LabelListAdapter.LabelHolder> {
+public class LabelListAdapter extends RecyclerView.Adapter<LabelListAdapter.LabelHolder>
+    implements Filterable {
 
     private static final int EMPTY_LIST_SIZE = 0;
 
     private List<Label> labels;
+    private List<Label> labelsFull;
     private ArrayList<String> noteLabels;
+    private SparseBooleanArray itemStateArray = new SparseBooleanArray();
     private OnLabelClickListener listener;
 
     interface OnLabelClickListener {
@@ -61,7 +66,7 @@ public class LabelListAdapter extends RecyclerView.Adapter<LabelListAdapter.Labe
 
     @Override
     public void onBindViewHolder(@NonNull LabelHolder holder, int position) {
-        holder.onBindLabel(labels.get(position));
+        holder.onBindLabel(position);
     }
 
     @Override
@@ -72,16 +77,58 @@ public class LabelListAdapter extends RecyclerView.Adapter<LabelListAdapter.Labe
         return labels.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return labelFilter;
+    }
+
+    private Filter labelFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Label> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(labelsFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (Label label : labelsFull) {
+                    if (label.getLabelTitle().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(label);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            labels.clear();
+            labels.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
     void loadLabels(List<Label> labels) {
         this.labels = labels;
-        notifyDataSetChanged();
+        labelsFull = new ArrayList<>(this.labels);
     }
 
     void loadNoteLabels(ArrayList<String> noteLabels) {
         this.noteLabels = noteLabels;
+        for(int i = 0; i < labels.size(); i++) {
+            for(String noteLabel: noteLabels) {
+                if(labels.get(i).getLabelTitle().equals(noteLabel)) {
+                    itemStateArray.put(i, true);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
-    class LabelHolder extends RecyclerView.ViewHolder {
+    class LabelHolder extends RecyclerView.ViewHolder
+        implements View.OnClickListener {
         private TextView title;
         private CheckBox checkBox;
 
@@ -89,23 +136,39 @@ public class LabelListAdapter extends RecyclerView.Adapter<LabelListAdapter.Labe
             super(itemView);
             title = itemView.findViewById(R.id.tv_label_title);
             checkBox = itemView.findViewById(R.id.cb_label);
+            itemView.setOnClickListener(this);
         }
 
-        private void onBindLabel(final Label label) {
-            title.setText(label.getLabelTitle());
-            checkNoteLabel(label);
-            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    listener.onCheckBoxChecked(isChecked, label);
-                }
-            });
+        private void onBindLabel(int position) {
+            title.setText(labels.get(position).getLabelTitle());
+            // TODO: You can not trust adapter position !!!!
+            int itemPosition = getLabelPosition(title.getText().toString());
+            checkBox.setChecked(itemStateArray.get(itemPosition));
         }
 
-        private void checkNoteLabel(Label label) {
-            if(noteLabels.contains(label.getLabelTitle())) {
+        @Override
+        public void onClick(View v) {
+            // TODO: We can not trust adapter position!!!
+            int itemPosition = getLabelPosition(title.getText().toString());
+            if(!itemStateArray.get(itemPosition, false)) {
                 checkBox.setChecked(true);
+                itemStateArray.put(itemPosition, true);
+            } else {
+                checkBox.setChecked(false);
+                itemStateArray.put(itemPosition, false);
             }
+            listener.onCheckBoxChecked(checkBox.isChecked(), labelsFull.get(itemPosition));
+        }
+
+        private int getLabelPosition(String title) {
+            int itemPosition = 0;
+            for(int i = 0; i < labelsFull.size(); i++) {
+                if(labelsFull.get(i).getLabelTitle().equals(title)) {
+                    itemPosition = i;
+                    break;
+                }
+            }
+            return itemPosition;
         }
     }
 }
