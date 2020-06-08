@@ -168,7 +168,6 @@ public class LabelFragment extends Fragment
                 viewModel.createNewLabel(queryText);
                 adapter.loadLabels(viewModel.getLabels());
                 adapter.loadNoteLabels(viewModel.getNoteLabels());
-
             }
         });
     }
@@ -177,7 +176,6 @@ public class LabelFragment extends Fragment
         if(recyclerView.getVisibility() == View.GONE) {
             displayRecyclerView();
         }
-
         adapter.loadLabels(labels);
         adapter.loadNoteLabels(noteLabels);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

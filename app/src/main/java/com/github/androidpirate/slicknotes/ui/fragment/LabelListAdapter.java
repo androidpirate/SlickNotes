@@ -117,14 +117,16 @@ public class LabelListAdapter extends RecyclerView.Adapter<LabelListAdapter.Labe
 
     void loadNoteLabels(ArrayList<String> noteLabels) {
         this.noteLabels = noteLabels;
-        for(int i = 0; i < labels.size(); i++) {
-            for(String noteLabel: noteLabels) {
-                if(labels.get(i).getLabelTitle().equals(noteLabel)) {
-                    itemStateArray.put(i, true);
+        if(noteLabels != null) {
+            for (int i = 0; i < labels.size(); i++) {
+                for (String noteLabel : noteLabels) {
+                    if (labels.get(i).getLabelTitle().equals(noteLabel)) {
+                        itemStateArray.put(i, true);
+                    }
                 }
             }
+            notifyDataSetChanged();
         }
-        notifyDataSetChanged();
     }
 
     class LabelHolder extends RecyclerView.ViewHolder
