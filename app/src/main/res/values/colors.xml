@@ -19,4 +19,6 @@
     <color name="colorCardBgYellow">#FFC107</color>
     <!-- Line Separator -->
     <color name="lineSeparatorColor">@color/colorPrimary</color>
+    <!-- Label Chip -->
+    <color name="chipLabelBackgroundColor">#ACACAC</color>
 </resources>

@@ -37,4 +37,6 @@
     <color name="colorCardBgYellow">#FFC107</color>
     <!-- Line Separator -->
     <color name="lineSeparatorColor">#FDFDFD</color>
+    <!-- Label Chip -->
+    <color name="chipLabelBackgroundColor">@color/colorAccent</color>
 </resources>

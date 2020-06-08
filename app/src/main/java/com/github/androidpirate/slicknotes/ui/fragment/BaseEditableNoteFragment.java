@@ -44,6 +44,7 @@ import android.widget.Toast;
 
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.util.AlarmReceiver;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
@@ -66,16 +67,17 @@ public abstract class BaseEditableNoteFragment extends Fragment
     public static final String EXTRA_NOTE_ID = "note_id";
     public static final String EXTRA_NOTE_TITLE = "note_title";
     public static final String EXTRA_NOTE_DETAILS = "note_details";
-    public static final String EXTRA_NOTE_LABELS = "note_labels";
     static final String DELETED_NOTE_ID = "deletedNoteId";
     static final String NOTE_PIN_STATUS = "note_pin_status";
     static final String NAVIGATION_BASE = "navigation_base";
+    static final String EXTRA_NOTE_LABELS = "note_labels";
     private static final String PICKER_DIALOG_TITLE = "Pick Card Background";
     private static final String PICKER_DIALOG_CANCEL = "Cancel";
 
     boolean isKeyboardOn = false;
     EditText title;
     EditText details;
+    ChipGroup chipGroup;
     TextView dateCreated;
     TextView dateEdited;
     private Animation fabExpand, fabCollapse, fabRotateLeft,
@@ -296,7 +298,7 @@ public abstract class BaseEditableNoteFragment extends Fragment
         @NonNull
         InputMethodManager inputManager = (InputMethodManager) Objects.requireNonNull(
                 requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE));
-        View currentFocusedView = getActivity().getCurrentFocus();
+        View currentFocusedView = requireActivity().getCurrentFocus();
         if(currentFocusedView != null) {
             inputManager.hideSoftInputFromWindow(
                     currentFocusedView.getWindowToken(),
@@ -307,6 +309,7 @@ public abstract class BaseEditableNoteFragment extends Fragment
     private void setupViews(View rootView) {
         title = rootView.findViewById(R.id.et_title);
         details = rootView.findViewById(R.id.et_details);
+        chipGroup = rootView.findViewById(R.id.chip_group);
         dateCreated = rootView.findViewById(R.id.tv_date_created);
         dateEdited = rootView.findViewById(R.id.tv_date_update);
     }

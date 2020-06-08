@@ -37,6 +37,7 @@ import com.github.androidpirate.slicknotes.data.NoteWithLabels;
 import com.github.androidpirate.slicknotes.util.CustomTextWatcher;
 import com.github.androidpirate.slicknotes.util.NoteViewModelFactory;
 import com.github.androidpirate.slicknotes.viewmodel.NoteDetailViewModel;
+import com.google.android.material.chip.Chip;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -171,6 +172,7 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
     private void setNoteValues(final NoteWithLabels noteWithLabels) {
         setBackgroundColor(noteWithLabels.getNote().getColor());
         setNoteTitleAndDetails(noteWithLabels);
+        setupNoteLabels(noteWithLabels);
         setNoteDate(noteWithLabels.getNote());
     }
 
@@ -178,15 +180,6 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
         title.setText(noteWithLabels.getNote().getTitle());
         title.clearFocus();
         details.setText(noteWithLabels.getNote().getDetails());
-        // TODO: Added for testing purposes, replace it with
-        // TODO: creating chips for each label
-        details.append("\n\n");
-        for(Label label: noteWithLabels.getLabels()) {
-            details.append(label.getLabelTitle() + " ");
-            // TODO: Adding label titles to noteLabels is required, DO NOT DELETE
-            noteLabels.add(label.getLabelTitle());
-        }
-        // TODO : Added for testing purposes, remove later
         details.clearFocus();
         title.addTextChangedListener(new CustomTextWatcher() {
             @Override
@@ -200,6 +193,15 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
                 noteWithLabels.getNote().setDetails(_after);
             }
         });
+    }
+
+    private void setupNoteLabels(NoteWithLabels noteWithLabels) {
+        for(Label label: noteWithLabels.getLabels()) {
+            Chip chip = (Chip) getLayoutInflater().inflate(R.layout.item_chip_label, null, false);
+
+            chip.setText(label.getLabelTitle());
+            chipGroup.addView(chip);
+        }
     }
 
     private void setNoteDate(final Note note) {
