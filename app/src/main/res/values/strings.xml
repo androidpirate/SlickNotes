@@ -45,4 +45,6 @@
     <string name="pref_item_order_title">Add New Items On Top</string>
     <!-- LabelFragment resources -->
     <string name="empty_labels_message">No label available for this note.</string>
+    <string name="tv_create_label_content">Create label</string>
+    <string name="label_exist_toast_content">Label already exists</string>
 </resources>

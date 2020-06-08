@@ -42,4 +42,13 @@ public class LabelRepository {
     public LiveData<List<Label>> getDatabaseLabels() {
         return dao.getAllLabels();
     }
+
+    public void insertLabel(final Label label) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                dao.insertLabel(label);
+            }
+        });
+    }
 }

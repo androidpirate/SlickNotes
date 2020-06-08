@@ -19,8 +19,6 @@
 package com.github.androidpirate.slicknotes.viewmodel;
 
 import com.github.androidpirate.slicknotes.data.Label;
-import com.github.androidpirate.slicknotes.data.Note;
-import com.github.androidpirate.slicknotes.data.NoteLabelCrossRef;
 import com.github.androidpirate.slicknotes.data.NoteWithLabels;
 import com.github.androidpirate.slicknotes.repo.LabelRepository;
 import com.github.androidpirate.slicknotes.repo.NoteRepository;
@@ -35,6 +33,8 @@ public class LabelViewModel extends ViewModel {
     private NoteRepository noteRepository;
     private LabelRepository labelRepository;
     private NoteWithLabels databaseNote;
+    private List<Label> labels;
+    private ArrayList<String> noteLabels;
 
     public LabelViewModel(NoteRepository noteRepository, LabelRepository labelRepository) {
         this.noteRepository = noteRepository;
@@ -53,8 +53,30 @@ public class LabelViewModel extends ViewModel {
         databaseNote = note;
     }
 
-    // TODO: This method should also handle creating new notes
-    // TODO: and inserting to the labels table
+    public List<Label> getLabels() {
+        return labels;
+    }
+
+    public void setLabels(List<Label> labels) {
+        this.labels = labels;
+    }
+
+    public ArrayList<String> getNoteLabels() {
+        return noteLabels;
+    }
+
+    public void setNoteLabels(ArrayList<String> noteLabels) {
+        this.noteLabels = noteLabels;
+    }
+
+    public void createNewLabel(String labelTitle) {
+        Label label = new Label(labelTitle);
+        labels.add(label);
+        noteLabels.add(label.getLabelTitle());
+        labelRepository.insertLabel(label);
+        insertNoteLabel(label);
+    }
+
     public void insertNoteLabel(Label label) {
         noteRepository.insertNoteLabelCrossRef(
                 databaseNote.getNoteId(),

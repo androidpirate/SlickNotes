@@ -23,12 +23,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,7 +38,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Label;
@@ -57,8 +61,10 @@ public class LabelFragment extends Fragment
     implements LabelListAdapter.OnLabelClickListener {
 
     private static final int EMPTY_LIST_SIZE = 0;
+    private LinearLayout createLabel;
     private RecyclerView recyclerView;
     private TextView emptyLabelsMessage;
+    private SearchView searchView;
     private LabelListAdapter adapter;
     private LabelViewModel viewModel;
     private int noteId;
@@ -98,12 +104,14 @@ public class LabelFragment extends Fragment
             @Override
             public void onChanged(NoteWithLabels noteWithLabels) {
                 viewModel.setDatabaseNote(noteWithLabels);
+                viewModel.setNoteLabels(noteLabels);
             }
         });
         viewModel.getDatabaseLabels().observe(getViewLifecycleOwner(), new Observer<List<Label>>() {
             @Override
             public void onChanged(List<Label> labels) {
                 if(labels != null && labels.size() != EMPTY_LIST_SIZE) {
+                    viewModel.setLabels(labels);
                     displayLabels(labels);
                 } else {
                     displayEmptyLabelsMessage();
@@ -117,25 +125,52 @@ public class LabelFragment extends Fragment
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.label_list_menu, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView = (SearchView) searchItem.getActionView();
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                searchView.clearFocus();
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
+            public boolean onQueryTextChange(String queryText) {
+                if(queryText.length() != 0) {
+                    createLabel.setVisibility(View.VISIBLE);
+                    setCreateLabelClickListener(queryText);
+                } else {
+                    createLabel.setVisibility(View.GONE);
+                }
+                adapter.getFilter().filter(queryText);
                 return false;
             }
         });
     }
 
     private void setupViews(View rootView) {
+        createLabel = rootView.findViewById(R.id.create_label);
         recyclerView = rootView.findViewById(R.id.rv_labels_list);
         emptyLabelsMessage = rootView.findViewById(R.id.tv_empty_labels_message);
+    }
+
+    private void setCreateLabelClickListener(final String queryText) {
+        createLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetSearchView();
+                for(Label label: viewModel.getLabels()) {
+                    if(label.getLabelTitle().equals(queryText)) {
+                        displayLabelExistToast();
+                        break;
+                    }
+                }
+                viewModel.createNewLabel(queryText);
+                adapter.loadLabels(viewModel.getLabels());
+                adapter.loadNoteLabels(viewModel.getNoteLabels());
+
+            }
+        });
     }
 
     private void displayLabels(List<Label> labels) {
@@ -160,8 +195,21 @@ public class LabelFragment extends Fragment
         recyclerView.setVisibility(View.GONE);
     }
 
+    private void displayLabelExistToast() {
+        Toast.makeText(
+                getContext(),
+                R.string.label_exist_toast_content,
+                Toast.LENGTH_SHORT)
+                .show();
+    }
+
     private void setEmptyLabelsMessage() {
         emptyLabelsMessage.setText(getString(R.string.empty_labels_message));
+    }
+
+    private void resetSearchView() {
+        searchView.setQuery("", true);
+        searchView.clearFocus();
     }
 
     /**
