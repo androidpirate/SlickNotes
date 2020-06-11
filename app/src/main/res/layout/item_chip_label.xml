@@ -28,7 +28,7 @@
     style="@style/Widget.MaterialComponents.Chip.Choice"
     android:textAppearance="?android:attr/textAppearance"
     app:chipStrokeWidth="1dp"
-    app:chipStrokeColor="@android:color/black"
-    app:chipBackgroundColor="@color/colorCardBgDefault">
+    app:chipStrokeColor="@color/chipLabelStrokeColor"
+    app:chipBackgroundColor="@color/chipLabelBackgroundColor">
 
 </com.google.android.material.chip.Chip>

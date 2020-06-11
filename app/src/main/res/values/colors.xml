@@ -18,5 +18,6 @@
     <color name="colorCardBgPurple">#C9B0F7</color>
     <color name="colorCardBgYellow">#FFC107</color>
     <!-- Label Chip -->
-    <color name="chipLabelBackgroundColor">#ACACAC</color>
+    <color name="chipLabelBackgroundColor">#FAFAFA</color>
+    <color name="chipLabelStrokeColor">#000000</color>
 </resources>

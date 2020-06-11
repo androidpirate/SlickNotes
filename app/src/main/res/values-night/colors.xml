@@ -37,4 +37,5 @@
     <color name="colorCardBgYellow">#FFC107</color>
     <!-- Label Chip -->
     <color name="chipLabelBackgroundColor">@color/colorAccent</color>
+    <color name="chipLabelStrokeColor">@color/colorAccent</color>
 </resources>
