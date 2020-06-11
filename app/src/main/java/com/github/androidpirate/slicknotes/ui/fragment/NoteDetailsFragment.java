@@ -197,10 +197,12 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
 
     private void setupNoteLabels(NoteWithLabels noteWithLabels) {
         for(Label label: noteWithLabels.getLabels()) {
-            Chip chip = (Chip) getLayoutInflater().inflate(R.layout.item_chip_label, null, false);
-            chip.setText(label.getLabelTitle());
-            chipGroup.addView(chip);
-            noteLabels.add(label.getLabelTitle());
+            if(!noteLabels.contains(label.getLabelTitle())) {
+                Chip chip = (Chip) getLayoutInflater().inflate(R.layout.item_chip_label, null, false);
+                chip.setText(label.getLabelTitle());
+                chipGroup.addView(chip);
+                noteLabels.add(label.getLabelTitle());
+            }
         }
     }
 
