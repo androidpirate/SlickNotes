@@ -24,6 +24,7 @@
     <dimen name="margin_8">8dp</dimen>
     <dimen name="margin_16">16dp</dimen>
     <dimen name="margin_32">32dp</dimen>
+    <dimen name="margin_64">64dp</dimen>
     <dimen name="padding_8">8dp</dimen>
     <dimen name="padding_16">16dp</dimen>
     <!-- Fonts -->
@@ -41,4 +42,5 @@
     <dimen name="card_border_stroke_width">4dp</dimen>
     <dimen name="padding_0">0dp</dimen>
     <dimen name="line_separator_height">2dp</dimen>
+    <dimen name="chip_spacing_10">10dp</dimen>
 </resources>

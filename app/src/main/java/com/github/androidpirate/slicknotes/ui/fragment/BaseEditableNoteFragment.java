@@ -316,7 +316,6 @@ public abstract class BaseEditableNoteFragment extends Fragment
 
     private void setDateDataVisible() {
         if(Objects.requireNonNull(navController.getCurrentDestination()).getId() == R.id.nav_details) {
-            rootView.findViewById(R.id.line_separator).setVisibility(View.VISIBLE);
             rootView.findViewById(R.id.tv_date_created).setVisibility(View.VISIBLE);
             rootView.findViewById(R.id.tv_date_update).setVisibility(View.VISIBLE);
         }
