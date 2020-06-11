@@ -35,8 +35,6 @@
     <color name="colorCardBgPink">#F2B4F7</color>
     <color name="colorCardBgPurple">#C9B0F7</color>
     <color name="colorCardBgYellow">#FFC107</color>
-    <!-- Line Separator -->
-    <color name="lineSeparatorColor">#FDFDFD</color>
     <!-- Label Chip -->
     <color name="chipLabelBackgroundColor">@color/colorAccent</color>
 </resources>
