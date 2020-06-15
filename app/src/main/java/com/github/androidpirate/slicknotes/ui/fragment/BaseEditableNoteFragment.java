@@ -71,6 +71,8 @@ public abstract class BaseEditableNoteFragment extends Fragment
     static final String NOTE_PIN_STATUS = "note_pin_status";
     static final String NAVIGATION_BASE = "navigation_base";
     static final String EXTRA_NOTE_LABELS = "note_labels";
+    static final int FRAGMENT_CREATE = 0;
+    static final int FRAGMENT_DETAILS = 1;
     private static final String PICKER_DIALOG_TITLE = "Pick Card Background";
     private static final String PICKER_DIALOG_CANCEL = "Cancel";
 
@@ -92,6 +94,7 @@ public abstract class BaseEditableNoteFragment extends Fragment
     private boolean isFabActionOpen = false;
     private boolean isFabOn = true;
     boolean pinStatus;
+    int fragmentType;
 
     /**
      * Abstract methods for color picker dialog
@@ -361,8 +364,12 @@ public abstract class BaseEditableNoteFragment extends Fragment
     private void animateFab() {
         if(isFabActionOpen) {
             fabAction.startAnimation(fabRotateRight);
-            fabAddLabel.startAnimation(fabCollapse);
-            fabAddLabel.setClickable(false);
+            if(fragmentType == FRAGMENT_CREATE) {
+                fabAddLabel.hide();
+            } else {
+                fabAddLabel.startAnimation(fabCollapse);
+                fabAddLabel.setClickable(false);
+            }
             fabChangeColor.startAnimation(fabCollapse);
             fabChangeColor.setClickable(false);
             fabShare.startAnimation(fabCollapse);
@@ -370,8 +377,12 @@ public abstract class BaseEditableNoteFragment extends Fragment
             isFabActionOpen = false;
         } else {
             fabAction.startAnimation(fabRotateLeft);
-            fabAddLabel.startAnimation(fabExpand);
-            fabAddLabel.setClickable(true);
+            if(fragmentType == FRAGMENT_CREATE) {
+                fabAddLabel.hide();
+            } else {
+                fabAddLabel.startAnimation(fabExpand);
+                fabAddLabel.setClickable(true);
+            }
             fabChangeColor.startAnimation(fabExpand);
             fabChangeColor.setClickable(true);
             fabShare.startAnimation(fabExpand);

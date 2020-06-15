@@ -128,24 +128,13 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_add_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_label"
-        android:visibility="invisible"
-        android:layout_marginEnd="@dimen/margin_16"
-        android:layout_marginBottom="@dimen/fab_bottom_margin_level_1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_change_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_color"
         android:visibility="invisible"
         android:layout_marginEnd="@dimen/margin_16"
-        android:layout_marginBottom="@dimen/fab_bottom_margin_level_2"
+        android:layout_marginBottom="@dimen/fab_bottom_margin_level_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
@@ -154,6 +143,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_share"
+        android:visibility="invisible"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:layout_marginBottom="@dimen/fab_bottom_margin_level_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_label"
         android:visibility="invisible"
         android:layout_marginEnd="@dimen/margin_16"
         android:layout_marginBottom="@dimen/fab_bottom_margin_level_3"

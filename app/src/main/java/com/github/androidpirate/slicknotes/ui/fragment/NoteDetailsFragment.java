@@ -71,6 +71,7 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
             navigationBase = getArguments().getInt(NAVIGATION_BASE);
         }
         noteLabels = new ArrayList<>();
+        fragmentType = BaseEditableNoteFragment.FRAGMENT_DETAILS;
     }
 
     @Override

@@ -49,6 +49,7 @@ public class NoteCreateFragment extends BaseEditableNoteFragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         pinStatus = false;
+        fragmentType = BaseEditableNoteFragment.FRAGMENT_CREATE;
     }
 
     @Override
