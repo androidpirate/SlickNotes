@@ -166,8 +166,6 @@ public class LabelFragment extends Fragment
                     }
                 }
                 viewModel.createNewLabel(queryText);
-                adapter.loadLabels(viewModel.getLabels());
-                adapter.loadNoteLabels(viewModel.getNoteLabels());
             }
         });
     }

@@ -71,7 +71,6 @@ public class LabelViewModel extends ViewModel {
 
     public void createNewLabel(String labelTitle) {
         Label label = new Label(labelTitle);
-        labels.add(label);
         noteLabels.add(label.getLabelTitle());
         labelRepository.insertLabel(label);
         insertNoteLabel(label);
