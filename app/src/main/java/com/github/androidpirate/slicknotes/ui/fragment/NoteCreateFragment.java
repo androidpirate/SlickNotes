@@ -73,8 +73,6 @@ public class NoteCreateFragment extends BaseEditableNoteFragment {
                 setPinIcon(pinStatus, item);
                 displayPinToast(pinStatus);
                 break;
-            case R.id.action_add_label:
-                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -106,6 +104,6 @@ public class NoteCreateFragment extends BaseEditableNoteFragment {
 
     @Override
     void onAddLabelFabClick() {
-        // TODO: Do something here
+        // Adding labels during creating notes is not allowed
     }
 }

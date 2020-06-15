@@ -17,7 +17,6 @@
     <string name="titleHint">Enter note title</string>
     <string name="detailsHint">Enter note details</string>
     <string name="action_pin_title">Pin</string>
-    <string name="action_add_label_title">Add Label</string>
     <string name="action_send_to_trash_title">Send To Trash</string>
     <!-- NoteTrashFragment resources -->
     <string name="action_restore_title">Restore</string>

@@ -118,9 +118,6 @@ public class NoteListFragment extends BaseNoteListFragment {
                 viewModel.setNotePinStatus(baseViewModel.getSelectedNotes());
                 toggleAlternateMenu();
                 break;
-            case R.id.action_add_label:
-                displayToast(ADD_LABEL_MESSAGE);
-                break;
             case R.id.action_send_to_trash:
                 viewModel.sendNotesToTrash(baseViewModel.getSelectedNotes());
                 toggleAlternateMenu();
