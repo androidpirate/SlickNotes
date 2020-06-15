@@ -397,6 +397,8 @@ public abstract class BaseEditableNoteFragment extends Fragment
         // Setup color picker FABs
         setupColorPickerFABs(dialogView);
         colorPickerDialog.show();
+        // Collapse expandable FAB
+        animateFab();
     }
 
     private void setupColorPickerFABs(final View dialogView) {
@@ -426,6 +428,8 @@ public abstract class BaseEditableNoteFragment extends Fragment
         sendIntent.setType("text/plain");
         Intent shareIntent = Intent.createChooser(sendIntent, null);
         startActivity(shareIntent);
+        // Collapse expandable FAB
+        animateFab();
     }
 
     private void setReminder(Calendar reminderDateAndTime, int noteId,
