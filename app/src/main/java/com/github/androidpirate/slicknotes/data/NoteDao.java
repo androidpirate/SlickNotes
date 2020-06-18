@@ -67,6 +67,7 @@ public interface NoteDao {
     @Insert
     long insertDatabaseNote(Note note);
 
+    @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertNoteLabelCrossRef(@NonNull NoteLabelCrossRef noteLabelRef);
 

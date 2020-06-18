@@ -84,7 +84,7 @@
 
         <action
             android:id="@+id/nav_details_to_label_list"
-            app:destination="@id/nav_label_list"/>
+            app:destination="@id/nav_note_label_list"/>
 
     </fragment>
 
@@ -105,10 +105,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_label_list"
+        android:id="@+id/nav_note_label_list"
         android:label="Labels"
-        android:name="com.github.androidpirate.slicknotes.ui.fragment.LabelFragment"
-        tools:layout="@layout/fragment_label">
+        android:name="com.github.androidpirate.slicknotes.ui.fragment.NoteLabelFragment"
+        tools:layout="@layout/fragment_note_label">
 
         <argument
             android:name="noteId"
@@ -116,6 +116,12 @@
             android:defaultValue="0"/>
 
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_label_list"
+        android:label="Labels"
+        android:name="com.github.androidpirate.slicknotes.ui.fragment.LabelListFragment"
+        tools:layout="@layout/fragment_label_list"/>
 
     <activity
         android:id="@+id/nav_settings"

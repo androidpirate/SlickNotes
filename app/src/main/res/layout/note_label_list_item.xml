@@ -26,49 +26,35 @@
 
     <ImageView
         android:id="@+id/iv_label_icon"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:src="@drawable/ic_label"
-        android:contentDescription="@string/iv_label_icon_description"
-        android:tint="@color/labelIconColor"
-        android:layout_marginStart="@dimen/margin_16"
-        android:layout_marginTop="@dimen/margin_32"
-        android:layout_marginBottom="@dimen/margin_32"
+        android:tint="@color/colorPrimary"
+        android:layout_marginTop="@dimen/margin_8"
+        android:layout_marginStart="@dimen/margin_8"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
         android:id="@+id/tv_label_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:gravity="center_vertical"
-        app:layout_constraintHorizontal_bias="0.1"
+        android:layout_height="match_parent"
+        android:textStyle="bold"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_8"
         app:layout_constraintStart_toEndOf="@id/iv_label_icon"
-        app:layout_constraintEnd_toEndOf="@id/iv_options"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         tools:text="label title"/>
 
-    <ImageView
-        android:id="@+id/iv_options"
+    <CheckBox
+        android:id="@+id/cb_label"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/overflow_menu_icon_description"
-        android:src="@drawable/ic_overflow"
-        android:tint="@color/colorOverFlowMenu"
-        android:layout_marginEnd="@dimen/margin_16"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:clickable="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-    <FrameLayout
-        android:layout_width="@dimen/match_constraint_size"
-        android:layout_height="@dimen/line_separator_height"
-        android:background="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_marginEnd="@dimen/margin_8"
+        android:layout_marginTop="@dimen/margin_8"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

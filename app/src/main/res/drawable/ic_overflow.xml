@@ -17,18 +17,14 @@
   ~
   -->
 
-<menu
+<vector
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <item
-        android:id="@+id/action_edit"
-        android:icon="@drawable/ic_insert_note"
-        android:title="Edit" />
-
-    <item
-        android:id="@+id/action_delete"
-        android:icon="@drawable/ic_delete_permanent"
-        android:title="Delete" />
-
-</menu>
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24.0"
+    android:viewportHeight="24.0"
+    android:tint="#7F0909">
+    <path
+        android:pathData="M12,8c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2c-1.1,0 -2,0.9 -2,2S10.9,8 12,8zM12,10c-1.1,0 -2,0.9 -2,2s0.9,2 2,2c1.1,0 2,-0.9 2,-2S13.1,10 12,10zM12,16c-1.1,0 -2,0.9 -2,2s0.9,2 2,2c1.1,0 2,-0.9 2,-2S13.1,16 12,16z"
+        android:fillColor="#7F0909"/>
+</vector>

@@ -22,7 +22,8 @@ import android.app.Application;
 
 import com.github.androidpirate.slicknotes.repo.LabelRepository;
 import com.github.androidpirate.slicknotes.repo.NoteRepository;
-import com.github.androidpirate.slicknotes.viewmodel.LabelViewModel;
+import com.github.androidpirate.slicknotes.viewmodel.LabelListViewModel;
+import com.github.androidpirate.slicknotes.viewmodel.NoteLabelViewModel;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
@@ -30,19 +31,22 @@ import androidx.lifecycle.ViewModelProvider;
 
 public class LabelViewModelFactory implements ViewModelProvider.Factory {
     private static final String EXCEPTION_MESSAGE = "ViewModel class can not be found.";
-    public NoteRepository noteRepository;
-    public LabelRepository labelRepository;
+    private NoteRepository noteRepository;
+    private LabelRepository labelRepository;
 
     public LabelViewModelFactory(Application application) {
         noteRepository = ServiceLocator.provideNoteRepository(application);
         labelRepository = ServiceLocator.provideLabelRepository(application);
     }
 
+    @SuppressWarnings("unchecked")
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if(modelClass.isAssignableFrom(LabelViewModel.class)) {
-            return (T) new LabelViewModel(noteRepository, labelRepository);
+        if(modelClass.isAssignableFrom(NoteLabelViewModel.class)) {
+            return (T) new NoteLabelViewModel(noteRepository, labelRepository);
+        } else if(modelClass.isAssignableFrom(LabelListViewModel.class)) {
+            return (T) new LabelListViewModel(labelRepository);
         } else {
             throw new IllegalMonitorStateException(EXCEPTION_MESSAGE);
         }

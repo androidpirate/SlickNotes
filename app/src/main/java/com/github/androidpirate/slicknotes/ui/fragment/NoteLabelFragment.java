@@ -23,14 +23,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -46,7 +44,7 @@ import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Label;
 import com.github.androidpirate.slicknotes.data.NoteWithLabels;
 import com.github.androidpirate.slicknotes.util.LabelViewModelFactory;
-import com.github.androidpirate.slicknotes.viewmodel.LabelViewModel;
+import com.github.androidpirate.slicknotes.viewmodel.NoteLabelViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,20 +55,20 @@ import static com.github.androidpirate.slicknotes.ui.fragment.BaseEditableNoteFr
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LabelFragment extends Fragment
-    implements LabelListAdapter.OnLabelClickListener {
+public class NoteLabelFragment extends Fragment
+    implements NoteLabelListAdapter.OnLabelClickListener {
 
     private static final int EMPTY_LIST_SIZE = 0;
     private LinearLayout createLabel;
     private RecyclerView recyclerView;
     private TextView emptyLabelsMessage;
     private SearchView searchView;
-    private LabelListAdapter adapter;
-    private LabelViewModel viewModel;
+    private NoteLabelListAdapter adapter;
+    private NoteLabelViewModel viewModel;
     private int noteId;
     private ArrayList<String> noteLabels;
 
-    public LabelFragment() {
+    public NoteLabelFragment() {
         // Required empty public constructor
     }
 
@@ -82,7 +80,7 @@ public class LabelFragment extends Fragment
             noteLabels = getArguments().getStringArrayList(EXTRA_NOTE_LABELS);
         }
         if(adapter == null) {
-            adapter = new LabelListAdapter(new ArrayList<Label>(), this);
+            adapter = new NoteLabelListAdapter(new ArrayList<Label>(), this);
         }
         setHasOptionsMenu(true);
     }
@@ -90,7 +88,7 @@ public class LabelFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_label, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_note_label, container, false);
         setupViews(rootView);
         return rootView;
     }
@@ -99,7 +97,7 @@ public class LabelFragment extends Fragment
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         LabelViewModelFactory factory = new LabelViewModelFactory(requireActivity().getApplication());
-        viewModel = new ViewModelProvider(this, factory).get(LabelViewModel.class);
+        viewModel = new ViewModelProvider(this, factory).get(NoteLabelViewModel.class);
         viewModel.getDatabaseNote(noteId).observe(getViewLifecycleOwner(), new Observer<NoteWithLabels>() {
             @Override
             public void onChanged(NoteWithLabels noteWithLabels) {
@@ -123,7 +121,7 @@ public class LabelFragment extends Fragment
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.label_list_menu, menu);
+        inflater.inflate(R.menu.note_label_list_menu, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
         searchView = (SearchView) searchItem.getActionView();
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);

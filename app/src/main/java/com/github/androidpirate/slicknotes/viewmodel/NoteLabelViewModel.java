@@ -29,14 +29,14 @@ import java.util.List;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-public class LabelViewModel extends ViewModel {
+public class NoteLabelViewModel extends ViewModel {
     private NoteRepository noteRepository;
     private LabelRepository labelRepository;
     private NoteWithLabels databaseNote;
     private List<Label> labels;
     private ArrayList<String> noteLabels;
 
-    public LabelViewModel(NoteRepository noteRepository, LabelRepository labelRepository) {
+    public NoteLabelViewModel(NoteRepository noteRepository, LabelRepository labelRepository) {
         this.noteRepository = noteRepository;
         this.labelRepository = labelRepository;
     }

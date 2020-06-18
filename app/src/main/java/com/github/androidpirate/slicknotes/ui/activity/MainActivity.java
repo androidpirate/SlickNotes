@@ -90,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_home:
                         navController.navigate(R.id.nav_home);
                         break;
+                    case R.id.nav_labels:
+                        navController.navigate(R.id.nav_label_list);
+                        break;
                     case R.id.nav_trash:
                         navController.navigate(R.id.nav_trash);
                         break;

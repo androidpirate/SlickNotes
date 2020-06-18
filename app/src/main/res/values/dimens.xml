@@ -43,4 +43,5 @@
     <dimen name="card_border_stroke_width">4dp</dimen>
     <dimen name="padding_0">0dp</dimen>
     <dimen name="chip_spacing_10">10dp</dimen>
+    <dimen name="line_separator_height">1dp</dimen>
 </resources>

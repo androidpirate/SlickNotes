@@ -18,40 +18,33 @@
 
 package com.github.androidpirate.slicknotes.ui.fragment;
 
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.Filter;
-import android.widget.Filterable;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
-
-import com.github.androidpirate.slicknotes.R;
-import com.github.androidpirate.slicknotes.data.Label;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class LabelListAdapter extends RecyclerView.Adapter<LabelListAdapter.LabelHolder>
-    implements Filterable {
+import com.github.androidpirate.slicknotes.R;
+import com.github.androidpirate.slicknotes.data.Label;
 
+import java.util.List;
+
+public class LabelListAdapter extends RecyclerView.Adapter<LabelListAdapter.LabelHolder> {
     private static final int EMPTY_LIST_SIZE = 0;
-
     private List<Label> labels;
-    private List<Label> labelsFull;
-    private ArrayList<String> noteLabels;
-    private SparseBooleanArray itemStateArray = new SparseBooleanArray();
     private OnLabelClickListener listener;
 
     interface OnLabelClickListener {
-        void onCheckBoxChecked(boolean isChecked, Label label);
+        void onEditLabelClick(Label label);
+        void onDeleteLabelClick(Label label);
     }
 
-    public LabelListAdapter(List<Label> labels, OnLabelClickListener listener) {
+    LabelListAdapter(List<Label> labels, OnLabelClickListener listener) {
         this.labels = labels;
         this.listener = listener;
     }
@@ -66,7 +59,7 @@ public class LabelListAdapter extends RecyclerView.Adapter<LabelListAdapter.Labe
 
     @Override
     public void onBindViewHolder(@NonNull LabelHolder holder, int position) {
-        holder.onBindLabel(position);
+        holder.onBindLabel(labels.get(position));
     }
 
     @Override
@@ -77,100 +70,50 @@ public class LabelListAdapter extends RecyclerView.Adapter<LabelListAdapter.Labe
         return labels.size();
     }
 
-    @Override
-    public Filter getFilter() {
-        return labelFilter;
-    }
-
-    private Filter labelFilter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            List<Label> filteredList = new ArrayList<>();
-
-            if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(labelsFull);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
-                for (Label label : labelsFull) {
-                    if (label.getLabelTitle().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(label);
-                    }
-                }
-            }
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            labels.clear();
-            labels.addAll((List) results.values);
-            notifyDataSetChanged();
-        }
-    };
-
     void loadLabels(List<Label> labels) {
         this.labels = labels;
-        labelsFull = new ArrayList<>(this.labels);
+        notifyDataSetChanged();
     }
 
-    void loadNoteLabels(ArrayList<String> noteLabels) {
-        this.noteLabels = noteLabels;
-        if(noteLabels != null) {
-            for (int i = 0; i < labels.size(); i++) {
-                for (String noteLabel : noteLabels) {
-                    if (labels.get(i).getLabelTitle().equals(noteLabel)) {
-                        itemStateArray.put(i, true);
+    class LabelHolder extends RecyclerView.ViewHolder {
+        private TextView labelTitle;
+        private ImageView optionsMenu;
+
+        LabelHolder(@NonNull View itemView) {
+            super(itemView);
+            labelTitle = itemView.findViewById(R.id.tv_label_title);
+            optionsMenu = itemView.findViewById(R.id.iv_options);
+        }
+
+        void onBindLabel(final Label label) {
+            labelTitle.setText(label.getLabelTitle());
+            optionsMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setupPopUpMenu(label);
+                }
+            });
+        }
+
+        private void setupPopUpMenu(final Label label) {
+            PopupMenu popupMenu = new PopupMenu(itemView.getContext(), optionsMenu);
+            popupMenu.inflate(R.menu.label_list_menu);
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.action_edit:
+                            listener.onEditLabelClick(label);
+                            return true;
+                        case R.id.action_delete:
+                            listener.onDeleteLabelClick(label);
+                            return true;
+                        default:
+                            return false;
                     }
                 }
-            }
-            notifyDataSetChanged();
-        }
-    }
-
-    class LabelHolder extends RecyclerView.ViewHolder
-        implements View.OnClickListener {
-        private TextView title;
-        private CheckBox checkBox;
-
-        public LabelHolder(@NonNull View itemView) {
-            super(itemView);
-            title = itemView.findViewById(R.id.tv_label_title);
-            checkBox = itemView.findViewById(R.id.cb_label);
-            itemView.setOnClickListener(this);
-        }
-
-        private void onBindLabel(int position) {
-            title.setText(labels.get(position).getLabelTitle());
-            // TODO: You can not trust adapter position !!!!
-            int itemPosition = getLabelPosition(title.getText().toString());
-            checkBox.setChecked(itemStateArray.get(itemPosition));
-        }
-
-        @Override
-        public void onClick(View v) {
-            // TODO: We can not trust adapter position!!!
-            int itemPosition = getLabelPosition(title.getText().toString());
-            if(!itemStateArray.get(itemPosition, false)) {
-                checkBox.setChecked(true);
-                itemStateArray.put(itemPosition, true);
-            } else {
-                checkBox.setChecked(false);
-                itemStateArray.put(itemPosition, false);
-            }
-            listener.onCheckBoxChecked(checkBox.isChecked(), labelsFull.get(itemPosition));
-        }
-
-        private int getLabelPosition(String title) {
-            int itemPosition = 0;
-            for(int i = 0; i < labelsFull.size(); i++) {
-                if(labelsFull.get(i).getLabelTitle().equals(title)) {
-                    itemPosition = i;
-                    break;
-                }
-            }
-            return itemPosition;
+            });
+            popupMenu.show();
         }
     }
 }

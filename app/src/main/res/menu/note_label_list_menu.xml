@@ -22,13 +22,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_edit"
-        android:icon="@drawable/ic_insert_note"
-        android:title="Edit" />
-
-    <item
-        android:id="@+id/action_delete"
-        android:icon="@drawable/ic_delete_permanent"
-        android:title="Delete" />
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search"
+        android:title="Search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always"/>
 
 </menu>

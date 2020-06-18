@@ -30,24 +30,15 @@ import androidx.room.PrimaryKey;
 public class Label {
     @NonNull
     @PrimaryKey
-//    private int labelId;
     private String labelTitle;
 
     public Label(@NonNull String labelTitle) {
         this.labelTitle = labelTitle;
     }
 
-//    public int getLabelId() {
-//        return labelId;
-//    }
-
     public String getLabelTitle() {
         return labelTitle;
     }
-
-//    public void setLabelId(int labelId) {
-//        this.labelId = labelId;
-//    }
 
     public void setTitle(String title) {
         this.labelTitle = title;

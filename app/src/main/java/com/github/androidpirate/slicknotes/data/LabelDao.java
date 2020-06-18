@@ -34,8 +34,14 @@ public interface LabelDao {
     @Query("SELECT * FROM labels")
     LiveData<List<Label>> getAllLabels();
 
+    @Query("UPDATE labels SET labelTitle = :newTitle WHERE labelTitle = :originalLabelTitle")
+    void updateLabel(String originalLabelTitle, String newTitle);
+
+    @Query("UPDATE NoteLabelCrossRef SET labelTitle = :newTitle WHERE labelTitle = :originalLabelTitle")
+    void updateNoteLabelCrossRef(String originalLabelTitle, String newTitle);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long insertLabel(@NonNull Label label);
+    void insertLabel(@NonNull Label label);
 
     @Delete
     void deleteLabel(@NonNull Label label);

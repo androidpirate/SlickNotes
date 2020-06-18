@@ -31,23 +31,42 @@ import java.util.concurrent.Executors;
 import androidx.lifecycle.LiveData;
 
 public class LabelRepository {
-    private LabelDao dao;
+    private LabelDao labelDao;
     private Executor executor;
 
     public LabelRepository(Context context) {
-        dao = NoteDatabase.getInstance(context).labelDao();
+        labelDao = NoteDatabase.getInstance(context).labelDao();
         executor = Executors.newSingleThreadExecutor();
     }
 
     public LiveData<List<Label>> getDatabaseLabels() {
-        return dao.getAllLabels();
+        return labelDao.getAllLabels();
     }
 
     public void insertLabel(final Label label) {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                dao.insertLabel(label);
+                labelDao.insertLabel(label);
+            }
+        });
+    }
+
+    public void updateLabel(final String originalLabelTitle, final String newTitle) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                labelDao.updateLabel(originalLabelTitle, newTitle);
+                labelDao.updateNoteLabelCrossRef(originalLabelTitle, newTitle);
+            }
+        });
+    }
+
+    public void deleteLabel(final Label label) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                labelDao.deleteLabel(label);
             }
         });
     }

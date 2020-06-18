@@ -19,5 +19,8 @@
     <color name="colorCardBgYellow">#FFC107</color>
     <!-- Label Chip -->
     <color name="chipLabelBackgroundColor">#FAFAFA</color>
-    <color name="chipLabelStrokeColor">#000000</color>
+    <color name="chipLabelStrokeColor">@color/colorPrimary</color>
+    <color name="labelIconColor">@color/colorPrimary</color>
+    <!-- Overflow Menu -->
+    <color name="colorOverFlowMenu">@color/colorPrimary</color>
 </resources>
