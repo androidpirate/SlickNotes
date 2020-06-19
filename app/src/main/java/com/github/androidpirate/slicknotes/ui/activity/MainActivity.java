@@ -77,7 +77,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private AppBarConfiguration getAppBarConfig() {
-        return new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_trash, R.id.nav_settings)
+        return new AppBarConfiguration.Builder(
+                R.id.nav_home,
+                R.id.nav_trash,
+                R.id.nav_label_list,
+                R.id.nav_settings)
                 .setDrawerLayout(drawerLayout)
                 .build();
     }
