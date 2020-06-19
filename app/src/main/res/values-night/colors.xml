@@ -39,6 +39,7 @@
     <color name="chipLabelBackgroundColor">@color/colorAccent</color>
     <color name="chipLabelStrokeColor">@color/colorAccent</color>
     <color name="labelIconColor">@color/colorAccent</color>
+    <color name="colorLabelText">@color/colorPrimary</color>
     <!-- Overflow Menu -->
     <color name="colorOverFlowMenu">@color/colorAccent</color>
 </resources>

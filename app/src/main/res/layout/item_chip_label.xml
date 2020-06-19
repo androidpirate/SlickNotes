@@ -25,6 +25,7 @@
     android:gravity="center"
     android:textAlignment="center"
     android:textSize="12sp"
+    android:textColor="@color/colorLabelText"
     style="@style/Widget.MaterialComponents.Chip.Choice"
     android:textAppearance="?android:attr/textAppearance"
     app:chipStrokeWidth="1dp"
