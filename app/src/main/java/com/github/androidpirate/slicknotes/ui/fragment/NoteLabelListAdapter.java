@@ -43,7 +43,6 @@ public class NoteLabelListAdapter extends RecyclerView.Adapter<NoteLabelListAdap
 
     private List<Label> labels;
     private List<Label> labelsFull;
-    private ArrayList<String> noteLabels;
     private SparseBooleanArray itemStateArray = new SparseBooleanArray();
     private OnLabelClickListener listener;
 
@@ -51,7 +50,7 @@ public class NoteLabelListAdapter extends RecyclerView.Adapter<NoteLabelListAdap
         void onCheckBoxChecked(boolean isChecked, Label label);
     }
 
-    public NoteLabelListAdapter(List<Label> labels, OnLabelClickListener listener) {
+    NoteLabelListAdapter(List<Label> labels, OnLabelClickListener listener) {
         this.labels = labels;
         this.listener = listener;
     }
@@ -116,7 +115,6 @@ public class NoteLabelListAdapter extends RecyclerView.Adapter<NoteLabelListAdap
     }
 
     void loadNoteLabels(ArrayList<String> noteLabels) {
-        this.noteLabels = noteLabels;
         if(noteLabels != null) {
             for (int i = 0; i < labels.size(); i++) {
                 for (String noteLabel : noteLabels) {
@@ -134,7 +132,7 @@ public class NoteLabelListAdapter extends RecyclerView.Adapter<NoteLabelListAdap
         private TextView title;
         private CheckBox checkBox;
 
-        public LabelHolder(@NonNull View itemView) {
+        LabelHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.tv_label_title);
             checkBox = itemView.findViewById(R.id.cb_label);
