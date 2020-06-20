@@ -68,12 +68,10 @@ public class NoteCreateFragment extends BaseEditableNoteFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_pin:
-                pinStatus = viewModel.updateNotePinStatus();
-                setPinIcon(pinStatus, item);
-                displayPinToast(pinStatus);
-                break;
+        if (item.getItemId() == R.id.action_pin) {
+            pinStatus = viewModel.updateNotePinStatus();
+            setPinIcon(pinStatus, item);
+            displayPinToast(pinStatus);
         }
         return super.onOptionsItemSelected(item);
     }
