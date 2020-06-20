@@ -19,7 +19,6 @@
 package com.github.androidpirate.slicknotes.data;
 
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
@@ -36,6 +35,7 @@ public class Label {
         this.labelTitle = labelTitle;
     }
 
+    @NonNull
     public String getLabelTitle() {
         return labelTitle;
     }
