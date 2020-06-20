@@ -36,6 +36,7 @@ public class NoteLabelCrossRef {
         return noteId;
     }
 
+    @NonNull
     public String getLabelTitle() {
         return labelTitle;
     }
