@@ -32,7 +32,6 @@ public class BaseListViewModel extends ViewModel {
     private static final int EMPTY_SELECTION_SIZE = 0;
     NoteRepository repo;
     LiveData<List<NoteWithLabels>> uiModel;
-    List<Note> databaseModel;
     private List<Integer> selectedNoteIds;
     private List<Note> selectedNotes;
     private boolean hasAlternateMenu;
