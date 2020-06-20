@@ -53,4 +53,5 @@
     <string name="button_ok">OK</string>
     <string name="iv_label_icon_description">Label icon</string>
     <string name="overflow_menu_icon_description">Overflow menu icon</string>
+    <string name="create_label_icon_description">Create label icon</string>
 </resources>
