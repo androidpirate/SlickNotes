@@ -50,6 +50,8 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
 
     private static final int NOTE_LIST_BASE = 0;
     private static final int TRASH_LIST_BASE = 1;
+    private static final String DATE_CREATED = "Created ";
+    private static final String DATE_EDITED = "Edited ";
 
     private NoteDetailViewModel viewModel;
     private ArrayList<String> noteLabels;
@@ -166,7 +168,7 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
 
     @Override
     void onAddLabelFabClick() {
-        navigateToLabelList(noteId, new ArrayList<String>(noteLabels));
+        navigateToLabelList(noteId, new ArrayList<>(noteLabels));
         noteLabels.clear();
     }
 
@@ -199,7 +201,8 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
     private void setupNoteLabels(NoteWithLabels noteWithLabels) {
         for(Label label: noteWithLabels.getLabels()) {
             if(!noteLabels.contains(label.getLabelTitle())) {
-                Chip chip = (Chip) getLayoutInflater().inflate(R.layout.item_chip_label, null, false);
+                Chip chip = (Chip) getLayoutInflater()
+                        .inflate(R.layout.item_chip_label, null, false);
                 chip.setText(label.getLabelTitle());
                 chipGroup.addView(chip);
                 noteLabels.add(label.getLabelTitle());
@@ -212,13 +215,13 @@ public class NoteDetailsFragment extends BaseEditableNoteFragment {
             dateEdited.setVisibility(View.GONE);
             String dateCreatedFormatString = new SimpleDateFormat("MMM dd, yy", Locale.US)
                     .format(note.getDateCreated());
-            String dateCreatedString = "Created " + dateCreatedFormatString;
+            String dateCreatedString = DATE_CREATED + dateCreatedFormatString;
             dateCreated.setText(dateCreatedString);
         } else {
             dateCreated.setVisibility(View.GONE);
             String dateEditedFormatString = new SimpleDateFormat("MMM dd, yy", Locale.US)
                     .format(note.getDateEdited());
-            String dateEditedString = "Edited " + dateEditedFormatString;
+            String dateEditedString = DATE_EDITED + dateEditedFormatString;
             dateEdited.setText(dateEditedString);
         }
     }
