@@ -24,11 +24,11 @@
     <item
         android:id="@+id/action_edit"
         android:icon="@drawable/ic_insert_note"
-        android:title="Edit" />
+        android:title="@string/action_edit" />
 
     <item
         android:id="@+id/action_delete"
         android:icon="@drawable/ic_delete_permanent"
-        android:title="Delete" />
+        android:title="@string/action_delete" />
 
 </menu>
