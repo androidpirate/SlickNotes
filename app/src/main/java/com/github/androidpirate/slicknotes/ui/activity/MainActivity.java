@@ -36,6 +36,8 @@ import android.view.MenuItem;
 import com.github.androidpirate.slicknotes.R;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
@@ -121,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         String textSize = sharedPref.getString(
                 getString(R.string.pref_text_size_key),
                 defaultTextSize);
-        if(textSize.equals(defaultTextSize)) {
+        if(Objects.equals(textSize, defaultTextSize)) {
             setTheme(R.style.AppTheme_Default);
         } else {
             setTheme(R.style.AppTheme_Large);
