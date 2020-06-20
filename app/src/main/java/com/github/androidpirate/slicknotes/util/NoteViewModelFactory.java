@@ -38,6 +38,7 @@ public class NoteViewModelFactory implements ViewModelProvider.Factory {
         repo = ServiceLocator.provideNoteRepository(application);
     }
 
+    @SuppressWarnings("unchecked")
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {

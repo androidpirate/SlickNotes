@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+// TODO: Remove this class before publishing the app
 /**
  * Provides fake data for debugging.
  */
