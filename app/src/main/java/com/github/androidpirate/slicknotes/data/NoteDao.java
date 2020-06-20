@@ -56,11 +56,6 @@ public interface NoteDao {
 
     @NonNull
     @Transaction
-    @Query("SELECT * FROM notes WHERE note_pin_status = 1")
-    LiveData<List<NoteWithLabels>> getPinnedNotes();
-
-    @NonNull
-    @Transaction
     @Query("SELECT * FROM notes ORDER BY note_title")
     List<NoteWithLabels> getAllNotesWithLabels();
 
