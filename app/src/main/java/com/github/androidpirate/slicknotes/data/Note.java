@@ -18,9 +18,7 @@
 
 package com.github.androidpirate.slicknotes.data;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
