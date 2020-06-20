@@ -18,15 +18,11 @@
 
 package com.github.androidpirate.slicknotes.data;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 import androidx.room.TypeConverter;
 
-public class Converters {
-    private static final String COMMA_SEPARATOR = ",";
+class Converters {
 
     @TypeConverter
     public static Date fromTimestamp(Long value) {
@@ -35,23 +31,5 @@ public class Converters {
     @TypeConverter
     public static Long dateToTimestamp(Date date) {
         return date == null ? null : date.getTime();
-    }
-    @TypeConverter
-    public static List<String> fromStringToLabelsList(String labels) {
-        List<String> labelsList = new ArrayList<>();
-        if (labels != null) {
-            String[] labelsArray = labels.split(COMMA_SEPARATOR);
-            labelsList = Arrays.asList(labelsArray);
-        }
-        return labelsList;
-    }
-    @TypeConverter
-    public static String labelsListToString(List<String> labels) {
-        String labelsList = "";
-        for (String label:
-             labels) {
-            labelsList = labelsList.concat(label + COMMA_SEPARATOR);
-        }
-        return labelsList;
     }
 }
