@@ -31,11 +31,6 @@ public class NoteListViewModel extends BaseListViewModel {
         repo = noteRepository;
     }
 
-//    public LiveData<List<Note>> getDatabaseNotes(boolean addNewItemsOnTop) {
-//        updateUIModel(addNewItemsOnTop);
-//        return uiModel;
-//    }
-
     public LiveData<List<NoteWithLabels>> getDatabaseNotes(boolean addNewItemsOnTop) {
         updateUIModel(addNewItemsOnTop);
         return uiModel;
