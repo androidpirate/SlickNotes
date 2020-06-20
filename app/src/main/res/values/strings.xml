@@ -47,6 +47,7 @@
     <string name="empty_labels_message">No label available for this note.</string>
     <string name="tv_create_label_content">Create label</string>
     <string name="label_exist_toast_content">Label already exists</string>
+    <string name="action_search">Search</string>
     <!-- LabelFragment resources -->
     <string name="vertical_ellipses">⋮</string>
     <string name="edit_label_hint">Enter label</string>
