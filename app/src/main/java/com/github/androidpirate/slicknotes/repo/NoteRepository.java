@@ -111,15 +111,6 @@ public class NoteRepository {
         });
     }
 
-    public void updateDatabaseNotes(final List<Note> notes) {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                dao.updateDatabaseNotes(notes);
-            }
-        });
-    }
-
     public void insertNoteLabelCrossRef(final int noteId, final String labelTitle) {
         executor.execute(new Runnable() {
             @Override
