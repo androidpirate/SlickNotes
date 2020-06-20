@@ -45,7 +45,6 @@ import java.util.List;
  */
 public class NoteListFragment extends BaseNoteListFragment {
 
-    private static final String ADD_LABEL_MESSAGE = "Adding labels will be available soon";
     private static final String SEND_TO_TRASH_MESSAGE = "Selected notes are sent to trash";
 
     private SharedPreferences sharedPref;
