@@ -17,6 +17,9 @@
     <color name="colorCardBgPink">#F2B4F7</color>
     <color name="colorCardBgPurple">#C9B0F7</color>
     <color name="colorCardBgYellow">#FFC107</color>
+    !-- Create Label -->
+    <color name="colorCreateLabelText">@color/colorPrimary</color>
+    <color name="colorCreateLabelIcon">@color/colorPrimary</color>
     <!-- Label Chip -->
     <color name="chipLabelBackgroundColor">#FAFAFA</color>
     <color name="chipLabelStrokeColor">@color/colorPrimary</color>

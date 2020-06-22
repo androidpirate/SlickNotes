@@ -18,10 +18,12 @@
 
 package com.github.androidpirate.slicknotes.ui.fragment;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -36,6 +38,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,13 +62,20 @@ public class NoteLabelFragment extends Fragment
     implements NoteLabelListAdapter.OnLabelClickListener {
 
     private static final int EMPTY_LIST_SIZE = 0;
+    private static final String CREATE_LABEL_DIALOG_TITLE = "Create New Label";
+    private static final String DIALOG_NEGATIVE_BUTTON_TITLE = "Cancel";
+    private static final String DIALOG_POSITIVE_BUTTON_TITLE = "Ok";
+
     private LinearLayout createLabel;
     private RecyclerView recyclerView;
     private TextView emptyLabelsMessage;
+    private EditText labelInput;
     private SearchView searchView;
     private NoteLabelListAdapter adapter;
     private NoteLabelViewModel viewModel;
     private int noteId;
+    private boolean isLabelsEmpty = false;
+    private String queryTextString;
     private ArrayList<String> noteLabels;
 
     public NoteLabelFragment() {
@@ -112,6 +122,7 @@ public class NoteLabelFragment extends Fragment
                     viewModel.setLabels(labels);
                     displayLabels(labels);
                 } else {
+                    isLabelsEmpty = true;
                     displayEmptyLabelsMessage();
                 }
             }
@@ -121,51 +132,90 @@ public class NoteLabelFragment extends Fragment
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.note_label_list_menu, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        searchView = (SearchView) searchItem.getActionView();
-        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                searchView.clearFocus();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String queryText) {
-                if(queryText.length() != 0) {
-                    createLabel.setVisibility(View.VISIBLE);
-                    setCreateLabelClickListener(queryText);
-                } else {
-                    createLabel.setVisibility(View.GONE);
+        if(!isLabelsEmpty) {
+            inflater.inflate(R.menu.note_label_list_menu, menu);
+            MenuItem searchItem = menu.findItem(R.id.action_search);
+            searchView = (SearchView) searchItem.getActionView();
+            searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    searchView.clearFocus();
+                    return false;
                 }
-                adapter.getFilter().filter(queryText);
-                return false;
-            }
-        });
+
+                @Override
+                public boolean onQueryTextChange(String queryText) {
+                    if(queryText.length() != 0) {
+                        createLabel.setVisibility(View.VISIBLE);
+                        queryTextString = queryText;
+                    } else {
+                        createLabel.setVisibility(View.GONE);
+                    }
+                    adapter.getFilter().filter(queryText);
+                    return false;
+                }
+            });
+        }
     }
 
     private void setupViews(View rootView) {
         createLabel = rootView.findViewById(R.id.create_label);
+        setCreateLabelClickListener();
         recyclerView = rootView.findViewById(R.id.rv_labels_list);
         emptyLabelsMessage = rootView.findViewById(R.id.tv_empty_labels_message);
     }
 
-    private void setCreateLabelClickListener(final String queryText) {
+    private void setCreateLabelClickListener() {
         createLabel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                resetSearchView();
-                for(Label label: viewModel.getLabels()) {
-                    if(label.getLabelTitle().equals(queryText)) {
-                        displayLabelExistToast();
-                        break;
+                if(queryTextString != null && queryTextString.length() != 0) {
+                    resetSearchView();
+                    for(Label label: viewModel.getLabels()) {
+                        if(label.getLabelTitle().equals(queryTextString)) {
+                            displayLabelExistToast();
+                            break;
+                        }
                     }
+                    viewModel.createNewLabel(queryTextString);
+                } else {
+                    displayCreateLabelDialog();
                 }
-                viewModel.createNewLabel(queryText);
             }
         });
+    }
+
+    private void displayCreateLabelDialog() {
+        AlertDialog editLabelDialog = getCreateLabelDialogBuilder().create();
+        editLabelDialog.show();
+    }
+
+    private AlertDialog.Builder getCreateLabelDialogBuilder() {
+        // Inflate dialog view
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_edit_label, null);
+        labelInput = dialogView.findViewById(R.id.et_label_title);
+        // Create dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle(CREATE_LABEL_DIALOG_TITLE)
+                .setView(dialogView)
+                .setNegativeButton(
+                        DIALOG_NEGATIVE_BUTTON_TITLE,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        })
+                .setPositiveButton(
+                        DIALOG_POSITIVE_BUTTON_TITLE,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                viewModel.createNewLabel(labelInput.getText().toString());
+                            }
+                        });
+        return builder;
     }
 
     private void displayLabels(List<Label> labels) {
@@ -185,6 +235,7 @@ public class NoteLabelFragment extends Fragment
 
     private void displayEmptyLabelsMessage() {
         setEmptyLabelsMessage();
+        createLabel.setVisibility(View.VISIBLE);
         emptyLabelsMessage.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
     }
