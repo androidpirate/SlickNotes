@@ -46,19 +46,19 @@ public abstract class NoteDatabase extends RoomDatabase {
                     context.getApplicationContext(),
                     NoteDatabase.class,
                     "notes-database")
-                    .addCallback(new Callback() {
-                        @Override
-                        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                            super.onCreate(db);
-                            Executor executor = Executors.newSingleThreadExecutor();
-                            executor.execute(new Runnable() {
-                                @Override
-                                public void run() {
-                                    insertFakeData(context);
-                                }
-                            });
-                        }
-                    })
+//                    .addCallback(new Callback() {
+////                        @Override
+////                        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+////                            super.onCreate(db);
+////                            Executor executor = Executors.newSingleThreadExecutor();
+////                            executor.execute(new Runnable() {
+////                                @Override
+////                                public void run() {
+////                                    insertFakeData(context);
+////                                }
+////                            });
+////                        }
+////                    })
                     .build();
         }
         return INSTANCE;

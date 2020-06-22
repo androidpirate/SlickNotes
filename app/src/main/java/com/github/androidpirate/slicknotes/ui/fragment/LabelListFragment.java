@@ -32,6 +32,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.github.androidpirate.slicknotes.R;
 import com.github.androidpirate.slicknotes.data.Label;
@@ -52,8 +53,10 @@ public class LabelListFragment extends Fragment
     private static final String DIALOG_POSITIVE_BUTTON_TITLE = "Ok";
     private static final String QUOTATION_MARK = "\"";
     private static final String QUESTION_MARK = " ?";
+    private static final int EMPTY_LIST = 0;
 
     private RecyclerView recyclerView;
+    private TextView emptyListMessage;
     private EditText labelInput;
     private LabelListAdapter adapter;
     private LabelListViewModel viewModel;
@@ -81,12 +84,16 @@ public class LabelListFragment extends Fragment
         viewModel.getDatabaseLabels().observe(getViewLifecycleOwner(), new Observer<List<Label>>() {
             @Override
             public void onChanged(List<Label> labels) {
-                if(adapter == null) {
-                    adapter = new LabelListAdapter(labels,LabelListFragment.this);
-                    // Setup recycler view
-                    setupRecyclerView();
+                if(labels.size() == EMPTY_LIST) {
+                    displayEmptyListMessage();
+
                 } else {
-                    adapter.loadLabels(labels);
+                    if (adapter == null) {
+                        adapter = new LabelListAdapter(labels, LabelListFragment.this);
+                        recyclerView.setAdapter(adapter);
+                    } else {
+                        adapter.loadLabels(labels);
+                    }
                 }
             }
         });
@@ -94,10 +101,12 @@ public class LabelListFragment extends Fragment
 
     private void setupViews(View rootView) {
         recyclerView = rootView.findViewById(R.id.rv_labels_list);
+        emptyListMessage = rootView.findViewById(R.id.tv_empty_list_message);
     }
 
-    private void setupRecyclerView() {
-        recyclerView.setAdapter(adapter);
+    private void displayEmptyListMessage() {
+        recyclerView.setVisibility(View.GONE);
+        emptyListMessage.setVisibility(View.VISIBLE);
     }
 
     /**

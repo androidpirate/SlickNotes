@@ -28,9 +28,25 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_labels_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/match_constraint_size"
         android:layout_marginTop="?attr/actionBarSize"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         tools:context=".ui.fragment.LabelListFragment"/>
+
+    <TextView
+        android:id="@+id/tv_empty_list_message"
+        android:layout_width="@dimen/match_constraint_size"
+        android:layout_height="@dimen/match_constraint_size"
+        android:visibility="gone"
+        android:text="@string/empty_labels_list_message"
+        style="?emptyListMessage"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
