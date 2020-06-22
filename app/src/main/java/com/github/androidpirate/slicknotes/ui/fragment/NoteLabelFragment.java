@@ -204,6 +204,7 @@ public class NoteLabelFragment extends Fragment
     private void resetSearchView() {
         searchView.setQuery("", true);
         searchView.clearFocus();
+        searchView.onActionViewCollapsed();
     }
 
     /**
