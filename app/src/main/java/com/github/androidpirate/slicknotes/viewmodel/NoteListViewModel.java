@@ -57,9 +57,9 @@ public class NoteListViewModel extends BaseListViewModel {
 
     private void updateUIModel(boolean newItemsOnTop) {
         if(newItemsOnTop) {
-            uiModel = repo.getDatabaseNotesOrderedByAscendingDate();
-        } else {
             uiModel = repo.getDatabaseNotesOrderedByDescendingDate();
+        } else {
+            uiModel = repo.getDatabaseNotesOrderedByAscendingDate();
         }
     }
 }
