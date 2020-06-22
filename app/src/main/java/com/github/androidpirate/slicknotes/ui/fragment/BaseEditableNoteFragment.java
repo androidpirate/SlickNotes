@@ -413,12 +413,7 @@ public abstract class BaseEditableNoteFragment extends Fragment
     private void animateFab() {
         if(isFabActionOpen) {
             fabAction.startAnimation(fabRotateRight);
-            if(fragmentType == FRAGMENT_CREATE) {
-                fabAddLabel.hide();
-            } else {
-                fabAddLabel.startAnimation(fabCollapse);
-                fabAddLabel.setClickable(false);
-            }
+            setFabAddVisibility();
             fabChangeColor.startAnimation(fabCollapse);
             fabChangeColor.setClickable(false);
             fabShare.startAnimation(fabCollapse);
@@ -426,17 +421,26 @@ public abstract class BaseEditableNoteFragment extends Fragment
             isFabActionOpen = false;
         } else {
             fabAction.startAnimation(fabRotateLeft);
-            if(fragmentType == FRAGMENT_CREATE) {
-                fabAddLabel.hide();
-            } else {
-                fabAddLabel.startAnimation(fabExpand);
-                fabAddLabel.setClickable(true);
-            }
+            setFabAddVisibility();
             fabChangeColor.startAnimation(fabExpand);
             fabChangeColor.setClickable(true);
             fabShare.startAnimation(fabExpand);
             fabShare.setClickable(true);
             isFabActionOpen = true;
+        }
+    }
+
+    private void setFabAddVisibility() {
+        if(fragmentType == FRAGMENT_CREATE) {
+            fabAddLabel.hide();
+        } else {
+            if(isFabActionOpen) {
+                fabAddLabel.startAnimation(fabCollapse);
+                fabAddLabel.setClickable(false);
+            } else {
+                fabAddLabel.startAnimation(fabExpand);
+                fabAddLabel.setClickable(true);
+            }
         }
     }
 
