@@ -213,8 +213,12 @@ public class NoteLabelFragment extends Fragment
     public void onCheckBoxChecked(boolean isChecked, Label label) {
         if(isChecked) {
             viewModel.insertNoteLabel(label);
+            noteLabels.add(label.getLabelTitle());
+            adapter.loadNoteLabels(noteLabels);
         } else {
             viewModel.removeNoteLabel(label);
+            noteLabels.remove(label.getLabelTitle());
+            adapter.loadNoteLabels(noteLabels);
         }
     }
 }
