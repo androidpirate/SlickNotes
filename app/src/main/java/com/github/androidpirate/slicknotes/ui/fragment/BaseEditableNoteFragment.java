@@ -385,6 +385,7 @@ public abstract class BaseEditableNoteFragment extends Fragment
             animateFab();
         }
         fabAction.startAnimation(fabActionHide);
+        fabAction.setClickable(false);
     }
 
     private void hideDate(boolean hasFocus) {
