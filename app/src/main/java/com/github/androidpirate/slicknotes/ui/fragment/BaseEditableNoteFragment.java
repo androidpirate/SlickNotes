@@ -332,6 +332,7 @@ public abstract class BaseEditableNoteFragment extends Fragment
             public void onFocusChange(View v, boolean hasFocus) {
                 hideDate(hasFocus);
                 setScrollViewMargin(hasFocus);
+                setFabActionClickable(hasFocus);
             }
         });
         details.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -339,6 +340,7 @@ public abstract class BaseEditableNoteFragment extends Fragment
             public void onFocusChange(View v, boolean hasFocus) {
                 hideDate(hasFocus);
                 setScrollViewMargin(hasFocus);
+                setFabActionClickable(hasFocus);
             }
         });
     }
@@ -385,7 +387,14 @@ public abstract class BaseEditableNoteFragment extends Fragment
             animateFab();
         }
         fabAction.startAnimation(fabActionHide);
-        fabAction.setClickable(false);
+    }
+
+    private void setFabActionClickable(boolean hasFocus) {
+        if(hasFocus) {
+            fabAction.setClickable(false);
+        } else {
+            fabAction.setClickable(true);
+        }
     }
 
     private void hideDate(boolean hasFocus) {
