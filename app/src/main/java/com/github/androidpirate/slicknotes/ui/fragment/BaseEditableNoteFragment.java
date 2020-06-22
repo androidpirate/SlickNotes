@@ -28,6 +28,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,6 +40,9 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -56,6 +61,7 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -82,6 +88,7 @@ public abstract class BaseEditableNoteFragment extends Fragment
     ChipGroup chipGroup;
     TextView dateCreated;
     TextView dateEdited;
+    ScrollView scrollView;
     private Animation fabExpand, fabCollapse, fabRotateLeft,
             fabRotateRight, fabActionShow, fabActionHide;
     private View rootView;
@@ -312,9 +319,28 @@ public abstract class BaseEditableNoteFragment extends Fragment
     private void setupViews(View rootView) {
         title = rootView.findViewById(R.id.et_title);
         details = rootView.findViewById(R.id.et_details);
+        setFocusChangedListener();
+        scrollView = rootView.findViewById(R.id.sv_content);
         chipGroup = rootView.findViewById(R.id.chip_group);
         dateCreated = rootView.findViewById(R.id.tv_date_created);
         dateEdited = rootView.findViewById(R.id.tv_date_update);
+    }
+
+    private void setFocusChangedListener() {
+        title.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                hideDate(hasFocus);
+                setScrollViewMargin(hasFocus);
+            }
+        });
+        details.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                hideDate(hasFocus);
+                setScrollViewMargin(hasFocus);
+            }
+        });
     }
 
     private void setDateDataVisible() {
@@ -359,6 +385,28 @@ public abstract class BaseEditableNoteFragment extends Fragment
             animateFab();
         }
         fabAction.startAnimation(fabActionHide);
+    }
+
+    private void hideDate(boolean hasFocus) {
+        if(hasFocus) {
+            dateCreated.setVisibility(View.INVISIBLE);
+            dateEdited.setVisibility(View.INVISIBLE);
+        } else {
+            dateCreated.setVisibility(View.VISIBLE);
+            dateEdited.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setScrollViewMargin(boolean hasFocus) {
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams)
+                scrollView.getLayoutParams();
+        if(hasFocus) {
+            params.setMargins(0, 0, 0, 0);
+        } else {
+            int actionBarHeight = getActionBarHeight();
+            params.setMargins(0, 0, 0, actionBarHeight);
+        }
+        scrollView.setLayoutParams(params);
     }
 
     private void animateFab() {
@@ -490,5 +538,15 @@ public abstract class BaseEditableNoteFragment extends Fragment
                         }
                     }
                 });
+    }
+
+    private int getActionBarHeight() {
+        TypedValue tv = new TypedValue();
+        if(requireActivity()
+                .getTheme()
+                .resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+            return TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
+        }
+        return 0;
     }
 }
