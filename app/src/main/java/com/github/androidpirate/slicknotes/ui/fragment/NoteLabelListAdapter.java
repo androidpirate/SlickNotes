@@ -141,14 +141,12 @@ public class NoteLabelListAdapter extends RecyclerView.Adapter<NoteLabelListAdap
 
         private void onBindLabel(int position) {
             title.setText(labels.get(position).getLabelTitle());
-            // TODO: You can not trust adapter position !!!!
             int itemPosition = getLabelPosition(title.getText().toString());
             checkBox.setChecked(itemStateArray.get(itemPosition));
         }
 
         @Override
         public void onClick(View v) {
-            // TODO: We can not trust adapter position!!!
             int itemPosition = getLabelPosition(title.getText().toString());
             if(!itemStateArray.get(itemPosition, false)) {
                 checkBox.setChecked(true);
