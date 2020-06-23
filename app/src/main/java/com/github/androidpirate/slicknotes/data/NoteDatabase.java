@@ -20,18 +20,10 @@ package com.github.androidpirate.slicknotes.data;
 
 import android.content.Context;
 
-import com.github.androidpirate.slicknotes.util.FakeData;
-
-import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-
-import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
 @Database(entities = {Note.class, Label.class, NoteLabelCrossRef.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
@@ -46,35 +38,8 @@ public abstract class NoteDatabase extends RoomDatabase {
                     context.getApplicationContext(),
                     NoteDatabase.class,
                     "notes-database")
-//                    .addCallback(new Callback() {
-////                        @Override
-////                        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-////                            super.onCreate(db);
-////                            Executor executor = Executors.newSingleThreadExecutor();
-////                            executor.execute(new Runnable() {
-////                                @Override
-////                                public void run() {
-////                                    insertFakeData(context);
-////                                }
-////                            });
-////                        }
-////                    })
                     .build();
         }
         return INSTANCE;
-    }
-
-    // TODO : Remove this method from the release build
-    private static void insertFakeData(Context context) {
-        List<NoteWithLabels> fakeNotes = FakeData.getNotes();
-        NoteDao noteDao = getInstance(context).noteDao();
-        LabelDao labelDao = getInstance(context).labelDao();
-        for(NoteWithLabels noteWtLabels: fakeNotes) {
-            int noteId = (int) noteDao.insertDatabaseNote(noteWtLabels.getNote());
-            for(Label label: noteWtLabels.getLabels()) {
-                labelDao.insertLabel(label);
-                noteDao.insertNoteLabelCrossRef(new NoteLabelCrossRef(noteId, label.getLabelTitle()));
-            }
-        }
     }
 }
