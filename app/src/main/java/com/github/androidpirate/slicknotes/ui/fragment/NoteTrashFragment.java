@@ -19,9 +19,11 @@
 package com.github.androidpirate.slicknotes.ui.fragment;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -42,6 +44,10 @@ import java.util.List;
 public class NoteTrashFragment extends BaseNoteListFragment {
 
     private static final String NOTES_RESTORED_MESSAGE = "Selected notes are restored";
+    private static final String DELETE_NOTE_DIALOG_TITLE = "Delete Forever";
+    private static final String DELETE_NOTE_DIALOG_MESSAGE = "Are you sure you want to delete note(s) forever?";
+    private static final String DELETE_NOTE_DIALOG_POSITIVE_BUTTON = "Ok";
+    private static final String DELETE_NOTE_DIALOG_NEGATIVE_BUTTON = "Cancel";
 
     private NoteTrashViewModel viewModel;
 
@@ -94,9 +100,33 @@ public class NoteTrashFragment extends BaseNoteListFragment {
                 displayToast(NOTES_RESTORED_MESSAGE);
                 break;
             case R.id.action_delete:
-                viewModel.deleteNotes(baseViewModel.getSelectedNotes());
+                getDeleteNoteDialogBuilder().show();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private AlertDialog.Builder getDeleteNoteDialogBuilder() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle(DELETE_NOTE_DIALOG_TITLE)
+                .setMessage(
+                        DELETE_NOTE_DIALOG_MESSAGE)
+                .setNegativeButton(
+                        DELETE_NOTE_DIALOG_NEGATIVE_BUTTON,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        })
+                .setPositiveButton(
+                        DELETE_NOTE_DIALOG_POSITIVE_BUTTON,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                viewModel.deleteNotes(baseViewModel.getSelectedNotes());
+                            }
+                        });
+        return builder;
     }
 }
