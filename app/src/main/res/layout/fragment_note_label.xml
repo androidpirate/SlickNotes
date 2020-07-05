@@ -34,7 +34,6 @@
         android:layout_marginEnd="@dimen/margin_8"
         android:layout_marginTop="?attr/actionBarSize"
         android:orientation="horizontal"
-        android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -65,7 +64,7 @@
         android:id="@+id/rv_labels_list"
         android:layout_width="@dimen/match_constraint_size"
         android:layout_height="@dimen/match_constraint_size"
-        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginTop="@dimen/margin_8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/create_label"

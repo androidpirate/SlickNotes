@@ -141,6 +141,7 @@ public class NoteLabelFragment extends Fragment
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     searchView.clearFocus();
+                    clearQueryText();
                     return false;
                 }
 
@@ -149,8 +150,6 @@ public class NoteLabelFragment extends Fragment
                     if(queryText.length() != 0) {
                         createLabel.setVisibility(View.VISIBLE);
                         queryTextString = queryText;
-                    } else {
-                        createLabel.setVisibility(View.GONE);
                     }
                     adapter.getFilter().filter(queryText);
                     return false;
@@ -179,6 +178,7 @@ public class NoteLabelFragment extends Fragment
                         }
                     }
                     viewModel.createNewLabel(queryTextString);
+                    clearQueryText();
                 } else {
                     displayCreateLabelDialog();
                 }
@@ -235,7 +235,7 @@ public class NoteLabelFragment extends Fragment
 
     private void displayEmptyLabelsMessage() {
         setEmptyLabelsMessage();
-        createLabel.setVisibility(View.VISIBLE);
+//        createLabel.setVisibility(View.VISIBLE);
         emptyLabelsMessage.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
     }
@@ -256,6 +256,10 @@ public class NoteLabelFragment extends Fragment
         searchView.setQuery("", true);
         searchView.clearFocus();
         searchView.onActionViewCollapsed();
+    }
+
+    private void clearQueryText() {
+        queryTextString = "";
     }
 
     /**
