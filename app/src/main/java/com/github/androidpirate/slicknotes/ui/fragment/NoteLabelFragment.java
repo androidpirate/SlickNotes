@@ -18,7 +18,9 @@
 
 package com.github.androidpirate.slicknotes.ui.fragment;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Rect;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -37,7 +39,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -51,6 +55,7 @@ import com.github.androidpirate.slicknotes.viewmodel.NoteLabelViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.github.androidpirate.slicknotes.ui.fragment.BaseEditableNoteFragment.EXTRA_NOTE_ID;
 import static com.github.androidpirate.slicknotes.ui.fragment.BaseEditableNoteFragment.EXTRA_NOTE_LABELS;
@@ -77,6 +82,7 @@ public class NoteLabelFragment extends Fragment
     private boolean isLabelsEmpty = false;
     private String queryTextString;
     private ArrayList<String> noteLabels;
+    private boolean isKeyboardOn = false;
 
     public NoteLabelFragment() {
         // Required empty public constructor
@@ -99,6 +105,8 @@ public class NoteLabelFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_note_label, container, false);
+        // Set soft keyboard listener
+        setSoftKeyboardListener(rootView);
         setupViews(rootView);
         return rootView;
     }
@@ -155,6 +163,14 @@ public class NoteLabelFragment extends Fragment
                     return false;
                 }
             });
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(isKeyboardOn) {
+            hideSoftKeyboard();
         }
     }
 
@@ -260,6 +276,38 @@ public class NoteLabelFragment extends Fragment
 
     private void clearQueryText() {
         queryTextString = "";
+    }
+
+    private void setSoftKeyboardListener(final View view) {
+        view.getViewTreeObserver()
+                .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        Rect r = new Rect();
+                        //r will be populated with the coordinates of
+                        // your view that area still visible.
+                        view.getWindowVisibleDisplayFrame(r);
+                        int heightDiff = view.getRootView().getHeight() - (r.bottom - r.top);
+                        if (heightDiff > 500) {
+                            // if more than 100 pixels, its probably a keyboard...
+                            isKeyboardOn = true;
+                        } else if (heightDiff < 500){
+                            isKeyboardOn = false;
+                        }
+                    }
+                });
+    }
+
+    private void hideSoftKeyboard() {
+        @NonNull
+        InputMethodManager inputManager = (InputMethodManager) Objects.requireNonNull(
+                requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE));
+        View currentFocusedView = requireActivity().getCurrentFocus();
+        if(currentFocusedView != null) {
+            inputManager.hideSoftInputFromWindow(
+                    currentFocusedView.getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 
     /**
