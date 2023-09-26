@@ -156,12 +156,6 @@ Entire app navigation is handled by the Navigation Component API.
 
 I would like to take this opportunity to thank [Brian Munzenberger](https://github.com/bmunzenb) and [Stuart Kent](https://github.com/stkent) for their continued mentorship throughout the project, without their support this project would not be possible!
 
-# Download the App
-
-You can download the app on Google Play using the following link below:
-
-[https://play.google.com/store/apps/details?id=com.github.androidpirate.slicknotes](https://play.google.com/store/apps/details?id=com.github.androidpirate.slicknotes)
-
 # **License**
 
 Copyright 2020, The Android Open Source Project
