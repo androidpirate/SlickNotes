@@ -66,6 +66,8 @@ permalink: "blog/:title"
 compress_html:
   clippings: all
 
+remote_theme: YJPL/Supply
+
 # Defaults
 defaults:
   -
@@ -94,7 +96,8 @@ exclude:
   - vendor/bundle/
   - vendor/cache/
   - vendor/gems/
-
-# remote_theme: thedevslot/WhatATheme
-
   - vendor/ruby/
+
+
+
+ 
