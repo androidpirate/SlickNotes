@@ -37,7 +37,7 @@ Data is observed in the LiveData format by **NoteListViewModel** and is displa
 
 ## Create Note
 
-Displays an interface to create a new note. Extends a base class **BaseEditableNoteFragment** which
+Displays an interface to create a new note. Extends a base class **BaseEditableNoteFragment**.
 
 Data operations such as pinning the note, updating note background color, or insertion of data into the database is handled by **NoteCreateViewModel**.
 
