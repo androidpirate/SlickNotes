@@ -152,10 +152,6 @@ Entire app navigation is handled by the Navigation Component API.
 
 ---
 
-# Honorable Mentions
-
-I would like to take this opportunity to thank [Brian Munzenberger](https://github.com/bmunzenb) and [Stuart Kent](https://github.com/stkent) for their continued mentorship throughout the project, without their support this project would not be possible!
-
 # **License**
 
 Copyright 2020, The Android Open Source Project
