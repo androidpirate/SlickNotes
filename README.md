@@ -5,8 +5,6 @@ The app uses several Android Architecture Component APIs and a clean domain laye
 
 # App Architecture
 
-![](Architecture_Style.png)
-
 This project uses the Model-View-ViewModel architecture pattern.
 The repository is used as a single source of data even though the app only uses a local database in the current version. View models are created and provided to Views via a factory that uses a service locator to inject repository instances. View models observe the latest changes in the data and updates the UI accordingly.
 
@@ -19,8 +17,6 @@ Displays a list of existing notes using a RecyclerView. Extends a base class **
 Data is observed in the LiveData format by **NoteListViewModel** and is displayed by the **NoteListAdapter**. Any user interaction over data is handled by **NoteListViewModel** and the results are observed immediately.
 
 **NoteListAdapter** is responsible for displaying proper header and data items in the list and used to handle mass selection operations in the list.
-
-![](list_feature.gif)
 
 ### Key features:
 
@@ -41,8 +37,6 @@ Displays an interface to create a new note. Extends a base class **BaseEditable
 
 Data operations such as pinning the note, updating note background color, or insertion of data into the database is handled by **NoteCreateViewModel**.
 
-![](create_feature.gif)
-
 ### Key features:
 
 - Discard empty note on navigating to list view
@@ -60,8 +54,6 @@ Displays details of existing notes and allows users to edit/delete note details 
 
 Data is observed in LiveData format by **NoteDetailViewModel** and any interaction for updating data is also handled by the view model.
 
-![](details_feature.gif)
-
 ### Key features:
 
 - Display note details
@@ -78,8 +70,6 @@ Data is observed in LiveData format by **NoteDetailViewModel** and any interac
 Displays a list of notes that are sent to trash but not yet deleted completely of the database. One of the main functionality of this fragment is that it gives the user to restore the note before it is deleted forever. Extends a base class **BaseNoteListFragment** which provides basic functionality for displaying a list of items by inheritance.
 
 **NoteListAdapter** is responsible for displaying proper data in the list and used to handle mass selection operations in the list.
-
-![](trash_feature.gif)
 
 ### **Key features:**
 
@@ -117,8 +107,6 @@ The advantage of this kind of implementation is to keep individual fragment clas
 Displays app settings and uses preferences to store them.
 
 Since app settings are not related to any other front-end features I would like to keep it as a stand-alone entity that has its activity and fragment life-cycles that are handled separately from the rest of the app.
-
-![](settings_feature.gif)
 
 ### **Key features:**
 
