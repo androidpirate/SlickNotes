@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Slicknotes</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+<link rel="stylesheet" href="css/animate.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="style.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<!-- Font Google -->
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container"> <a class="navbar-brand navbar-logo" href="#"> <img src="images/slicknotes_logo.png" alt="logo" class="logo-1"> </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="fas fa-bars"></span> </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"> <a class="nav-link" href="" data-scroll-nav="0">Home</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="#" data-scroll-nav="1">Architecture</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="#" data-scroll-nav="2">Features</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="#" data-scroll-nav="3">GitHub</a> </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- End Navbar --> 
+<!-------Banner Start------->
+<section class="banner" data-scroll-index='0'>
+  <div class="banner-overlay">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-sm-12">
+          <div class="banner-text">
+            <h1 class="white">Elevate your note-taking with Slicknotes.</h1>
+            <div class="blank-space-100"> </div>
+            <h5 class="white">Slicknotes is a Java-based note-taking app for Android.</h5>
+            <h5 class="banner-text white">Inspired by Google's Keep Notes, Slicknotes uses several Android Architecture Component APIs and a clean domain layer to provide a smooth experience.</h5>
+            <div class="blank-space-100"> </div>
+          </div>
+          <ul class="no-bullets">
+            <li><h5 class="white">MVVM Architecture</h5></li>
+            <li><h5 class="white">Navigation Component</h5></li>
+            <li><h5 class="white">Clean Domain Layer</h5></li>
+            <li><h5 class="white">Android ViewModel</h5></li>
+            <li><h5 class="white">LiveData</h5></li>
+            <li><h5 class="white">Many-to-Many Relational Database with Room</h5></li>
+            <li><h5 class="white">Shared Preferences</h5></li>
+            <li><h5 class="white">Alarm Manager</h5></li>
+            <li><h5 class="white">Heads Up Notifications</h5></li>
+          </ul> 
+        </div>
+        <div class="col-md-4 col-sm-12"> <img src="images/list_feature.png" class="img-fluid wow fadeInUp"/> </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-------Banner End-------> 
+
+<!-------App Architecture Start------->
+<section class="about section-padding prelative" data-scroll-index='1'>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="sectioner-header text-center">
+          <h3>App Architecture</h3>
+          <span class="line"></span>
+          <p>Slicknotes was developed with the MVVM architectural pattern. The repository is used as a single source of data even though the app only uses a local database in the current version. View models are created and provided to Views via a factory that uses a service locator to inject repository instances. View models observe the latest changes in the data and updates the UI accordingly.</p>
+          <img src="images/architecture_style.jpg" class="img-fluid wow fadeInUp"/>
+        </div>
+        <div class="section-content text-center">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="icon-box wow fadeInUp" data-wow-delay="0.2s"> <i class="fa fa-database" aria-hidden="true"></i>
+                <h5>Room Database</h5>
+                <p>Using the Room API database consists of three tables, notes, labels, and a junction table to provide a many to many relationship between them.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="icon-box wow fadeInUp" data-wow-delay="0.4s"> <i class="fa fa-layer-group" aria-hidden="true"></i>
+                <h5>Repository</h5>
+                <p>Handles database queries and CRUD functions on the database for particular model objects.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="icon-box wow fadeInUp" data-wow-delay="0.6s"> <i class="fa fa-arrows-turn-to-dots" aria-hidden="true"></i>
+                <h5>ViewModel - LiveData</h5>
+                <p>Provides most up to date data for the UI components (Fragments in this case) using the observer pattern.</p>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-------App Architecture End------->
+
+<!-------List Feature Start------->
+<section class="feature section-padding" data-scroll-index='2'>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <!-------List Feature Summary Start------->
+        <div class="sectioner-header text-center">
+          <h3>Notes List</h3>
+          <span class="line"></span>
+          <p>Displays a list of existing notes using a RecyclerView. </p>
+        </div>
+        <!-------List Feature Summary End------->
+        <div class="section-content text-center">
+          <div class="row">
+            <div class="col-md-4 col-sm-12">
+              <!-------List Feature #1------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.2s">
+                <div class="media-body text-right media-right-margin">
+                  <h5>Observable Pattern</h5>
+                  <p>Data is observed in the LiveData format displayed by the NoteListAdapter.</p>
+                </div>
+                <div class="media-right icon-border"> <span class="fa fa-binoculars" aria-hidden="true"></span> </div>
+              </div>
+              <!-------List Feature #2------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.4s">
+                <div class="media-body text-right media-right-margin">
+                  <h5>Unidirectional Data Handling</h5>
+                  <p>User interaction over data is handled by NoteListViewModel and the results are observed immediately.</p>
+                </div>
+                <div class="media-right icon-border"> <span class="fa fa-arrow-right-arrow-left" aria-hidden="true"></span> </div>
+              </div>
+              <!-------List Feature #3------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.6s">
+                <div class="media-body text-right media-right-margin">
+                  <h5>Interchangeable List Layout</h5>
+                  <p>Switches between list and grid views.</p>
+                </div>
+                <div class="media-right icon-border"> <span class="fa fa-note-sticky" aria-hidden="true"></span> </div>
+              </div>
+            </div>
+            <!--List Feature GIF Start-->
+            <div class="col-md-4 d-none d-md-block d-lg-block">
+              <div class="feature-mobile"> <img src="images/list_feature.gif" class="img-fluid wow fadeInUp"/> </div>
+            </div>
+            <!--List Feature GIF End-->
+            <div class="col-md-4 col-sm-12">
+              <!-------List Feature #4------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.2s">
+                <div class="media-left icon-border media-right-margin"> <span class="fa fa-thumbtack" aria-hidden="true"></span> </div>
+                <div class="media-body text-left">
+                  <h5>Pinning Notes</h5>
+                  <p>Pins important notes on top of the list.</p>
+                </div>
+              </div>
+              <!-------List Feature #5------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.4s">
+                <div class="media-left icon-border media-right-margin"> <span class="fa fa-arrow-down-a-z" aria-hidden="true"></span> </div>
+                <div class="media-body text-left">
+                  <h5>Sorting Notes</h5>
+                  <p>Display notes in ascending/descending order based on the date of creation.</p>
+                </div>
+              </div>
+              <!-------List Feature #6------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.6s">
+                <div class="media-left icon-border media-right-margin"> <span class="fa fa-list-check" aria-hidden="true"></span> </div>
+                <div class="media-body text-left">
+                  <h5>Mass Selection</h5>
+                  <p>Allows mass selection and editing.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-------List Feature End-------> 
+
+<!-------Create Feature Start------->
+<section class="feature section-padding" data-scroll-index='2'>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <!-------Create Feature Summary Start------->
+        <div class="sectioner-header text-center">
+          <h3>Create Note</h3>
+          <span class="line"></span>
+          <p>Displays an interface to create a new note. </p>
+        </div>
+        <!-------Create Feature Summary End------->
+        <div class="section-content text-center">
+          <div class="row">
+            <div class="col-md-4 col-sm-12">
+              <!-------Create Feature #1------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.2s">
+                <div class="media-body text-right media-right-margin">
+                  <h5>Data Creation</h5>
+                  <p>Creates new notes.</p>
+                </div>
+                <div class="media-right icon-border"> <span class="fa fa-plus" aria-hidden="true"></span> </div>
+              </div>
+              <!-------Create Feature #2------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.4s">
+                <div class="media-body text-right media-right-margin">
+                  <h5>Data Update</h5>
+                  <p>Updates the existing note data along with pin status and background colors.</p>
+                </div>
+                <div class="media-right icon-border"> <span class="fa fa-pen-to-square" aria-hidden="true"></span> </div>
+              </div>
+              <!-------Create Feature #3------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.6s">
+                <div class="media-body text-right media-right-margin">
+                  <h5>Auto Discard</h5>
+                  <p>Discards empty note on navigating to list view.</p>
+                </div>
+                <div class="media-right icon-border"> <span class="fa fa-xmark" aria-hidden="true"></span> </div>
+              </div>
+            </div>
+            <!--Create Feature GIF Start-->
+            <div class="col-md-4 d-none d-md-block d-lg-block">
+              <div class="feature-mobile"> <img src="images/create_feature.gif" class="img-fluid wow fadeInUp"/> </div>
+            </div>
+            <!--Create Feature GIF End-->
+            <div class="col-md-4 col-sm-12">
+              <!-------Create Feature #4------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.2s">
+                <div class="media-left icon-border media-right-margin"> <span class="fa fa-database" aria-hidden="true"></span> </div>
+                <div class="media-body text-left">
+                  <h5>Insert Note</h5>
+                  <p>Inserts new note to the database.</p>
+                </div>
+              </div>
+              <!-------Create Feature #5------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.4s">
+                <div class="media-left icon-border media-right-margin"> <span class="fa fa-thumbtack" aria-hidden="true"></span> </div>
+                <div class="media-body text-left">
+                  <h5>Update Pin Status</h5>
+                  <p>Updates pin status of the note.</p>
+                </div>
+              </div>
+              <!-------Create Feature #6------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.6s">
+                <div class="media-left icon-border media-right-margin"> <span class="fa fa-fill-drip" aria-hidden="true"></span> </div>
+                <div class="media-body text-left">
+                  <h5>Update Note Color</h5>
+                  <p>Updates background color of the note.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-------Create Feature End-------> 
+
+<!-------Note Details Start------->
+<section class="feature section-padding" data-scroll-index='2'>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <!-------Note Details Summary Start------->
+        <div class="sectioner-header text-center">
+          <h3>Note Details</h3>
+          <span class="line"></span>
+          <p>Displays details of an existing note and allows users to edit/delete note details such as note content, adding/removing labels, pin status.</p>
+        </div>
+        <!-------Note Details Summary End------->
+        <div class="section-content text-center">
+          <div class="row">
+            <div class="col-md-4 col-sm-12">
+              <!-------Note Details Feature #1------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.2s">
+                <div class="media-body text-right media-right-margin">
+                  <h5>Note Details</h5>
+                  <p>Allows displaying and editing note details.</p>
+                </div>
+                <div class="media-right icon-border"> <span class="fa fa-bars" aria-hidden="true"></span> </div>
+              </div>
+              <!-------Note Details Feature #2------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.4s">
+                <div class="media-body text-right media-right-margin">
+                  <h5>Note Delete</h5>
+                  <p>Sends the note to the trash.</p>
+                </div>
+                <div class="media-right icon-border"> <span class="fa fa-trash-can" aria-hidden="true"></span> </div>
+              </div>
+              <!-------Note Details Feature #3------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.6s">
+                <div class="media-body text-right media-right-margin">
+                  <h5>Note Detail Updates</h5>
+                  <p>Updates pin status and note color.</p>
+                </div>
+                <div class="media-right icon-border"> <span class="fa fa-pen-to-square" aria-hidden="true"></span> </div>
+              </div>
+            </div>
+            <!--Note Details GIF Start-->
+            <div class="col-md-4 d-none d-md-block d-lg-block">
+              <div class="feature-mobile"> <img src="images/details_feature.gif" class="img-fluid wow fadeInUp"/> </div>
+            </div>
+            <!--Note Details GIF End-->
+            <div class="col-md-4 col-sm-12">
+              <!-------Note Details Feature #4------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.2s">
+                <div class="media-left icon-border media-right-margin"> <span class="fa fa-tag" aria-hidden="true"></span> </div>
+                <div class="media-body text-left">
+                  <h5>Note Labels</h5>
+                  <p>Allows the user  to add, remove and search note labels.</p>
+                </div>
+              </div>
+              <!-------Note Details Feature #5------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.4s">
+                <div class="media-left icon-border media-right-margin"> <span class="fa fa-bell" aria-hidden="true"></span> </div>
+                <div class="media-body text-left">
+                  <h5>Reminders</h5>
+                  <p>Set reminders for a note using the Alarm Manager and Heads Up Notifications.</p>
+                </div>
+              </div>
+              <!-------Note Details Feature #6------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.6s">
+                <div class="media-left icon-border media-right-margin"> <span class="fa fa-share" aria-hidden="true"></span> </div>
+                <div class="media-body text-left">
+                  <h5>Note Sharing</h5>
+                  <p>Allows sharing note through other apps.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-------Note Details End------->
+
+<!-------Trash Start------->
+<section class="feature section-padding" data-scroll-index='2'>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <!-------Trash Summary Start------->
+        <div class="sectioner-header text-center">
+          <h3>Trash</h3>
+          <span class="line"></span>
+          <p>Displays a list of notes that are sent to trash but not yet deleted completely of the database.</p>
+        </div>
+        <!-------Trash Summary End------->
+        <div class="section-content text-center">
+          <div class="row">
+            <div class="col-md-4 col-sm-12">
+              <!-------Trash Feature #1------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.2s">
+                <div class="media-body text-right media-right-margin">
+                  <h5>Restore Notes</h5>
+                  <p>One of the main functionality of the Trash is that it gives the user to restore the note before it is deleted forever.</p>
+                </div>
+                <div class="media-right icon-border"> <span class="fa fa-trash-arrow-up" aria-hidden="true"></span> </div>
+              </div>
+              <!-------Trash Feature #2------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.4s">
+                <div class="media-body text-right media-right-margin">
+                  <h5>Delete Forever</h5>
+                  <p>Deletes notes forever.</p>
+                </div>
+                <div class="media-right icon-border"> <span class="fa fa-ban" aria-hidden="true"></span> </div>
+              </div>
+              <!-------Trash Feature #3------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.6s">
+                <!--Empty Content-->
+              </div>
+            </div>
+            <!--Trash GIF Start-->
+            <div class="col-md-4 d-none d-md-block d-lg-block">
+              <div class="feature-mobile"> <img src="images/trash_feature.gif" class="img-fluid wow fadeInUp"/> </div>
+            </div>
+            <!--Trash GIF End-->
+            <div class="col-md-4 col-sm-12">
+              <!-------Trash Feature #4------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.2s">
+                <div class="media-left icon-border media-right-margin"> <span class="fa fa-list-check" aria-hidden="true"></span> </div>
+                <div class="media-body text-left">
+                  <h5>Mass Selection</h5>
+                  <p>Allows mass selection and editing.</p>
+                </div>
+              </div>
+              <!-------Trash Feature #5------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.4s">
+                <div class="media-left icon-border media-right-margin"> <span class="fa fa-clone" aria-hidden="true"></span> </div>
+                <div class="media-body text-left">
+                  <h5>Inheritance</h5>
+                  <p>Extends a base class BaseNoteListFragment which provides basic functionality for displaying a list of items by inheritance.</p>
+                </div>
+              </div>
+              <!-------Trash Feature #6------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.6s">
+                <!--Empty Content-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-------Trash End------->
+
+<!-------Settings Start------->
+<section class="feature section-padding" data-scroll-index='2'>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <!-------Settings Summary Start------->
+        <div class="sectioner-header text-center">
+          <h3>Settings</h3>
+          <span class="line"></span>
+          <p>Displays app settings and uses preferences to store them.</p>
+        </div>
+        <!-------Settings Summary End------->
+        <div class="section-content text-center">
+          <div class="row">
+            <div class="col-md-4 col-sm-12">
+              <!-------Settings Feature #1------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.2s">
+                <div class="media-body text-right media-right-margin">
+                  <h5>Settings Activity</h5>
+                  <p>Settings Activity is a stand-alone entity that has its own activity and fragment life cycles.</p>
+                </div>
+                <div class="media-right icon-border"> <span class="fa fa-trash-arrow-up" aria-hidden="true"></span> </div>
+              </div>
+              <!-------Settings Feature #2------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.4s">
+                <div class="media-body text-right media-right-margin">
+                  <h5>Light & Dark Theme</h5>
+                  <p>Allows switching between light/dark theme.</p>
+                </div>
+                <div class="media-right icon-border"> <span class="fa fa-ban" aria-hidden="true"></span> </div>
+              </div>
+              <!-------Settings Feature #3------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.6s">
+                <!--Empty Content-->
+              </div>
+            </div>
+            <!--Settings GIF Start-->
+            <div class="col-md-4 d-none d-md-block d-lg-block">
+              <div class="feature-mobile"> <img src="images/settings_feature.gif" class="img-fluid wow fadeInUp"/> </div>
+            </div>
+            <!--Settings GIF End-->
+            <div class="col-md-4 col-sm-12">
+              <!-------Settings Feature #4------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.2s">
+                <div class="media-left icon-border media-right-margin"> <span class="fa fa-list-check" aria-hidden="true"></span> </div>
+                <div class="media-body text-left">
+                  <h5>Sorting Order</h5>
+                  <p>Allows changing the order of notes displayed by creation date.</p>
+                </div>
+              </div>
+              <!-------Settings Feature #5------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.4s">
+                <div class="media-left icon-border media-right-margin"> <span class="fa fa-clone" aria-hidden="true"></span> </div>
+                <div class="media-body text-left">
+                  <h5>Font Size</h5>
+                  <p>Allows changing the text size used in notes.</p>
+                </div>
+              </div>
+              <!-------Settings Feature #6------->
+              <div class="media single-feature wow fadeInUp" data-wow-delay="0.6s">
+                <!--Empty Content-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-------Settings End-------> 
+
+<!-------Github Repo Start------->
+<section class="download section-padding" data-scroll-index='3'>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="sectioner-header text-center white">
+          <h3>Check out the source code on GitHub</h3>
+          <span class="line"></span>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="section-content text-center">
+          <h3><a href="https://github.com/androidpirate/SlickNotes">Slicknotes GitHub Repo</a></h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-------GitHub Repo End------->
+
+<footer class="footer-copy">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <p>2024 &copy; Slicknotes.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script> 
+<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script> 
+<!-- scrollIt js --> 
+<script src="js/scrollIt.min.js"></script> 
+<script src="js/wow.min.js"></script> 
+<script>
+	wow = new WOW();
+	wow.init();
+$(document).ready(function(e) {
+
+	$('#video-icon').on('click',function(e){
+	e.preventDefault();
+	$('.video-popup').css('display','flex');
+	$('.iframe-src').slideDown();
+	});
+	$('.video-popup').on('click',function(e){
+	var $target = e.target.nodeName;
+	var video_src = $(this).find('iframe').attr('src');
+	if($target != 'IFRAME'){
+	$('.video-popup').fadeOut();
+	$('.iframe-src').slideUp();
+	$('.video-popup iframe').attr('src'," ");
+	$('.video-popup iframe').attr('src',video_src);
+	}
+	});
+
+	$('.slider').bxSlider({
+	pager: false
+	});
+});
+    
+$(window).on("scroll",function () {
+
+	var bodyScroll = $(window).scrollTop(),
+	navbar = $(".navbar");
+	
+	if(bodyScroll > 50){
+	$('.navbar-logo img').attr('src','images/slicknotes_logo_black.png');
+	navbar.addClass("nav-scroll");
+
+}else{
+	$('.navbar-logo img').attr('src','images/slicknotes_logo.png');
+	navbar.removeClass("nav-scroll");
+}
+
+});
+$(window).on("load",function (){
+	var bodyScroll = $(window).scrollTop(),
+	navbar = $(".navbar");
+	
+	if(bodyScroll > 50){
+	$('.navbar-logo img').attr('src','images/slicknotes_logo_black.png');
+	navbar.addClass("nav-scroll");
+	}else{
+	$('.navbar-logo img').attr('src','images/slicknotes_logo.png');
+	navbar.removeClass("nav-scroll");
+	}
+
+	$.scrollIt({
+	
+	easing: 'swing',      // the easing function for animation
+	scrollTime: 900,       // how long (in ms) the animation takes
+	activeClass: 'active', // class given to the active nav element
+	onPageChange: null,    // function(pageIndex) that is called when page is changed
+	topOffset: -63
+	});
+});
+
+</script>
+</body>
+</html>
